@@ -17,56 +17,54 @@
 
     .hero-container {
       position: relative; width: 100vw; height: 100vh;
-      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%),
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%), 
                   url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200') center/cover no-repeat;
-      display: flex; flex-direction: column; justify-content: space-between;
-      padding: 16px 10px;
+      display: flex; flex-direction: column; justify-content: space-between; 
+      padding: 16px 12px;
     }
 
-    /* AUTOMATISCH REAGIERENDE NAVIGATION */
-    .hero-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* NAVIGATION (JETZT NUR NOCH 3 BUTTONS = PERFEKTER PLATZ) */
+    .hero-nav { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
       z-index: 10;
       width: 100%;
-      gap: 6px;
+      gap: 10px;
     }
 
-    .brand-logo {
-      /* Dynamische Schriftgröße: Passt sich der Displaybreite an */
-      font-size: clamp(0.65rem, 2.5vw, 0.9rem);
-      font-weight: 800;
-      letter-spacing: 1px;
+    .brand-logo { 
+      font-size: clamp(0.75rem, 3vw, 0.95rem); 
+      font-weight: 800; 
+      letter-spacing: 1px; 
       text-transform: uppercase;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 4px;
+    .nav-links { 
+      display: flex; 
+      gap: 6px; 
       width: 100%;
       justify-content: flex-end;
     }
 
     .nav-item {
-      color: #fff;
-      /* Dynamische Schriftgröße für die Buttons */
-      font-size: clamp(0.55rem, 2.2vw, 0.75rem);
-      font-weight: 700;
-      text-transform: uppercase;
-      padding: 6px 0;
+      color: #fff; 
+      font-size: clamp(0.6rem, 2.4vw, 0.8rem); 
+      font-weight: 700; 
+      text-transform: uppercase; 
+      padding: 7px 0;
       text-align: center;
-      /* Verteilt den Platz gleichmäßig auf alle 4 Buttons */
-      flex: 1;
-
-      background: rgba(0, 0, 0, 0.5);
+      flex: 1; 
+      max-width: 90px;
+      
+      background: rgba(0, 0, 0, 0.5); 
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border-radius: 20px;
+      border-radius: 20px; 
       border: 1px solid rgba(255, 255, 255, 0.2);
-      cursor: pointer;
+      cursor: pointer; 
       transition: all 0.2s;
       white-space: nowrap;
     }
@@ -85,7 +83,7 @@
 
     .modal-card {
       background: #111; border: 1px solid #333; border-radius: 20px;
-      padding: 24px; position: relative;
+      padding: 24px; position: relative; max-height: 85vh; overflow-y: auto;
     }
 
     .close-btn {
@@ -95,15 +93,23 @@
 
     h2 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
 
+    /* EVENT CARD STYLING */
+    .event-card {
+      background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px;
+      padding: 16px; margin-bottom: 14px;
+    }
+    .event-title { font-size: 1rem; font-weight: bold; margin-bottom: 6px; color: #fff; }
+    .event-info { font-size: 0.8rem; color: #aaa; margin-bottom: 12px; line-height: 1.4; }
+
     input, select {
       width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #333;
       background: #000; color: #fff; margin-bottom: 12px; font-size: 0.95rem; outline: none;
     }
 
     .btn-action {
-      width: 100%; padding: 15px; border: none; border-radius: 10px;
+      width: 100%; padding: 12px; border: none; border-radius: 8px;
       background: #fff; color: #000; font-weight: bold; text-transform: uppercase;
-      letter-spacing: 1px; margin-top: 10px; cursor: pointer;
+      font-size: 0.75rem; letter-spacing: 1px; cursor: pointer; transition: background 0.2s;
     }
     .btn-action:active { background: #ccc; }
 
@@ -114,11 +120,10 @@
 
   <div class="hero-container">
     <div class="hero-nav">
-      <div class="brand-logo">KULTUR</div>
+      <div class="brand-logo">KULTURVEREIN</div>
       <div class="nav-links">
         <span class="nav-item" onclick="openModal('events')">Events</span>
         <span class="nav-item" onclick="openModal('galerie')">Galerie</span>
-        <span class="nav-item" onclick="openModal('buchen')">Buchen</span>
         <span class="nav-item" onclick="openModal('team')">Team</span>
       </div>
     </div>
@@ -136,32 +141,47 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
+    // Event-Datenbank (hier kannst du jederzeit neue Events hinzufügen)
+    const eventsList = [
+      {
+        id: "kulturabend_2026",
+        title: "Kulturabend 2026",
+        date: "Samstag, 19:00 Uhr",
+        location: "Hauptaula im Vereinsheim",
+        description: "Ein unvergesslicher Abend voller Musik, Kunst und Begegnungen."
+      },
+      {
+        id: "herbstfest",
+        title: "Klassik & Jazz Konzert",
+        date: "24. Oktober, 18:00 Uhr",
+        location: "Großer Saal",
+        description: "Live-Performance unserer Vereinsmitglieder und Gastmusiker."
+      }
+    ];
+
     function openModal(type) {
       tg.HapticFeedback.impactOccurred('medium');
       const popup = document.getElementById('popup');
       const content = document.getElementById('modal-content');
 
-      if(type === 'buchen') {
-        content.innerHTML = `
-          <h2>Sitzplatz Buchen</h2>
-          <input type="text" id="fullname" placeholder="Vollständiger Name">
-          <select id="seats">
-            <option value="1">1 Person</option>
-            <option value="2">2 Personen</option>
-            <option value="3">3 Personen</option>
-            <option value="4">4 Personen (Familie)</option>
-          </select>
-          <button class="btn-action" onclick="sendBooking()">Verbindlich Reservieren</button>
-        `;
-      } else if(type === 'events') {
-        content.innerHTML = `
-          <h2>Nächstes Event</h2>
-          <p style="color:#aaa; font-size:0.9rem; line-height:1.5;">
-            <b>KULTURABEND 2026</b><br>
-            📅 Samstag, 19:00 Uhr<br>
-            📍 Hauptaula im Vereinsheim
-          </p>
-        `;
+      if(type === 'events') {
+        let html = `<h2>Anstehende Events</h2>`;
+        
+        eventsList.forEach(event => {
+          html += `
+            <div class="event-card">
+              <div class="event-title">${event.title}</div>
+              <div class="event-info">
+                📅 ${event.date}<br>
+                📍 ${event.location}<br><br>
+                ${event.description}
+              </div>
+              <button class="btn-action" onclick="openBookingForm('${event.title}')">Plätze Reservieren</button>
+            </div>
+          `;
+        });
+        content.innerHTML = html;
+
       } else if(type === 'galerie') {
         content.innerHTML = `
           <h2>Galerie</h2>
@@ -180,6 +200,26 @@
       popup.classList.add('active');
     }
 
+    function openBookingForm(eventTitle) {
+      tg.HapticFeedback.impactOccurred('light');
+      const content = document.getElementById('modal-content');
+      
+      content.innerHTML = `
+        <h2>Buchung</h2>
+        <p style="color:#888; font-size:0.85rem; margin-bottom:12px;">Event: <b style="color:#fff;">${eventTitle}</b></p>
+        
+        <input type="hidden" id="event_name" value="${eventTitle}">
+        <input type="text" id="fullname" placeholder="Vollständiger Name">
+        <select id="seats">
+          <option value="1">1 Person</option>
+          <option value="2">2 Personen</option>
+          <option value="3">3 Personen</option>
+          <option value="4">4 Personen (Familie)</option>
+        </select>
+        <button class="btn-action" onclick="sendBooking()">Verbindlich Reservieren</button>
+      `;
+    }
+
     function closeModal() {
       document.getElementById('popup').classList.remove('active');
     }
@@ -187,7 +227,8 @@
     function sendBooking() {
       const name = document.getElementById('fullname').value.trim();
       const seats = document.getElementById('seats').value;
-
+      const eventName = document.getElementById('event_name').value;
+      
       const user = tg.initDataUnsafe.user;
       const userId = user ? user.id : "Unbekannt";
 
@@ -198,11 +239,13 @@
       }
 
       tg.HapticFeedback.notificationOccurred('success');
-
-      tg.sendData(JSON.stringify({
+      
+      // Daten inklusive Event-Name an Python schicken
+      tg.sendData(JSON.stringify({ 
         telegram_id: userId,
-        name: name,
-        seats: parseInt(seats)
+        event: eventName,
+        name: name, 
+        seats: parseInt(seats) 
       }));
     }
   </script>
