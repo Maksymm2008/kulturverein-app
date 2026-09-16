@@ -10,25 +10,25 @@
 
     body, html {
       width: 100vw; height: 100vh;
-      background-color: #000; color: #fff;
+      background-color: #050507; color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       overflow: hidden;
     }
 
     .hero-container {
       position: relative; width: 100vw; height: 100vh;
-      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%), 
+      background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(5,5,7,0.95) 100%),
                   url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200') center/cover no-repeat;
-      display: flex; flex-direction: column; justify-content: space-between; 
+      display: flex; flex-direction: column; justify-content: space-between;
       padding: 16px 12px;
     }
 
     .hero-nav { display: flex; justify-content: space-between; align-items: center; z-index: 10; width: 100%; gap: 10px; }
     .brand-logo { font-size: clamp(0.75rem, 3vw, 0.95rem); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
     .nav-links { display: flex; gap: 6px; width: 100%; justify-content: flex-end; }
-    
+
     .nav-item {
-      color: #fff; font-size: clamp(0.6rem, 2.4vw, 0.8rem); font-weight: 700; text-transform: uppercase; 
+      color: #fff; font-size: clamp(0.6rem, 2.4vw, 0.8rem); font-weight: 700; text-transform: uppercase;
       padding: 7px 0; text-align: center; flex: 1; max-width: 90px;
       background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; transition: all 0.2s; white-space: nowrap;
@@ -38,43 +38,48 @@
     /* OVERLAY MODAL */
     .overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
       z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center;
       padding: 12px; animation: fadeIn 0.2s ease;
     }
     .overlay.active { display: flex; }
 
     .modal-card {
-      background: #111; border: 1px solid #333; border-radius: 20px;
+      background: #121216; border: 1px solid #2a2a32; border-radius: 20px;
       padding: 16px; position: relative; width: 100%; max-width: 420px;
       max-height: 92vh; overflow-y: auto; display: flex; flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
 
     .close-btn { position: absolute; top: 12px; right: 16px; font-size: 1.5rem; color: #888; cursor: pointer; z-index: 10; }
     h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
 
     /* EVENT CARD */
-    .event-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+    .event-card { background: #1a1a20; border: 1px solid #2a2a35; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
     .event-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 6px; color: #fff; }
     .event-info { font-size: 0.8rem; color: #aaa; margin-bottom: 10px; line-height: 1.4; }
 
-    /* BÜHNE & SAALPLAN */
+    /* BÜHNE (ДИЗАЙН КИНОТЕАТРА) */
     .stage {
-      width: 100%; background: #333; color: #aaa; text-align: center;
-      padding: 6px; font-size: 0.65rem; font-weight: bold; letter-spacing: 2px;
-      border-radius: 4px; margin-bottom: 12px; text-transform: uppercase;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      width: 100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.02) 100%);
+      border-top: 3px solid #fff;
+      color: #fff; text-align: center;
+      padding: 6px; font-size: 0.65rem; font-weight: 800; letter-spacing: 3px;
+      border-radius: 6px 6px 0 0; margin-bottom: 12px; text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(255,255,255,0.15);
     }
 
-    /* LEGEND (КИНОТЕАТР) */
+    /* ЛЕГЕНДА СИДЕНИЙ */
     .legend {
-      display: flex; justify-content: space-around; margin-bottom: 12px;
-      padding: 6px; background: #1a1a1a; border-radius: 8px; font-size: 0.7rem; color: #ccc;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 12px;
+      padding: 8px 4px; background: #181820; border-radius: 8px; font-size: 0.65rem; color: #ccc; text-align: center;
     }
-    .legend-item { display: flex; align-items: center; gap: 5px; }
-    .legend-box { width: 14px; height: 14px; border-radius: 3px; }
+    .legend-item { display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .legend-box { width: 12px; height: 12px; border-radius: 3px; }
     .legend-free { background: #222; border: 1px solid #444; }
     .legend-selected { background: #28a745; border: 1px solid #28a745; }
+    .legend-mine { background: #007bff; border: 1px solid #007bff; }
     .legend-occupied { background: #dc3545; border: 1px solid #dc3545; }
 
     .seating-grid {
@@ -91,16 +96,21 @@
       cursor: pointer; user-select: none; transition: all 0.15s; flex-shrink: 0;
     }
 
-    /* СТИЛИ МЕСТ */
-    .seat.selected { background: #28a745; color: #fff; border-color: #28a745; font-weight: bold; }
-    .seat.occupied { background: #dc3545; border-color: #dc3545; color: #777; cursor: not-allowed; opacity: 0.6; }
+    /* ЦВЕТА СИДЕНИЙ */
+    .seat.selected { background: #28a745; color: #fff; border-color: #28a745; font-weight: bold; box-shadow: 0 0 8px rgba(40,167,69,0.5); }
+    .seat.my-seat { background: #007bff; border-color: #007bff; color: #fff; font-weight: bold; cursor: default; box-shadow: 0 0 6px rgba(0,123,255,0.4); }
+    .seat.occupied { background: #dc3545; border-color: #dc3545; color: #777; cursor: not-allowed; opacity: 0.5; }
 
-    input {
-      width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #444;
-      background: #000; color: #fff; margin-bottom: 12px; font-size: 0.9rem; outline: none;
-      -webkit-appearance: none;
+    .info-banner {
+      background: rgba(0, 123, 255, 0.15); border: 1px solid rgba(0, 123, 255, 0.4);
+      color: #64b5f6; font-size: 0.75rem; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;
     }
 
+    input {
+      width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #333;
+      background: #09090c; color: #fff; margin-bottom: 12px; font-size: 0.9rem; outline: none;
+      -webkit-appearance: none;
+    }
     input:focus { border-color: #28a745; }
 
     .btn-action {
@@ -108,7 +118,8 @@
       background: #fff; color: #000; font-weight: bold; text-transform: uppercase;
       font-size: 0.75rem; letter-spacing: 1px; cursor: pointer;
     }
-    .btn-action:active { background: #ccc; }
+    .btn-action:disabled { background: #444; color: #888; cursor: not-allowed; }
+    .btn-action:active:not(:disabled) { background: #ccc; }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
@@ -137,10 +148,14 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Считываем забронированные места из URL параметров
+    // Парсим параметры из URL
     const urlParams = new URLSearchParams(window.location.search);
     const occupiedSeatsParam = urlParams.get('occupied') || '';
+    const mySeatsParam = urlParams.get('my_seats') || '';
+    const maxAllowedSeats = parseInt(urlParams.get('max_seats') || '4', 10);
+
     const occupiedSeats = occupiedSeatsParam ? occupiedSeatsParam.split(',') : [];
+    const mySeats = mySeatsParam ? mySeatsParam.split(',') : [];
 
     let selectedSeats = [];
 
@@ -149,8 +164,7 @@
         id: "kulturabend_2026",
         title: "Kulturabend 2026",
         date: "Samstag, 19:00 Uhr",
-        location: "Hauptaula im Vereinsheim",
-        description: "Ein unvergesslicher Abend voller Musik und Kunst."
+        location: "Hauptaula im Vereinsheim"
       }
     ];
 
@@ -184,29 +198,36 @@
       selectedSeats = [];
       const content = document.getElementById('modal-content');
 
-      const telegramUserName = (tg.initDataUnsafe && tg.initDataUnsafe.user) 
-        ? `${tg.initDataUnsafe.user.first_name || ''} ${tg.initDataUnsafe.user.last_name || ''}`.trim() 
+      const telegramUserName = (tg.initDataUnsafe && tg.initDataUnsafe.user)
+        ? `${tg.initDataUnsafe.user.first_name || ''} ${tg.initDataUnsafe.user.last_name || ''}`.trim()
         : '';
 
       let legendHtml = `
         <div class="legend">
           <div class="legend-item"><div class="legend-box legend-free"></div> Frei</div>
           <div class="legend-item"><div class="legend-box legend-selected"></div> Gewählt</div>
+          <div class="legend-item"><div class="legend-box legend-mine"></div> Deine</div>
           <div class="legend-item"><div class="legend-box legend-occupied"></div> Besetzt</div>
         </div>
       `;
 
-      let gridHtml = `<div class="stage">BÜHNE / LEINWAND</div>${legendHtml}<div class="seating-grid">`;
-      
+      let gridHtml = `<div class="stage">LEINWAND / BÜHNE</div>${legendHtml}<div class="seating-grid">`;
+
       for (let r = 1; r <= 8; r++) {
         gridHtml += `<div class="seat-row"><span class="row-label">R${r}</span>`;
         for (let s = 1; s <= 10; s++) {
           const seatId = `R${r}-S${s}`;
+          const isMine = mySeats.includes(seatId);
           const isOccupied = occupiedSeats.includes(seatId);
-          
-          if (isOccupied) {
+
+          if (isMine) {
+            // Ваши места (СИНИЕ)
+            gridHtml += `<div class="seat my-seat" id="seat-${seatId}" title="Dein Platz">✓</div>`;
+          } else if (isOccupied) {
+            // Чужие места (КРАСНЫЕ)
             gridHtml += `<div class="seat occupied" id="seat-${seatId}">✕</div>`;
           } else {
+            // Свободные места
             gridHtml += `<div class="seat" id="seat-${seatId}" onclick="toggleSeat('${seatId}')">${s}</div>`;
           }
         }
@@ -214,14 +235,23 @@
       }
       gridHtml += `</div>`;
 
+      let bannerHtml = '';
+      if (mySeats.length > 0) {
+        bannerHtml = `<div class="info-banner">🔹 Bereits von dir gebucht: <b>${mySeats.join(', ')}</b> (${mySeats.length}/4)</div>`;
+      }
+
+      let btnDisabledAttr = maxAllowedSeats <= 0 ? 'disabled' : '';
+      let btnText = maxAllowedSeats <= 0 ? 'Maximum (4) erreicht' : '0 Stühle ausgewählt – Reservieren';
+
       content.innerHTML = `
         <h2>Platzwahl</h2>
         <p style="color:#888; font-size:0.75rem; margin-bottom:8px;">Event: <b>${eventTitle}</b></p>
+        ${bannerHtml}
         ${gridHtml}
         <input type="hidden" id="event_name" value="${eventTitle}">
         <input type="text" id="fullname" placeholder="Vollständiger Name" value="${telegramUserName}">
-        <button class="btn-action" id="submit-booking-btn" onclick="sendBooking()">
-          <span id="seat-count-text">0 Stühle ausgewählt</span> – Reservieren
+        <button class="btn-action" id="submit-booking-btn" ${btnDisabledAttr} onclick="sendBooking()">
+          <span id="seat-count-text">${btnText}</span>
         </button>
       `;
 
@@ -232,28 +262,31 @@
     }
 
     function toggleSeat(seatId) {
+      if (maxAllowedSeats <= 0) {
+        tg.HapticFeedback.notificationOccurred('warning');
+        if (tg.showAlert) tg.showAlert("Du hast bereits das Maximum von 4 Plätzen gebucht!");
+        return;
+      }
+
       tg.HapticFeedback.selectionChanged();
       const seatEl = document.getElementById(`seat-${seatId}`);
-      
+
       if (selectedSeats.includes(seatId)) {
         selectedSeats = selectedSeats.filter(id => id !== seatId);
         seatEl.classList.remove('selected');
       } else {
-        if (selectedSeats.length >= 4) {
+        if (selectedSeats.length >= maxAllowedSeats) {
           tg.HapticFeedback.notificationOccurred('warning');
-          // ВАЖНО: Вместо alert() используем native tg.showAlert(), чтобы НЕ ломать focus у инпута!
-          if (tg.showAlert) {
-            tg.showAlert("Maximal 4 Stühle pro Buchung erlaubt!");
-          } else {
-            alert("Maximal 4 Stühle pro Buchung erlaubt!");
-          }
+          const msg = `Du kannst maximal noch ${maxAllowedSeats} weiteren/weitere Platz/Plätze auswählen!`;
+          if (tg.showAlert) tg.showAlert(msg);
+          else alert(msg);
           return;
         }
         selectedSeats.push(seatId);
         seatEl.classList.add('selected');
       }
 
-      document.getElementById('seat-count-text').innerText = `${selectedSeats.length} Stuhl/Stühle ausgewählt`;
+      document.getElementById('seat-count-text').innerText = `${selectedSeats.length} Stuhl/Stühle ausgewählt – Reservieren`;
     }
 
     function closeModal() {
@@ -264,7 +297,7 @@
       const nameInput = document.getElementById('fullname');
       const name = nameInput ? nameInput.value.trim() : "";
       const eventName = document.getElementById('event_name').value;
-      
+
       const user = tg.initDataUnsafe ? tg.initDataUnsafe.user : null;
       const userId = user ? user.id : "Unbekannt";
 
@@ -283,14 +316,14 @@
       }
 
       tg.HapticFeedback.notificationOccurred('success');
-      
-      tg.sendData(JSON.stringify({ 
+
+      tg.sendData(JSON.stringify({
         telegram_id: userId,
         event: eventName,
-        name: name, 
-        seats: selectedSeats 
+        name: name,
+        seats: selectedSeats
       }));
-      
+
       tg.close();
     }
   </script>
