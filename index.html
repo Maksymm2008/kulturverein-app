@@ -106,23 +106,21 @@
       color: #64b5f6; font-size: 0.75rem; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;
     }
 
-    input {
+    /* СТИЛИ ИМЕНИ: ПЛАШКА ВМЕСТО ПОЛЯ */
+    .locked-name-badge {
+      background: #1a1a20; border: 1px solid #2a2a35; padding: 12px; border-radius: 10px;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .locked-name-icon { font-size: 1.2rem; }
+    .locked-name-text { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+    .locked-name-value { color: #fff; font-weight: bold; font-size: 0.95rem; margin-top: 2px; }
+
+    input[type="text"] {
       width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #333;
       background: #09090c; color: #fff; margin-bottom: 12px; font-size: 0.9rem; outline: none;
       -webkit-appearance: none;
     }
-    input:focus { border-color: #28a745; }
-    
-    /* СТИЛЬ ЗАБЛОКИРОВАННОГО ИМЕНИ */
-    input.locked-input {
-      background: #1a1a20;
-      color: #888;
-      border-color: #2a2a35;
-      cursor: not-allowed;
-    }
-    input.locked-input:focus {
-      border-color: #2a2a35;
-    }
+    input[type="text"]:focus { border-color: #28a745; }
 
     .btn-action {
       width: 100%; padding: 14px; border: none; border-radius: 10px;
@@ -223,8 +221,6 @@
     const occupiedSeatsParam = urlParams.get('occupied') || '';
     const mySeatsParam = urlParams.get('my_seats') || '';
     const maxAllowedSeats = parseInt(urlParams.get('max_seats') || '4', 10);
-    
-    // НОВЫЙ ПАРАМЕТР: Забронированное ранее имя, переданное с бэкенда (если есть)
     const bookedNameParam = urlParams.get('booked_name') || '';
 
     const occupiedSeats = occupiedSeatsParam ? occupiedSeatsParam.split(',') : [];
@@ -407,17 +403,12 @@
       selectedSeats = [];
       const content = document.getElementById('modal-content');
 
-      // Имя из Телеграма на случай, если человек заходит впервые
       const telegramUserName = (tg.initDataUnsafe && tg.initDataUnsafe.user)
         ? `${tg.initDataUnsafe.user.first_name || ''} ${tg.initDataUnsafe.user.last_name || ''}`.trim()
         : '';
         
-      // Какое имя показывать? (В приоритете то, что пришло с бэка как уже забронированное)
       const displayName = bookedNameParam || telegramUserName;
-
-      // ЛОГИКА БЛОКИРОВКИ: Если есть хотя бы 1 купленное место, поле блокируется.
-      const isNameLocked = mySeats.length > 0;
-      const nameInputAttrs = isNameLocked ? 'readonly class="locked-input" title="Du hast bereits mit diesem Namen gebucht."' : '';
+      const isReturningUser = mySeats.length > 0;
 
       let legendHtml = `
         <div class="legend">
@@ -450,8 +441,29 @@
       gridHtml += `</div>`;
 
       let bannerHtml = '';
-      if (mySeats.length > 0) {
+      if (isReturningUser) {
         bannerHtml = `<div class="info-banner">🔹 Bereits von dir gebucht: <b>${mySeats.join(', ')}</b> (${mySeats.length}/4)</div>`;
+      }
+
+      // ЛОГИКА ОТОБРАЖЕНИЯ ИМЕНИ
+      let nameFieldHtml = '';
+      if (isReturningUser) {
+        // Если уже покупал — показываем плашку (без возможности редактирования) 
+        // и скрытый инпут, чтобы отправить данные без ошибки
+        const savedName = displayName || "Bereits registriert";
+        nameFieldHtml = `
+          <div class="locked-name-badge">
+            <div class="locked-name-icon">👤</div>
+            <div>
+              <div class="locked-name-text">Reserviert auf:</div>
+              <div class="locked-name-value">${savedName}</div>
+            </div>
+          </div>
+          <input type="hidden" id="fullname" value="${savedName}">
+        `;
+      } else {
+        // Если билетов еще нет — показываем обычное поле ввода
+        nameFieldHtml = `<input type="text" id="fullname" placeholder="Vollständiger Name" value="${displayName}">`;
       }
 
       let btnDisabledAttr = maxAllowedSeats <= 0 ? 'disabled' : '';
@@ -464,8 +476,7 @@
         ${gridHtml}
         <input type="hidden" id="event_name" value="${eventTitle}">
         
-        <!-- ПОЛЕ ДЛЯ ИМЕНИ (С ЛОГИКОЙ БЛОКИРОВКИ) -->
-        <input type="text" id="fullname" placeholder="Vollständiger Name" value="${displayName}" ${nameInputAttrs}>
+        ${nameFieldHtml}
         
         <button class="btn-action" id="submit-booking-btn" ${btnDisabledAttr} onclick="sendBooking()">
           <span id="seat-count-text">${btnText}</span>
@@ -519,7 +530,8 @@
       const user = tg.initDataUnsafe ? tg.initDataUnsafe.user : null;
       const userId = user ? user.id : "Unbekannt";
 
-      if(!name) {
+      // Если это НОВАЯ бронь (нет mySeats), и поле пустое — требуем ввести имя
+      if(!name && mySeats.length === 0) {
         tg.HapticFeedback.notificationOccurred('error');
         if (tg.showAlert) tg.showAlert('Bitte gib deinen Namen ein!');
         else alert('Bitte gib deinen Namen ein!');
