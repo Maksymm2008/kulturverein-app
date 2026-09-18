@@ -112,6 +112,17 @@
       -webkit-appearance: none;
     }
     input:focus { border-color: #28a745; }
+    
+    /* СТИЛЬ ЗАБЛОКИРОВАННОГО ИМЕНИ */
+    input.locked-input {
+      background: #1a1a20;
+      color: #888;
+      border-color: #2a2a35;
+      cursor: not-allowed;
+    }
+    input.locked-input:focus {
+      border-color: #2a2a35;
+    }
 
     .btn-action {
       width: 100%; padding: 14px; border: none; border-radius: 10px;
@@ -198,7 +209,6 @@
     </div>
   </div>
 
-  <!-- Lightbox Container -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <span class="lightbox-close">×</span>
     <img id="lightbox-img" src="">
@@ -213,6 +223,9 @@
     const occupiedSeatsParam = urlParams.get('occupied') || '';
     const mySeatsParam = urlParams.get('my_seats') || '';
     const maxAllowedSeats = parseInt(urlParams.get('max_seats') || '4', 10);
+    
+    // НОВЫЙ ПАРАМЕТР: Забронированное ранее имя, переданное с бэкенда (если есть)
+    const bookedNameParam = urlParams.get('booked_name') || '';
 
     const occupiedSeats = occupiedSeatsParam ? occupiedSeatsParam.split(',') : [];
     const mySeats = mySeatsParam ? mySeatsParam.split(',') : [];
@@ -228,7 +241,6 @@
       }
     ];
 
-    // --- ФОТОГРАФИИ ДЛЯ ГАЛЕРЕИ ---
     const galleryImages = [
       "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800",
       "https://images.unsplash.com/photo-1493225457124-a1a2a4af4048?w=800",
@@ -238,7 +250,6 @@
       "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800"
     ];
 
-    // --- ДАННЫЕ О КОМАНДЕ ---
     const teamMembers = [
       { id: 1, name: "Natali", role: "Vorstand & Orga", imgs: ["https://i.pravatar.cc/300?img=47", "https://i.pravatar.cc/300?img=48"], bio: "Natali ist das Herz des Kulturvereins. Sie plant die Events, koordiniert das Team und sorgt dafür, dass jeder Abend unvergesslich wird." },
       { id: 2, name: "Volodymyr", role: "Künstlerische Leitung", imgs: ["https://i.pravatar.cc/300?img=11", "https://i.pravatar.cc/300?img=12", "https://i.pravatar.cc/300?img=13"], bio: "Volodymyr ist für das kreative Programm verantwortlich. Von der Musikauswahl bis zur Bühnengestaltung bringt er Kunst zum Leben." },
@@ -247,7 +258,6 @@
       { id: 5, name: "Julia", role: "Social Media", imgs: ["https://i.pravatar.cc/300?img=32", "https://i.pravatar.cc/300?img=33"], bio: "Julia hält unsere Community auf Instagram und Facebook auf dem Laufenden und fängt die besten Momente fotografisch ein." }
     ];
 
-    // Переменные для слайдера команды
     let currentSlideIndex = 0;
     let autoSlideInterval;
     let touchStartX = 0;
@@ -258,7 +268,7 @@
       const popup = document.getElementById('popup');
       const content = document.getElementById('modal-content');
       
-      clearInterval(autoSlideInterval); // Очищаем интервал при переключении вкладок
+      clearInterval(autoSlideInterval);
 
       if(type === 'events') {
         let html = `<h2>Anstehende Events</h2>`;
@@ -274,7 +284,6 @@
         content.innerHTML = html;
         
       } else if(type === 'galerie') {
-        // РЕНДЕР ГАЛЕРЕИ
         let gridHtml = '<div class="gallery-grid">';
         galleryImages.forEach(img => {
           gridHtml += `<img src="${img}" class="gallery-img" onclick="openLightbox('${img}')">`;
@@ -287,7 +296,6 @@
         `;
         
       } else if(type === 'team') {
-        // РЕНДЕР КОМАНДЫ
         let gridHtml = '<div class="team-grid">';
         teamMembers.forEach(m => {
           gridHtml += `
@@ -303,15 +311,12 @@
       popup.classList.add('active');
     }
 
-    // --- ФУНКЦИИ ЛАЙТБОКСА (ГАЛЕРЕЯ) ---
     function openLightbox(imgSrc) {
       tg.HapticFeedback.impactOccurred('light');
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
-      
       lightboxImg.src = imgSrc;
       lightbox.style.display = 'flex';
-      // Небольшая задержка для плавного появления (анимации opacity)
       setTimeout(() => lightbox.classList.add('active'), 10);
     }
 
@@ -321,7 +326,6 @@
       setTimeout(() => lightbox.style.display = 'none', 300);
     }
 
-    // --- ФУНКЦИИ ДЛЯ СЛАЙДЕРА КОМАНДЫ ---
     function showTeamMember(id) {
       tg.HapticFeedback.selectionChanged();
       clearInterval(autoSlideInterval);
@@ -398,15 +402,22 @@
       autoSlideInterval = setInterval(() => moveSlide(1, totalSlides), 3000);
     }
 
-    // --- ФУНКЦИИ ВЫБОРА МЕСТ (БРОНИРОВАНИЕ) ---
     function openSeatingPlan(eventTitle) {
       tg.HapticFeedback.impactOccurred('light');
       selectedSeats = [];
       const content = document.getElementById('modal-content');
 
+      // Имя из Телеграма на случай, если человек заходит впервые
       const telegramUserName = (tg.initDataUnsafe && tg.initDataUnsafe.user)
         ? `${tg.initDataUnsafe.user.first_name || ''} ${tg.initDataUnsafe.user.last_name || ''}`.trim()
         : '';
+        
+      // Какое имя показывать? (В приоритете то, что пришло с бэка как уже забронированное)
+      const displayName = bookedNameParam || telegramUserName;
+
+      // ЛОГИКА БЛОКИРОВКИ: Если есть хотя бы 1 купленное место, поле блокируется.
+      const isNameLocked = mySeats.length > 0;
+      const nameInputAttrs = isNameLocked ? 'readonly class="locked-input" title="Du hast bereits mit diesem Namen gebucht."' : '';
 
       let legendHtml = `
         <div class="legend">
@@ -452,7 +463,10 @@
         ${bannerHtml}
         ${gridHtml}
         <input type="hidden" id="event_name" value="${eventTitle}">
-        <input type="text" id="fullname" placeholder="Vollständiger Name" value="${telegramUserName}">
+        
+        <!-- ПОЛЕ ДЛЯ ИМЕНИ (С ЛОГИКОЙ БЛОКИРОВКИ) -->
+        <input type="text" id="fullname" placeholder="Vollständiger Name" value="${displayName}" ${nameInputAttrs}>
+        
         <button class="btn-action" id="submit-booking-btn" ${btnDisabledAttr} onclick="sendBooking()">
           <span id="seat-count-text">${btnText}</span>
         </button>
