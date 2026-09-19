@@ -59,7 +59,7 @@
     .event-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 6px; color: #fff; }
     .event-info { font-size: 0.8rem; color: #aaa; margin-bottom: 10px; line-height: 1.4; }
 
-    /* BÜHNE */
+    /* BÜHNE (ДИЗАЙН КИНОТЕАТРА) */
     .stage {
       width: 100%;
       background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.02) 100%);
@@ -70,7 +70,7 @@
       box-shadow: 0 4px 15px rgba(255,255,255,0.15);
     }
 
-    /* LEGEND */
+    /* ЛЕГЕНДА СИДЕНИЙ */
     .legend {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 12px;
       padding: 8px 4px; background: #181820; border-radius: 8px; font-size: 0.65rem; color: #ccc; text-align: center;
@@ -96,6 +96,7 @@
       cursor: pointer; user-select: none; transition: all 0.15s; flex-shrink: 0;
     }
 
+    /* ЦВЕТА СИДЕНИЙ */
     .seat.selected { background: #28a745; color: #fff; border-color: #28a745; font-weight: bold; box-shadow: 0 0 8px rgba(40,167,69,0.5); }
     .seat.my-seat { background: #007bff; border-color: #007bff; color: #fff; font-weight: bold; cursor: default; box-shadow: 0 0 6px rgba(0,123,255,0.4); }
     .seat.occupied { background: #dc3545; border-color: #dc3545; color: #777; cursor: not-allowed; opacity: 0.5; }
@@ -105,7 +106,7 @@
       color: #64b5f6; font-size: 0.75rem; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;
     }
 
-    /* BADGE FOR LOCKED NAME */
+    /* СТИЛИ ИМЕНИ: ПЛАШКА ВМЕСТО ПОЛЯ */
     .locked-name-badge {
       background: #1a1a20; border: 1px solid #2a2a35; padding: 12px; border-radius: 10px;
       margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
@@ -131,34 +132,42 @@
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    /* TEAM & GALLERY STYLES */
+    /* --- TEAM KARTEN & SLIDER CSS --- */
     .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 10px; }
     .team-card { background: #1a1a20; border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; border: 1px solid #2a2a32; transition: transform 0.2s; }
     .team-card:active { transform: scale(0.95); }
     .team-img-small { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 2px solid #4dabf7; }
     .team-name { font-size: 0.85rem; font-weight: bold; }
     .team-role { font-size: 0.7rem; color: #888; }
-    
+
     .team-detail { display: flex; flex-direction: column; align-items: center; width: 100%; }
     .back-btn { font-size: 0.85rem; color: #4dabf7; cursor: pointer; margin-bottom: 15px; align-self: flex-start; display: flex; align-items: center; gap: 5px; }
-    
-    .carousel-container { 
-      width: 100%; max-width: 250px; aspect-ratio: 1/1; overflow: hidden; 
+
+    .carousel-container {
+      width: 100%; max-width: 250px; aspect-ratio: 1/1; overflow: hidden;
       position: relative; border-radius: 15px; border: 3px solid #4dabf7; margin-bottom: 12px;
     }
     .carousel-track { display: flex; height: 100%; width: 100%; transition: transform 0.4s ease-in-out; }
     .carousel-slide { min-width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-    
+
     .carousel-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 15px; }
     .dot { width: 8px; height: 8px; border-radius: 50%; background: #444; cursor: pointer; transition: 0.3s; }
     .dot.active { background: #4dabf7; }
-    
+
     .team-detail-bio { font-size: 0.85rem; color: #ccc; line-height: 1.5; text-align: left; background: #1a1a20; padding: 12px; border-radius: 10px; width: 100%; border: 1px solid #2a2a32; }
 
-    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; padding-bottom: 20px; }
-    .gallery-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; cursor: pointer; border: 1px solid #2a2a32; transition: transform 0.2s; }
+    /* --- GALERIE CSS --- */
+    .gallery-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+      margin-top: 15px; padding-bottom: 20px;
+    }
+    .gallery-img {
+      width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px;
+      cursor: pointer; border: 1px solid #2a2a32; transition: transform 0.2s;
+    }
     .gallery-img:active { transform: scale(0.95); }
 
+    /* --- LIGHTBOX (Vollbild-Bildbetrachter) --- */
     .lightbox {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.95); z-index: 200;
@@ -166,8 +175,16 @@
       opacity: 0; transition: opacity 0.3s ease;
     }
     .lightbox.active { display: flex; opacity: 1; }
-    .lightbox img { max-width: 95%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.8); object-fit: contain; }
-    .lightbox-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.1); border-radius: 50%; }
+    .lightbox img {
+      max-width: 95%; max-height: 90%; border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8); object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 20px;
+      color: #fff; font-size: 2.5rem; cursor: pointer;
+      width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
+      background: rgba(255,255,255,0.1); border-radius: 50%;
+    }
   </style>
 </head>
 <body>
@@ -199,12 +216,12 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Безопасное декодирование URL параметров
+    // Парсим параметры из URL
     const urlParams = new URLSearchParams(window.location.search);
     const occupiedSeatsParam = urlParams.get('occupied') || '';
     const mySeatsParam = urlParams.get('my_seats') || '';
     const maxAllowedSeats = parseInt(urlParams.get('max_seats') || '4', 10);
-    const bookedNameParam = decodeURIComponent(urlParams.get('booked_name') || '').trim();
+    const bookedNameParam = urlParams.get('booked_name') || '';
 
     const occupiedSeats = occupiedSeatsParam ? occupiedSeatsParam.split(',') : [];
     const mySeats = mySeatsParam ? mySeatsParam.split(',') : [];
@@ -239,12 +256,14 @@
 
     let currentSlideIndex = 0;
     let autoSlideInterval;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function openModal(type) {
       tg.HapticFeedback.impactOccurred('medium');
       const popup = document.getElementById('popup');
       const content = document.getElementById('modal-content');
-      
+
       clearInterval(autoSlideInterval);
 
       if(type === 'events') {
@@ -259,15 +278,19 @@
           `;
         });
         content.innerHTML = html;
-        
+
       } else if(type === 'galerie') {
         let gridHtml = '<div class="gallery-grid">';
         galleryImages.forEach(img => {
           gridHtml += `<img src="${img}" class="gallery-img" onclick="openLightbox('${img}')">`;
         });
         gridHtml += '</div>';
-        content.innerHTML = `<h2>Galerie</h2><p style="color:#aaa; font-size:0.85rem;">Eindrücke unserer Events.</p>${gridHtml}`;
-        
+        content.innerHTML = `
+          <h2>Galerie</h2>
+          <p style="color:#aaa; font-size:0.85rem;">Eindrücke unserer Events.</p>
+          ${gridHtml}
+        `;
+
       } else if(type === 'team') {
         let gridHtml = '<div class="team-grid">';
         teamMembers.forEach(m => {
@@ -305,10 +328,10 @@
       currentSlideIndex = 0;
       const member = teamMembers.find(m => m.id === id);
       const content = document.getElementById('modal-content');
-      
+
       let slidesHtml = '';
       let dotsHtml = '';
-      
+
       member.imgs.forEach((imgUrl, index) => {
         slidesHtml += `<img src="${imgUrl}" class="carousel-slide">`;
         dotsHtml += `<div class="dot ${index === 0 ? 'active' : ''}" onclick="setSlide(${index}, ${member.imgs.length})"></div>`;
@@ -319,10 +342,19 @@
         <div class="team-detail">
           <h2>${member.name}</h2>
           <div style="color:#4dabf7; font-size:0.85rem; margin-bottom:12px;">${member.role}</div>
-          <div class="carousel-container">
-            <div class="carousel-track" id="carousel-track">${slidesHtml}</div>
+
+          <div class="carousel-container"
+               ontouchstart="handleTouchStart(event)"
+               ontouchend="handleTouchEnd(event, ${member.imgs.length})">
+            <div class="carousel-track" id="carousel-track">
+              ${slidesHtml}
+            </div>
           </div>
-          <div class="carousel-dots" id="carousel-dots">${member.imgs.length > 1 ? dotsHtml : ''}</div>
+
+          <div class="carousel-dots" id="carousel-dots">
+            ${member.imgs.length > 1 ? dotsHtml : ''}
+          </div>
+
           <div class="team-detail-bio">${member.bio}</div>
         </div>
       `;
@@ -341,14 +373,29 @@
     function setSlide(index, totalSlides) {
       currentSlideIndex = index;
       updateCarousel(totalSlides);
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = setInterval(() => moveSlide(1, totalSlides), 3000);
     }
 
     function updateCarousel(totalSlides) {
       const track = document.getElementById('carousel-track');
       const dots = document.getElementById('carousel-dots').children;
       if (track) track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-      for(let i = 0; i < dots.length; i++) dots[i].classList.remove('active');
+
+      for(let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active');
+      }
       if(dots[currentSlideIndex]) dots[currentSlideIndex].classList.add('active');
+    }
+
+    function handleTouchStart(e) { touchStartX = e.changedTouches[0].screenX; }
+
+    function handleTouchEnd(e, totalSlides) {
+      touchEndX = e.changedTouches[0].screenX;
+      clearInterval(autoSlideInterval);
+      if (touchStartX - touchEndX > 40) moveSlide(1, totalSlides);
+      if (touchEndX - touchStartX > 40) moveSlide(-1, totalSlides);
+      autoSlideInterval = setInterval(() => moveSlide(1, totalSlides), 3000);
     }
 
     function openSeatingPlan(eventTitle) {
@@ -356,12 +403,10 @@
       selectedSeats = [];
       const content = document.getElementById('modal-content');
 
-      // Извлечение имени из Telegram (если доступно)
       const telegramUserName = (tg.initDataUnsafe && tg.initDataUnsafe.user)
         ? `${tg.initDataUnsafe.user.first_name || ''} ${tg.initDataUnsafe.user.last_name || ''}`.trim()
         : '';
-        
-      // Приоритет: Имя из параметров ссылки БОТА -> Имя из Telegram
+
       const displayName = bookedNameParam || telegramUserName;
       const isReturningUser = mySeats.length > 0;
 
@@ -400,22 +445,24 @@
         bannerHtml = `<div class="info-banner">🔹 Bereits von dir gebucht: <b>${mySeats.join(', ')}</b> (${mySeats.length}/4)</div>`;
       }
 
-      /* НОВАЯ ИСПРАВЛЕННАЯ ЛОГИКА ОТОБРАЖЕНИЯ ИМЕНИ */
+      // ЛОГИКА ОТОБРАЖЕНИЯ ИМЕНИ
       let nameFieldHtml = '';
-      if (isReturningUser && displayName) {
-        // Если пользователь УЖЕ бронировал И имя известно -> Показываем заблокированную плашку
+      if (isReturningUser) {
+        // Если уже покупал — показываем плашку (без возможности редактирования)
+        // и скрытый инпут, чтобы отправить данные без ошибки
+        const savedName = displayName || "Bereits registriert";
         nameFieldHtml = `
           <div class="locked-name-badge">
             <div class="locked-name-icon">👤</div>
             <div>
               <div class="locked-name-text">Reserviert auf:</div>
-              <div class="locked-name-value">${displayName}</div>
+              <div class="locked-name-value">${savedName}</div>
             </div>
           </div>
-          <input type="hidden" id="fullname" value="${displayName}">
+          <input type="hidden" id="fullname" value="${savedName}">
         `;
       } else {
-        // Во всех остальных случаях (первый раз ИЛИ имя неизвестно) -> Даем ввести/изменить имя!
+        // Если билетов еще нет — показываем обычное поле ввода
         nameFieldHtml = `<input type="text" id="fullname" placeholder="Vollständiger Name" value="${displayName}">`;
       }
 
@@ -428,9 +475,9 @@
         ${bannerHtml}
         ${gridHtml}
         <input type="hidden" id="event_name" value="${eventTitle}">
-        
+
         ${nameFieldHtml}
-        
+
         <button class="btn-action" id="submit-booking-btn" ${btnDisabledAttr} onclick="sendBooking()">
           <span id="seat-count-text">${btnText}</span>
         </button>
@@ -483,8 +530,8 @@
       const user = tg.initDataUnsafe ? tg.initDataUnsafe.user : null;
       const userId = user ? user.id : "Unbekannt";
 
-      // Проверка: имя ОБЯЗАТЕЛЬНО должно быть заполнено
-      if(!name) {
+      // Если это НОВАЯ бронь (нет mySeats), и поле пустое — требуем ввести имя
+      if(!name && mySeats.length === 0) {
         tg.HapticFeedback.notificationOccurred('error');
         if (tg.showAlert) tg.showAlert('Bitte gib deinen Namen ein!');
         else alert('Bitte gib deinen Namen ein!');
