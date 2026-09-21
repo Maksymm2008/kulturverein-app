@@ -578,38 +578,45 @@
     }
 
     function sendBooking() {
-      const nameInput = document.getElementById('fullname');
-      const name = nameInput ? nameInput.value.trim() : "";
-      const eventName = document.getElementById('event_name').value;
+  try {
+    const nameInput = document.getElementById('fullname');
+    const name = nameInput ? nameInput.value.trim() : "";
+    const eventName = document.getElementById('event_name') ? document.getElementById('event_name').value : "Event";
 
-      const user = tg.initDataUnsafe ? tg.initDataUnsafe.user : null;
-      const userId = user ? user.id : "Unbekannt";
+    // Безопасное получение ID пользователя
+    const user = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
+    const userId = user ? user.id : "Unbekannt";
 
-      if(!name && mySeats.length === 0) {
-        tg.HapticFeedback.notificationOccurred('error');
-        if (tg.showAlert) tg.showAlert('Bitte gib deinen Namen ein!');
-        else alert('Bitte gib deinen Namen ein!');
-        return;
-      }
-
-      if(selectedSeats.length === 0) {
-        tg.HapticFeedback.notificationOccurred('error');
-        if (tg.showAlert) tg.showAlert('Bitte wähle mindestens 1 Stuhl aus!');
-        else alert('Bitte wähle mindestens 1 Stuhl aus!');
-        return;
-      }
-
-      tg.HapticFeedback.notificationOccurred('success');
-
-      tg.sendData(JSON.stringify({
-        telegram_id: userId,
-        event: eventName,
-        name: name,
-        seats: selectedSeats
-      }));
-
-      tg.close();
+    if (!name && mySeats.length === 0) {
+      if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+      if (tg.showAlert) tg.showAlert('Bitte gib deinen Namen ein!');
+      else alert('Bitte gib deinen Namen ein!');
+      return;
     }
+
+    if (selectedSeats.length === 0) {
+      if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+      if (tg.showAlert) tg.showAlert('Bitte wähle mindestens 1 Stuhl aus!');
+      else alert('Bitte wähle mindestens 1 Stuhl aus!');
+      return;
+    }
+
+    if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+
+    // Отправляем данные в Telegram (Telegram САМ закроет окно!)
+    tg.sendData(JSON.stringify({
+      telegram_id: userId,
+      event: eventName,
+      name: name,
+      seats: selectedSeats
+    }));
+
+    // НЕ ВЫЗЫВАЕМ tg.close() здесь!
+
+  } catch (err) {
+    alert("Fehler beim Senden: " + err.message);
+  }
+}
   </script>
 </body>
 </html>
