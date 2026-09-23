@@ -214,6 +214,22 @@
 
     .impressum-content { font-size: 0.8rem; color: #ccc; line-height: 1.5; text-align: left; }
     .impressum-content b { color: #fff; }
+
+    /* ФУТЕР НА ГЛАВНОМ ЭКРАНЕ */
+.main-footer {
+  text-align: center;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 10;
+  padding-bottom: 8px;
+}
+.main-footer a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0 4px;
+}
+
   </style>
 </head>
 <body>
@@ -228,12 +244,13 @@
         <span class="nav-item" onclick="openModal('info')">Info</span>
       </div>
     </div>
-  </div>
 
-  <div class="overlay" id="popup">
-    <div class="modal-card">
-      <span class="close-btn" onclick="closeModal()">×</span>
-      <div id="modal-content"></div>
+    <!-- ФУТЕР ВНИЗУ ГЛАВНОГО ЭКРАНА -->
+    <div class="main-footer">
+      <p>© 2026 Ukrainisch-Deutscher Kulturverein e.V.</p>
+      <p style="margin-top: 4px;">
+        <a onclick="openImpressum()">Impressum</a> • <a onclick="openDatenschutz()">Datenschutz</a>
+      </p>
     </div>
   </div>
 
