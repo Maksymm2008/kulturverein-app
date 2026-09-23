@@ -255,31 +255,34 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО: DATENSCHUTZ (ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ) -->
+  <!-- МОДАЛЬНОЕ ОКНО: DATENSCHUTZ -->
   <div class="overlay" id="datenschutz-popup">
     <div class="modal-card">
       <span class="close-btn" onclick="closeDatenschutz()">×</span>
       <h2>Datenschutzerklärung</h2>
-      <div class="impressum-content">
-        <p><b>1. Datenschutz auf einen Blick</b></p>
-        <p>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Nachfolgend informieren wir Sie über die Verarbeitung personenbezogener Daten bei der Nutzung dieser WebApp.</p>
+      <div class="impressum-content" style="max-height: 75vh; overflow-y: auto; padding-right: 5px;">
+        <p><b>1. Grundlegendes</b></p>
+        <p>Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und den Zweck der Verarbeitung von personenbezogenen Daten innerhalb dieses Telegram-Bots und der angebundenen WebApp auf.</p>
         <br>
-        <p><b>2. Erfassung von Daten</b></p>
-        <p>Bei der Nutzung der App zur Sitzplatzreservierung erheben wir folgende Daten:</p>
+        <p><b>2. Welche Daten werden verarbeitet?</b></p>
+        <p>Wenn Sie eine Reservierung vornehmen oder uns kontaktieren, verarbeiten wir:</p>
         <ul>
-          <li>• Vor- und Nachname (für die Ticketzuordnung)</li>
-          <li>• Telegram ID (zur Verifizierung Ihrer Reservierung)</li>
-          <li>• Ausgewählte Sitzplätze</li>
+          <li>• <b>Telegram-Daten:</b> Ihre Telegram-ID, Ihren Profilnamen (Vor-/Nachname) und Ihren Telegram-Benutzernamen (@username).</li>
+          <li>• <b>Buchungsdaten:</b> Den von Ihnen angegebenen Namen und die ausgewählten Sitzplätze.</li>
+          <li>• <b>Kommunikation:</b> Textnachrichten, die Sie über den Bot an die Administration senden.</li>
         </ul>
         <br>
-        <p><b>3. Zweck der Datenverarbeitung</b></p>
-        <p>Die Verarbeitung erfolgt ausschließlich zum Zweck der Organisation, Durchführung und Verwaltung der Sitzplatzreservierungen für unsere Veranstaltungen (Art. 6 Abs. 1 lit. b DSGVO).</p>
+        <p><b>3. Zweck und Rechtsgrundlage</b></p>
+        <p>Die Verarbeitung erfolgt zur Erfüllung eines Vertrags oder vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO) – konkret für die Ticketreservierung, Einlasskontrolle und den Support.</p>
         <br>
-        <p><b>4. Speicherdauer</b></p>
-        <p>Die Daten werden nur so lange gespeichert, wie es für die Abwicklung der Veranstaltung erforderlich ist, und anschließend gelöscht.</p>
+        <p><b>4. Speicherung der Daten</b></p>
+        <p>Ihre Daten werden lokal in einer geschlossenen Datenbank (JSON-Datei) beim Betreiber des Bots gespeichert. Wenn Sie Ihre Reservierung stornieren, werden die gebuchten Plätze freigegeben und Ihre aktive Reservierung aus der Datenbank gelöscht.</p>
         <br>
-        <p><b>5. Ihre Rechte</b></p>
-        <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung oder Löschung Ihrer gespeicherten Daten. Wenden Sie sich hierfür einfach an unseren Vorstand.</p>
+        <p><b>5. Weitergabe an Dritte (QR-Code Generierung)</b></p>
+        <p>Die App läuft innerhalb des Messengers <b>Telegram</b> (es gelten die Datenschutzbestimmungen von Telegram). Zur Erstellung Ihres personalisierten Einlass-Tickets (QR-Code) wird Ihre anonymisierte Ticket-Nummer (basierend auf Ihrer Telegram-ID) an den externen Dienst <i>api.qrserver.com</i> gesendet. Es werden keine Namen an diesen Dienst übermittelt.</p>
+        <br>
+        <p><b>6. Ihre Rechte</b></p>
+        <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten. Senden Sie uns hierfür einfach eine Nachricht im Bot-Chat.</p>
       </div>
     </div>
   </div>
