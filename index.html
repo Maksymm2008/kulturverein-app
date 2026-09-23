@@ -185,17 +185,35 @@
       background: rgba(255,255,255,0.1); border-radius: 50%;
     }
 
-    /* --- FAQ & CONTACT CSS --- */
+    /* --- FAQ & CONTACT & MEMBERSHIP CSS --- */
     .faq-item { margin-bottom: 10px; background: #1a1a20; padding: 12px; border-radius: 10px; border: 1px solid #2a2a32; }
     .faq-q { font-weight: bold; font-size: 0.85rem; color: #4dabf7; margin-bottom: 4px; }
     .faq-a { font-size: 0.8rem; color: #ccc; line-height: 1.4; }
 
     .contact-box {
       background: rgba(77, 171, 247, 0.08); border: 1px solid rgba(77, 171, 247, 0.3);
-      padding: 14px; border-radius: 12px; margin-top: 16px; text-align: center;
+      padding: 14px; border-radius: 12px; margin-top: 14px; text-align: center;
     }
     .contact-title { font-size: 0.9rem; font-weight: bold; color: #fff; margin-bottom: 6px; }
     .contact-desc { font-size: 0.78rem; color: #aaa; margin-bottom: 10px; line-height: 1.4; }
+
+    /* БЛОК MITGLIEDSCHAFT */
+    .member-box {
+      background: rgba(40, 167, 69, 0.08); border: 1px solid rgba(40, 167, 69, 0.3);
+      padding: 14px; border-radius: 12px; margin-top: 14px; text-align: center;
+    }
+    .member-title { font-size: 0.9rem; font-weight: bold; color: #28a745; margin-bottom: 6px; }
+    .member-desc { font-size: 0.78rem; color: #ccc; margin-bottom: 10px; line-height: 1.4; }
+
+    /* ФУТЕР И IMPRESSUM */
+    .app-footer {
+      margin-top: 25px; padding-top: 15px; border-top: 1px solid #2a2a32;
+      text-align: center; font-size: 0.7rem; color: #666;
+    }
+    .app-footer a { color: #888; text-decoration: underline; cursor: pointer; margin: 0 5px; }
+
+    .impressum-content { font-size: 0.8rem; color: #ccc; line-height: 1.5; text-align: left; }
+    .impressum-content b { color: #fff; }
   </style>
 </head>
 <body>
@@ -216,6 +234,24 @@
     <div class="modal-card">
       <span class="close-btn" onclick="closeModal()">×</span>
       <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО ДЛЯ IMPRESSUM -->
+  <div class="overlay" id="impressum-popup">
+    <div class="modal-card">
+      <span class="close-btn" onclick="closeImpressum()">×</span>
+      <h2>Impressum</h2>
+      <div class="impressum-content">
+        <p><b>Ukrainisch-Deutscher Kulturverein e.V.</b></p>
+        <p>Musterstraße 123<br>12345 Musterstadt</p>
+        <br>
+        <p><b>Vertreten durch den Vorstand:</b><br>1. Vorsitzender: Имя Фамилия</p>
+        <br>
+        <p><b>Kontakt:</b><br>E-Mail: info@kulturverein.de</p>
+        <br>
+        <p><b>Registereintrag:</b><br>Eintragung im Vereinsregister.<br>Registergericht: Amtsgericht Musterstadt<br>Registernummer: VR 12345</p>
+      </div>
     </div>
   </div>
 
@@ -350,10 +386,26 @@
           <h2>Info & FAQ</h2>
           <div style="margin-top:10px;">${faqHtml}</div>
 
+          <!-- БЛОК: КАК СТАТЬ ЧЛЕНОМ ОРГАНИЗАЦИИ -->
+          <div class="member-box">
+            <div class="member-title">🤝 Wie kann ich Mitglied werden?</div>
+            <div class="member-desc">Möchtest du unseren Verein unterstützen und aktiv mitgestalten? Wir freuen uns über jedes neue Mitglied!</div>
+            <button class="btn-action" style="background:#28a745; color:#fff;" onclick="contactAdmin()">Mitgliedschaft anfragen</button>
+          </div>
+
+          <!-- БЛОК: ВОПРОСЫ / СВЯЗЬ -->
           <div class="contact-box">
             <div class="contact-title">💬 Fragen oder Hilfe nötig?</div>
-            <div class="contact-desc">Klicke unten, um uns direkt eine Nachricht im Telegram-Chat zu schreiben. Wir antworten dir так schnell wie möglich!</div>
+            <div class="contact-desc">Klicke unten, um uns direkt eine Nachricht im Telegram-Chat zu schreiben. Wir antworten dir so schnell wie möglich!</div>
             <button class="btn-action" style="background:#4dabf7; color:#fff;" onclick="contactAdmin()">Frage an Admin senden</button>
+          </div>
+
+          <!-- ФУТЕР: IMPRESSUM & DATENSCHUTZ -->
+          <div class="app-footer">
+            <p>© 2026 Ukrainisch-Deutscher Kulturverein e.V.</p>
+            <p style="margin-top:6px;">
+              <a onclick="openImpressum()">Impressum & Datenschutz</a>
+            </p>
           </div>
         `;
       }
@@ -364,6 +416,15 @@
     function contactAdmin() {
       tg.HapticFeedback.impactOccurred('medium');
       tg.close();
+    }
+
+    function openImpressum() {
+      tg.HapticFeedback.impactOccurred('light');
+      document.getElementById('impressum-popup').classList.add('active');
+    }
+
+    function closeImpressum() {
+      document.getElementById('impressum-popup').classList.remove('active');
     }
 
     function openLightbox(imgSrc) {
@@ -578,45 +639,41 @@
     }
 
     function sendBooking() {
-  try {
-    const nameInput = document.getElementById('fullname');
-    const name = nameInput ? nameInput.value.trim() : "";
-    const eventName = document.getElementById('event_name') ? document.getElementById('event_name').value : "Event";
+      try {
+        const nameInput = document.getElementById('fullname');
+        const name = nameInput ? nameInput.value.trim() : "";
+        const eventName = document.getElementById('event_name') ? document.getElementById('event_name').value : "Event";
 
-    // Безопасное получение ID пользователя
-    const user = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
-    const userId = user ? user.id : "Unbekannt";
+        const user = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
+        const userId = user ? user.id : "Unbekannt";
 
-    if (!name && mySeats.length === 0) {
-      if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-      if (tg.showAlert) tg.showAlert('Bitte gib deinen Namen ein!');
-      else alert('Bitte gib deinen Namen ein!');
-      return;
+        if (!name && mySeats.length === 0) {
+          if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+          if (tg.showAlert) tg.showAlert('Bitte gib deinen Namen ein!');
+          else alert('Bitte gib deinen Namen ein!');
+          return;
+        }
+
+        if (selectedSeats.length === 0) {
+          if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+          if (tg.showAlert) tg.showAlert('Bitte wähle mindestens 1 Stuhl aus!');
+          else alert('Bitte wähle mindestens 1 Stuhl aus!');
+          return;
+        }
+
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+
+        tg.sendData(JSON.stringify({
+          telegram_id: userId,
+          event: eventName,
+          name: name,
+          seats: selectedSeats
+        }));
+
+      } catch (err) {
+        alert("Fehler beim Senden: " + err.message);
+      }
     }
-
-    if (selectedSeats.length === 0) {
-      if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-      if (tg.showAlert) tg.showAlert('Bitte wähle mindestens 1 Stuhl aus!');
-      else alert('Bitte wähle mindestens 1 Stuhl aus!');
-      return;
-    }
-
-    if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-
-    // Отправляем данные в Telegram (Telegram САМ закроет окно!)
-    tg.sendData(JSON.stringify({
-      telegram_id: userId,
-      event: eventName,
-      name: name,
-      seats: selectedSeats
-    }));
-
-    // НЕ ВЫЗЫВАЕМ tg.close() здесь!
-
-  } catch (err) {
-    alert("Fehler beim Senden: " + err.message);
-  }
-}
   </script>
 </body>
 </html>
