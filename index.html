@@ -237,7 +237,7 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО ДЛЯ IMPRESSUM -->
+  <!-- МОДАЛЬНОЕ ОКНО: IMPRESSUM -->
   <div class="overlay" id="impressum-popup">
     <div class="modal-card">
       <span class="close-btn" onclick="closeImpressum()">×</span>
@@ -251,6 +251,35 @@
         <p><b>Kontakt:</b><br>E-Mail: info@kulturverein.de</p>
         <br>
         <p><b>Registereintrag:</b><br>Eintragung im Vereinsregister.<br>Registergericht: Amtsgericht Musterstadt<br>Registernummer: VR 12345</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: DATENSCHUTZ (ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ) -->
+  <div class="overlay" id="datenschutz-popup">
+    <div class="modal-card">
+      <span class="close-btn" onclick="closeDatenschutz()">×</span>
+      <h2>Datenschutzerklärung</h2>
+      <div class="impressum-content">
+        <p><b>1. Datenschutz auf einen Blick</b></p>
+        <p>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Nachfolgend informieren wir Sie über die Verarbeitung personenbezogener Daten bei der Nutzung dieser WebApp.</p>
+        <br>
+        <p><b>2. Erfassung von Daten</b></p>
+        <p>Bei der Nutzung der App zur Sitzplatzreservierung erheben wir folgende Daten:</p>
+        <ul>
+          <li>• Vor- und Nachname (für die Ticketzuordnung)</li>
+          <li>• Telegram ID (zur Verifizierung Ihrer Reservierung)</li>
+          <li>• Ausgewählte Sitzplätze</li>
+        </ul>
+        <br>
+        <p><b>3. Zweck der Datenverarbeitung</b></p>
+        <p>Die Verarbeitung erfolgt ausschließlich zum Zweck der Organisation, Durchführung und Verwaltung der Sitzplatzreservierungen für unsere Veranstaltungen (Art. 6 Abs. 1 lit. b DSGVO).</p>
+        <br>
+        <p><b>4. Speicherdauer</b></p>
+        <p>Die Daten werden nur so lange gespeichert, wie es für die Abwicklung der Veranstaltung erforderlich ist, und anschließend gelöscht.</p>
+        <br>
+        <p><b>5. Ihre Rechte</b></p>
+        <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung oder Löschung Ihrer gespeicherten Daten. Wenden Sie sich hierfür einfach an unseren Vorstand.</p>
       </div>
     </div>
   </div>
@@ -404,7 +433,7 @@
           <div class="app-footer">
             <p>© 2026 Ukrainisch-Deutscher Kulturverein e.V.</p>
             <p style="margin-top:6px;">
-              <a onclick="openImpressum()">Impressum & Datenschutz</a>
+              <a onclick="openImpressum()">Impressum</a> • <a onclick="openDatenschutz()">Datenschutz</a>
             </p>
           </div>
         `;
@@ -425,6 +454,15 @@
 
     function closeImpressum() {
       document.getElementById('impressum-popup').classList.remove('active');
+    }
+
+    function openDatenschutz() {
+      tg.HapticFeedback.impactOccurred('light');
+      document.getElementById('datenschutz-popup').classList.add('active');
+    }
+
+    function closeDatenschutz() {
+      document.getElementById('datenschutz-popup').classList.remove('active');
     }
 
     function openLightbox(imgSrc) {
