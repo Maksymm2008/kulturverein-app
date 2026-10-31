@@ -128,12 +128,13 @@
     .locked-name-icon { font-size: 1.2rem; }
     .locked-name-value { color: #fff; font-weight: bold; font-size: 0.95rem; }
 
-    input[type="text"] {
+    input[type="text"], textarea {
       width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #333;
       background: #09090c; color: #fff; margin-bottom: 12px; font-size: 0.9rem; outline: none;
-      -webkit-appearance: none;
+      font-family: inherit; -webkit-appearance: none;
     }
-    input[type="text"]:focus { border-color: #28a745; }
+    textarea { min-height: 95px; resize: vertical; }
+    input[type="text"]:focus, textarea:focus { border-color: #4dabf7; }
 
     .btn-action {
       width: 100%; padding: 14px; border: none; border-radius: 10px;
@@ -141,7 +142,7 @@
       font-size: 0.75rem; letter-spacing: 1px; cursor: pointer; margin-top: 6px;
     }
     .btn-action:disabled { background: #444; color: #888; cursor: not-allowed; }
-    .btn-action:active:not(:disabled) { background: #ccc; }
+    .btn-action:active:not(:disabled) { opacity: 0.85; }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -246,16 +247,15 @@
       </div>
     </div>
 
-    <!-- FOOTER AM STARTBILDSCHIRM -->
     <div class="main-footer">
       <p>© 2026 Ukrainisch-Deutscher Kulturverein e.V.</p>
       <p style="margin-top: 4px;">
-        <a onclick="openImpressum()" id="footer-imp">Impressum</a> • <a onclick="openDatenschutz()" id="footer-dat">Datenschutz</a>
+        <a onclick="openImpressum()">Impressum</a> • <a onclick="openDatenschutz()">Datenschutz</a>
       </p>
     </div>
   </div>
 
-  <!-- HAUPT-POPUP FÜR EVENTS, GALERIE, TEAM, INFO, SAALPLAN -->
+  <!-- HAUPT-POPUP -->
   <div class="overlay" id="popup">
     <div class="modal-card" id="main-modal-card">
       <div id="modal-back-holder"></div>
@@ -272,13 +272,13 @@
       <div class="impressum-content">
         <p><b>Angaben gemäß § 5 DDG:</b></p>
         <p><b>Ukrainisch-Deutscher Kulturverein e.V.</b></p>
-        <p>Musterstraße 123<br>12345 Musterstadt</p>
+        <p>[Straße & Hausnummer eintragen]<br>24534 Neumünster</p>
         <br>
-        <p><b>Vertreten durch den Vorstand (§ 26 BGB):</b><br>1. Vorsitzende(r): Vorname Nachname</p>
+        <p><b>Vertreten durch den Vorstand (§ 26 BGB):</b><br>1. Vorsitzende(r): [Vorname Nachname]</p>
         <br>
         <p><b>Kontakt:</b><br>E-Mail: info@kulturverein.de</p>
         <br>
-        <p><b>Registereintrag:</b><br>Eintragung im Vereinsregister.<br>Registergericht: Amtsgericht Musterstadt<br>Registernummer: VR 12345</p>
+        <p><b>Registereintrag:</b><br>Eintragung im Vereinsregister.<br>Registergericht: Amtsgericht Kiel<br>Registernummer: VR [Nummer eintragen]</p>
       </div>
     </div>
   </div>
@@ -290,27 +290,23 @@
       <h2>Datenschutzerklärung</h2>
       <div class="impressum-content" style="max-height: 75vh; overflow-y: auto; padding-right: 5px;">
         <p><b>1. Verantwortlicher</b></p>
-        <p>Verantwortlich für die Datenverarbeitung innerhalb dieses Telegram-Bots und der WebApp ist der im Impressum genannte Ukrainisch-Deutscher Kulturverein e.V.</p>
+        <p>Verantwortlich für die Datenverarbeitung innerhalb dieses Telegram-Bots und der WebApp ist der im Impressum genannte Ukrainisch-Deutscher Kulturverein e.V. in Neumünster.</p>
         <br>
         <p><b>2. Welche Daten werden verarbeitet?</b></p>
-        <p>Beim Öffnen der WebApp (gehostet über GitHub Pages) werden technisch notwendige Verbindungsdaten verarbeitet. Wenn Sie eine Reservierung vornehmen oder uns kontaktieren, verarbeiten wir:</p>
+        <p>Beim Öffnen der WebApp (gehostet über GitHub Pages) werden technisch notwendige Verbindungsdaten verarbeitet. Wenn Sie eine Reservierung vornehmen, eine Mitgliedschaft anfragen oder den Vereins-Chat nutzen, verarbeiten wir:</p>
         <ul>
           <li>• <b>Telegram-Daten:</b> Ihre Telegram-ID, Ihren Profilnamen und Ihren @Benutzernamen.</li>
-          <li>• <b>Buchungsdaten:</b> Den angegebenen Namen und die ausgewählten Sitzplätze.</li>
-          <li>• <b>Kommunikation:</b> Nachrichten, die Sie über den Bot an die Administration senden.</li>
+          <li>• <b>Buchungs- & Formulardaten:</b> Den angegebenen Namen, Kontaktdaten, ausgewählte Sitzplätze sowie Ihre Nachrichten.</li>
         </ul>
         <br>
         <p><b>3. Zweck und Rechtsgrundlage</b></p>
-        <p>Die Verarbeitung erfolgt zur Durchführung der Ticketreservierung, Einlasskontrolle und Beantwortung von Anfragen (Art. 6 Abs. 1 lit. b DSGVO).</p>
+        <p>Die Verarbeitung erfolgt zur Durchführung der Ticketreservierung, der Bearbeitung von Mitgliedschafts-/Supportanfragen sowie der Moderation des Vereins-Chats (Art. 6 Abs. 1 lit. b und f DSGVO).</p>
         <br>
         <p><b>4. Speicherung & Löschung</b></p>
-        <p>Ihre Daten werden in einer geschützten Datenbank beim Betreiber gespeichert. Bei einer Stornierung werden die Plätze freigegeben und Ihre Reservierung gelöscht.</p>
+        <p>Ihre Daten werden in einer geschützten Datenbank beim Betreiber gespeichert. Bei einer Stornierung oder auf Wunsch per Nachricht im Bot werden Ihre Daten gelöscht.</p>
         <br>
-        <p><b>5. QR-Code Generierung</b></p>
-        <p>Zur Erstellung des Einlass-Tickets (QR-Code) wird lediglich eine anonymisierte Ticket-Kennung an den Dienst <i>api.qrserver.com</i> übermittelt (ohne Ihren Namen).</p>
-        <br>
-        <p><b>6. Ihre Rechte</b></p>
-        <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten (Art. 15–18 DSGVO) sowie ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde (Art. 77 DSGVO).</p>
+        <p><b>5. Ihre Rechte</b></p>
+        <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten (Art. 15–18 DSGVO) sowie ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde (ULD Schleswig-Holstein, Kiel).</p>
       </div>
     </div>
   </div>
@@ -359,8 +355,17 @@
         memberDesc: "Möchtest du unseren Verein unterstützen und aktiv mitgestalten? Wir freuen uns über jedes neue Mitglied!",
         memberBtn: "Mitgliedschaft anfragen",
         contactTitle: "💬 Fragen oder Hilfe nötig?",
-        contactDesc: "Klicke unten, um uns direkt eine Nachricht im Telegram-Chat zu schreiben. Wir antworten dir so schnell wie möglich!",
+        contactDesc: "Klicke unten, um uns direkt deine Frage zu senden. Wir antworten dir hier im Telegram-Bot!",
         contactBtn: "Frage an Admin senden",
+        memberFormHeader: "🤝 Mitgliedschaft anfragen",
+        memberFormSub: "Fülle kurz die Felder aus – der Vorstand meldet sich direkt bei dir im Chat.",
+        contactInputPlaceholder: "Telefonnummer oder E-Mail",
+        memberNotePlaceholder: "Optional: Wie möchtest du dich einbringen?",
+        sendRequestBtn: "Anfrage jetzt absenden",
+        questionFormHeader: "💬 Frage an Admin senden",
+        questionFormSub: "Schreibe deine Frage hier rein – unsere Antwort erhältst du direkt im Telegram-Chat.",
+        questionPlaceholder: "Deine Nachricht oder Frage an uns...",
+        sendQuestionBtn: "Nachricht absenden",
         seatTitle: "Platzwahl",
         stage: "LEINWAND / BÜHNE",
         legFree: "Frei", legSel: "Gewählt", legMine: "Deine", legOcc: "Besetzt",
@@ -372,6 +377,7 @@
         alertMax4: "Du hast bereits das Maximum von 4 Plätzen gebucht!",
         alertMaxRemain: (n) => `Du kannst maximal noch ${n} weiteren/weitere Platz/Plätze auswählen!`,
         alertEnterName: "Bitte gib deinen Namen ein!",
+        alertEnterText: "Bitte gib eine Nachricht ein!",
         alertSelectSeat: "Bitte wähle mindestens 1 Stuhl aus!"
       },
       ua: {
@@ -387,8 +393,17 @@
         memberDesc: "Хочеш підтримати нашу спілку та долучитися до організації подій? Ми раді кожному новому учаснику!",
         memberBtn: "Подати заявку",
         contactTitle: "💬 Маєш питання чи потрібна допомога?",
-        contactDesc: "Натисни нижче, щоб написати нам повідомлення просто в чаті Telegram. Ми відповімо якнайшвидше!",
+        contactDesc: "Натисни нижче, щоб надіслати нам своє питання. Ми відповімо тобі просто в цьому боті!",
         contactBtn: "Написати адміністратору",
+        memberFormHeader: "🤝 Заявка на членство",
+        memberFormSub: "Заповни коротку форму — ми зв'яжемося з тобою просто в чаті Telegram.",
+        contactInputPlaceholder: "Номер телефону або E-Mail",
+        memberNotePlaceholder: "Необов'язково: де ти хочеш допомагати?",
+        sendRequestBtn: "Надіслати заявку",
+        questionFormHeader: "💬 Питання адміністратору",
+        questionFormSub: "Напиши своє питання тут — відповідь прийде просто в чат бота.",
+        questionPlaceholder: "Твоє питання або повідомлення...",
+        sendQuestionBtn: "Надіслати повідомлення",
         seatTitle: "Вибір місць",
         stage: "СЦЕНА / ЕКРАН",
         legFree: "Вільно", legSel: "Обрано", legMine: "Твої", legOcc: "Зайнято",
@@ -400,6 +415,7 @@
         alertMax4: "Ти вже забронював максимум (4 місця)!",
         alertMaxRemain: (n) => `Ти можеш обрати ще максимум ${n} місць!`,
         alertEnterName: "Будь ласка, введи своє ім'я!",
+        alertEnterText: "Будь ласка, введи текст повідомлення!",
         alertSelectSeat: "Будь ласка, обери хоча б 1 місце!"
       }
     };
@@ -491,6 +507,13 @@
     let pointerEndX = 0;
     let isDragging = false;
 
+    function getDefaultUserName() {
+      const tgName = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user)
+        ? `${tg.initDataUnsafe.user.first_name || ''} ${tg.initDataUnsafe.user.last_name || ''}`.trim()
+        : '';
+      return bookedNameParam || tgName;
+    }
+
     function updateNavLabels() {
       const t = i18n[currentLang];
       document.getElementById('lang-de').classList.toggle('active', currentLang === 'de');
@@ -509,13 +532,11 @@
       const popup = document.getElementById('popup');
       if (popup.classList.contains('active') && popup.dataset.view) {
         const view = popup.dataset.view;
-        if (view.startsWith('team_')) {
-          showTeamMember(parseInt(view.split('_')[1], 10));
-        } else if (view.startsWith('seat_')) {
-          openSeatingPlan(view.replace('seat_', ''));
-        } else {
-          openModal(view);
-        }
+        if (view.startsWith('team_')) showTeamMember(parseInt(view.split('_')[1], 10));
+        else if (view.startsWith('seat_')) openSeatingPlan(view.replace('seat_', ''));
+        else if (view === 'form_member') openMembershipForm();
+        else if (view === 'form_question') openQuestionForm();
+        else openModal(view);
       }
     }
 
@@ -591,13 +612,13 @@
           <div class="member-box">
             <div class="member-title">${t.memberTitle}</div>
             <div class="member-desc">${t.memberDesc}</div>
-            <button class="btn-action" style="background:#28a745; color:#fff;" onclick="contactAdmin()">${t.memberBtn}</button>
+            <button class="btn-action" style="background:#28a745; color:#fff;" onclick="openMembershipForm()">${t.memberBtn}</button>
           </div>
 
           <div class="contact-box">
             <div class="contact-title">${t.contactTitle}</div>
             <div class="contact-desc">${t.contactDesc}</div>
-            <button class="btn-action" style="background:#4dabf7; color:#fff;" onclick="contactAdmin()">${t.contactBtn}</button>
+            <button class="btn-action" style="background:#4dabf7; color:#fff;" onclick="openQuestionForm()">${t.contactBtn}</button>
           </div>
 
           <div class="app-footer">
@@ -611,6 +632,103 @@
 
       popup.classList.add('active');
       if (modalCard) modalCard.scrollTop = 0;
+    }
+
+    /* --- FORMULAR 1: MITGLIEDSCHAFT ANFRAGEN --- */
+    function openMembershipForm() {
+      haptic('light');
+      const popup = document.getElementById('popup');
+      const content = document.getElementById('modal-content');
+      const modalCard = document.getElementById('main-modal-card');
+      const t = i18n[currentLang];
+
+      popup.dataset.view = 'form_member';
+      setBackButton(`<div class="back-btn" onclick="openModal('info')">${t.backBtn}</div>`);
+
+      const defaultName = getDefaultUserName();
+
+      content.innerHTML = `
+        <h2>${t.memberFormHeader}</h2>
+        <p style="color:#aaa; font-size:0.8rem; margin-bottom:14px; line-height:1.4;">${t.memberFormSub}</p>
+        <input type="text" id="member_name" placeholder="${t.namePlaceholder}" value="${defaultName}">
+        <input type="text" id="member_contact" placeholder="${t.contactInputPlaceholder}">
+        <textarea id="member_note" placeholder="${t.memberNotePlaceholder}"></textarea>
+        <button class="btn-action" style="background:#28a745; color:#fff;" onclick="submitMembershipForm()">
+          ${t.sendRequestBtn}
+        </button>
+      `;
+      if (modalCard) modalCard.scrollTop = 0;
+    }
+
+    function submitMembershipForm() {
+      const t = i18n[currentLang];
+      const name = (document.getElementById('member_name').value || '').trim();
+      const contact = (document.getElementById('member_contact').value || '').trim();
+      const note = (document.getElementById('member_note').value || '').trim();
+
+      if (!name) {
+        haptic('error');
+        if (tg && tg.showAlert) tg.showAlert(t.alertEnterName);
+        else alert(t.alertEnterName);
+        return;
+      }
+
+      haptic('success');
+      if (tg) {
+        tg.sendData(JSON.stringify({
+          action: "membership",
+          name: name,
+          contact: contact,
+          message: note
+        }));
+      }
+    }
+
+    /* --- FORMULAR 2: FRAGE AN ADMIN SENDEN --- */
+    function openQuestionForm() {
+      haptic('light');
+      const popup = document.getElementById('popup');
+      const content = document.getElementById('modal-content');
+      const modalCard = document.getElementById('main-modal-card');
+      const t = i18n[currentLang];
+
+      popup.dataset.view = 'form_question';
+      setBackButton(`<div class="back-btn" onclick="openModal('info')">${t.backBtn}</div>`);
+
+      const defaultName = getDefaultUserName();
+
+      content.innerHTML = `
+        <h2>${t.questionFormHeader}</h2>
+        <p style="color:#aaa; font-size:0.8rem; margin-bottom:14px; line-height:1.4;">${t.questionFormSub}</p>
+        <input type="text" id="question_name" placeholder="${t.namePlaceholder}" value="${defaultName}">
+        <textarea id="question_text" placeholder="${t.questionPlaceholder}"></textarea>
+        <button class="btn-action" style="background:#4dabf7; color:#fff;" onclick="submitQuestionForm()">
+          ${t.sendQuestionBtn}
+        </button>
+      `;
+      if (modalCard) modalCard.scrollTop = 0;
+    }
+
+    function submitQuestionForm() {
+      const t = i18n[currentLang];
+      const name = (document.getElementById('question_name').value || '').trim();
+      const text = (document.getElementById('question_text').value || '').trim();
+
+      if (!text) {
+        haptic('error');
+        if (tg && tg.showAlert) tg.showAlert(t.alertEnterText);
+        else alert(t.alertEnterText);
+        return;
+      }
+
+      haptic('success');
+      if (tg) {
+        tg.sendData(JSON.stringify({
+          action: "question",
+          name: name || "Gast",
+          message: text
+        }));
+      }
     }
 
     function showTeamMember(id) {
@@ -708,26 +826,10 @@
       }
     }
 
-    function handleTouchStart(e) {
-      pointerStartX = e.changedTouches[0].screenX;
-    }
-
-    function handleTouchEnd(e, totalSlides) {
-      pointerEndX = e.changedTouches[0].screenX;
-      handleSwipeGesture(totalSlides);
-    }
-
-    function handleMouseDown(e) {
-      isDragging = true;
-      pointerStartX = e.clientX;
-    }
-
-    function handleMouseUp(e, totalSlides) {
-      if (!isDragging) return;
-      isDragging = false;
-      pointerEndX = e.clientX;
-      handleSwipeGesture(totalSlides);
-    }
+    function handleTouchStart(e) { pointerStartX = e.changedTouches[0].screenX; }
+    function handleTouchEnd(e, totalSlides) { pointerEndX = e.changedTouches[0].screenX; handleSwipeGesture(totalSlides); }
+    function handleMouseDown(e) { isDragging = true; pointerStartX = e.clientX; }
+    function handleMouseUp(e, totalSlides) { if (!isDragging) return; isDragging = false; pointerEndX = e.clientX; handleSwipeGesture(totalSlides); }
 
     function handleSwipeGesture(totalSlides) {
       if (totalSlides <= 1) return;
@@ -751,11 +853,7 @@
       popup.dataset.view = `seat_${eventTitle}`;
       setBackButton(`<div class="back-btn" onclick="openModal('events')">${t.backBtn}</div>`);
 
-      const telegramUserName = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user)
-        ? `${tg.initDataUnsafe.user.first_name || ''} ${tg.initDataUnsafe.user.last_name || ''}`.trim()
-        : '';
-
-      const displayName = bookedNameParam || telegramUserName;
+      const displayName = getDefaultUserName();
       const isReturningUser = mySeats.length > 0;
 
       let legendHtml = `
@@ -882,6 +980,7 @@
 
         if (tg) {
           tg.sendData(JSON.stringify({
+            action: "booking",
             telegram_id: userId,
             event: eventName,
             name: name,
@@ -891,11 +990,6 @@
       } catch (err) {
         alert("Fehler beim Senden: " + err.message);
       }
-    }
-
-    function contactAdmin() {
-      haptic('medium');
-      if (tg) tg.close();
     }
 
     function closeModal() {
