@@ -17,71 +17,35 @@
 
     .hero-container {
       position: relative; width: 100vw; height: 100vh;
-      background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(5,5,7,0.96) 100%),
+      background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(5,5,7,0.95) 100%),
                   url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200') center/cover no-repeat;
       display: flex; flex-direction: column; justify-content: space-between;
-      padding: 14px 12px;
+      padding: 16px 12px;
     }
 
-    /* TOP BAR & LANGUAGE SWITCHER */
-    .top-header { display: flex; flex-direction: column; gap: 10px; z-index: 10; width: 100%; }
+    /* NAVIGATION */
+    .top-bar { display: flex; flex-direction: column; gap: 10px; z-index: 10; width: 100%; }
     .brand-row { display: flex; justify-content: space-between; align-items: center; }
-    .brand-logo { font-size: 0.95rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
-    
+    .brand-logo { font-size: clamp(0.8rem, 3vw, 1rem); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+
     .lang-switch {
-      display: flex; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 20px; overflow: hidden; backdrop-filter: blur(10px);
+      display: flex; background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px; overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
     .lang-btn {
-      padding: 5px 10px; font-size: 0.7rem; font-weight: 700; color: #aaa;
+      padding: 4px 10px; font-size: 0.68rem; font-weight: 700; color: #aaa;
       cursor: pointer; transition: 0.2s; user-select: none;
     }
-    .lang-btn.active { background: #4dabf7; color: #000; }
+    .lang-btn.active { background: #fff; color: #000; }
 
-    .nav-links { display: flex; gap: 5px; width: 100%; justify-content: space-between; }
+    .nav-links { display: flex; gap: 6px; width: 100%; justify-content: space-between; }
     .nav-item {
       color: #fff; font-size: clamp(0.6rem, 2.3vw, 0.75rem); font-weight: 700; text-transform: uppercase;
       padding: 8px 0; text-align: center; flex: 1;
-      background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; transition: all 0.2s; white-space: nowrap;
     }
-    .nav-item:active { background: #fff; color: #000; transform: scale(0.96); }
-
-    /* HERO CENTER WIDGET (ENGAGEMENT) */
-    .hero-center {
-      z-index: 10; my: auto; display: flex; flex-direction: column; align-items: center;
-      text-align: center; padding: 0 8px;
-    }
-    .hero-badge {
-      background: rgba(77, 171, 247, 0.2); border: 1px solid rgba(77, 171, 247, 0.5);
-      color: #74c0fc; font-size: 0.7rem; font-weight: 700; padding: 4px 12px;
-      border-radius: 20px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;
-    }
-    .hero-title { font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 800; line-height: 1.2; margin-bottom: 8px; }
-    .hero-sub { font-size: 0.82rem; color: #ccc; max-width: 340px; margin-bottom: 16px; line-height: 1.4; }
-
-    .stats-row {
-      display: flex; gap: 10px; width: 100%; max-width: 360px; margin-bottom: 16px;
-    }
-    .stat-card {
-      flex: 1; background: rgba(18, 18, 22, 0.8); border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px; padding: 10px 6px; backdrop-filter: blur(10px);
-    }
-    .stat-val { font-size: 1.05rem; font-weight: 800; color: #ffd43b; }
-    .stat-lbl { font-size: 0.65rem; color: #aaa; margin-top: 2px; }
-
-    .hero-cta-row { display: flex; gap: 8px; width: 100%; max-width: 360px; }
-    .hero-btn-primary {
-      flex: 2; padding: 13px; border-radius: 14px; border: none;
-      background: linear-gradient(135deg, #4dabf7 0%, #3b5bdb 100%);
-      color: #fff; font-weight: 800; font-size: 0.8rem; text-transform: uppercase;
-      cursor: pointer; box-shadow: 0 4px 15px rgba(59, 91, 219, 0.4);
-    }
-    .hero-btn-secondary {
-      flex: 1; padding: 13px 8px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.25);
-      background: rgba(255,255,255,0.08); color: #fff; font-weight: 700; font-size: 0.75rem;
-      cursor: pointer; backdrop-filter: blur(8px);
-    }
+    .nav-item:active { background: #fff; color: #000; }
 
     /* OVERLAY MODAL */
     .overlay {
@@ -94,17 +58,24 @@
 
     .modal-card {
       background: #121216; border: 1px solid #2a2a32; border-radius: 20px;
-      padding: 18px 16px; position: relative; width: 100%; max-width: 420px;
+      padding: 44px 16px 16px 16px; position: relative; width: 100%; max-width: 420px;
       max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column;
       box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
 
-    .close-btn { position: absolute; top: 10px; right: 16px; font-size: 1.6rem; color: #888; cursor: pointer; z-index: 10; }
-    h2 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; padding-right: 28px; }
+    .close-btn {
+      position: absolute; top: 10px; right: 16px; font-size: 1.6rem; line-height: 1;
+      color: #888; cursor: pointer; z-index: 20; padding: 4px;
+    }
+    .back-btn {
+      position: absolute; top: 14px; left: 16px; font-size: 0.85rem; font-weight: 600;
+      color: #4dabf7; cursor: pointer; z-index: 20; display: flex; align-items: center; gap: 5px;
+    }
+
+    h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
 
     /* EVENT CARD */
     .event-card { background: #1a1a20; border: 1px solid #2a2a35; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
-    .event-badge { display: inline-block; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 6px; background: rgba(77,171,247,0.15); color: #4dabf7; margin-bottom: 6px; }
     .event-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 6px; color: #fff; }
     .event-info { font-size: 0.8rem; color: #aaa; margin-bottom: 10px; line-height: 1.4; }
 
@@ -115,6 +86,7 @@
       border-top: 3px solid #fff; color: #fff; text-align: center;
       padding: 6px; font-size: 0.65rem; font-weight: 800; letter-spacing: 3px;
       border-radius: 6px 6px 0 0; margin-bottom: 12px; text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(255,255,255,0.15);
     }
 
     .legend {
@@ -141,7 +113,7 @@
       cursor: pointer; user-select: none; transition: all 0.15s; flex-shrink: 0;
     }
     .seat.selected { background: #28a745; color: #fff; border-color: #28a745; font-weight: bold; box-shadow: 0 0 8px rgba(40,167,69,0.5); }
-    .seat.my-seat { background: #007bff; border-color: #007bff; color: #fff; font-weight: bold; cursor: default; }
+    .seat.my-seat { background: #007bff; border-color: #007bff; color: #fff; font-weight: bold; cursor: default; box-shadow: 0 0 6px rgba(0,123,255,0.4); }
     .seat.occupied { background: #dc3545; border-color: #dc3545; color: #777; cursor: not-allowed; opacity: 0.5; }
 
     .info-banner {
@@ -153,173 +125,192 @@
       background: #1a1a20; border: 1px solid #2a2a35; padding: 12px; border-radius: 10px;
       margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
     }
+    .locked-name-icon { font-size: 1.2rem; }
     .locked-name-value { color: #fff; font-weight: bold; font-size: 0.95rem; }
 
     input[type="text"] {
       width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #333;
       background: #09090c; color: #fff; margin-bottom: 12px; font-size: 0.9rem; outline: none;
+      -webkit-appearance: none;
     }
     input[type="text"]:focus { border-color: #28a745; }
 
     .btn-action {
-      width: 100%; padding: 12px; border: none; border-radius: 10px;
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
       background: #fff; color: #000; font-weight: bold; text-transform: uppercase;
-      font-size: 0.75rem; letter-spacing: 0.5px; cursor: pointer; margin-top: 6px; transition: 0.2s;
+      font-size: 0.75rem; letter-spacing: 1px; cursor: pointer; margin-top: 6px;
     }
     .btn-action:disabled { background: #444; color: #888; cursor: not-allowed; }
-    .btn-action.joined { background: #28a745; color: #fff; }
+    .btn-action:active:not(:disabled) { background: #ccc; }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    /* TEAM & CAROUSEL */
+    /* TEAM KARTEN & SLIDER */
     .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 10px; }
-    .team-card { background: #1a1a20; border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; border: 1px solid #2a2a32; }
+    .team-card { background: #1a1a20; border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; border: 1px solid #2a2a32; transition: transform 0.2s; }
+    .team-card:active { transform: scale(0.95); }
     .team-img-small { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 2px solid #4dabf7; }
     .team-name { font-size: 0.85rem; font-weight: bold; }
     .team-role { font-size: 0.7rem; color: #888; }
+
     .team-detail { display: flex; flex-direction: column; align-items: center; width: 100%; }
-    .back-btn { font-size: 0.85rem; color: #4dabf7; cursor: pointer; margin-bottom: 12px; align-self: flex-start; }
-    .carousel-container { width: 100%; max-width: 240px; aspect-ratio: 1/1; overflow: hidden; position: relative; border-radius: 15px; border: 3px solid #4dabf7; margin-bottom: 12px; }
+
+    .carousel-container {
+      width: 100%; max-width: 250px; aspect-ratio: 1/1; overflow: hidden;
+      position: relative; border-radius: 15px; border: 3px solid #4dabf7; margin-bottom: 12px;
+      user-select: none; touch-action: pan-y;
+    }
     .carousel-track { display: flex; height: 100%; width: 100%; transition: transform 0.4s ease-in-out; }
-    .carousel-slide { min-width: 100%; height: 100%; object-fit: cover; }
-    .carousel-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 12px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #444; cursor: pointer; }
-    .dot.active { background: #4dabf7; }
-    .team-detail-bio { font-size: 0.85rem; color: #ccc; line-height: 1.5; background: #1a1a20; padding: 12px; border-radius: 10px; width: 100%; border: 1px solid #2a2a32; }
+    .carousel-slide { min-width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+    .carousel-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(0, 0, 0, 0.55); color: #fff; border: 1px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: bold; cursor: pointer; z-index: 5;
+    }
+    .carousel-arrow.left { left: 8px; }
+    .carousel-arrow.right { right: 8px; }
+
+    .carousel-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 15px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #444; cursor: pointer; transition: 0.3s; }
+    .dot.active { background: #4dabf7; transform: scale(1.2); }
+
+    .team-detail-bio { font-size: 0.85rem; color: #ccc; line-height: 1.5; text-align: left; background: #1a1a20; padding: 12px; border-radius: 10px; width: 100%; border: 1px solid #2a2a32; }
 
     /* GALERIE & LIGHTBOX */
-    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
-    .gallery-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; cursor: pointer; border: 1px solid #2a2a32; }
-    .lightbox { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.95); z-index: 200; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
-    .lightbox.active { display: flex; opacity: 1; }
-    .lightbox img { max-width: 95%; max-height: 90%; border-radius: 8px; object-fit: contain; }
-    .lightbox-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.2rem; cursor: pointer; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; padding-bottom: 10px; }
+    .gallery-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; cursor: pointer; border: 1px solid #2a2a32; transition: transform 0.2s; }
+    .gallery-img:active { transform: scale(0.95); }
 
-    /* FAQ, QUIZ & FOOTER */
+    .lightbox {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.95); z-index: 200;
+      display: none; justify-content: center; align-items: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .lightbox.active { display: flex; opacity: 1; }
+    .lightbox img { max-width: 95%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.8); object-fit: contain; }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.2rem; cursor: pointer;
+      width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
+      background: rgba(255,255,255,0.1); border-radius: 50%;
+    }
+
+    /* FAQ, CONTACT & FOOTER */
     .faq-item { margin-bottom: 10px; background: #1a1a20; padding: 12px; border-radius: 10px; border: 1px solid #2a2a32; }
     .faq-q { font-weight: bold; font-size: 0.85rem; color: #4dabf7; margin-bottom: 4px; }
     .faq-a { font-size: 0.8rem; color: #ccc; line-height: 1.4; }
-    .contact-box { background: rgba(77, 171, 247, 0.08); border: 1px solid rgba(77, 171, 247, 0.3); padding: 14px; border-radius: 12px; margin-top: 12px; text-align: center; }
-    .member-box { background: rgba(40, 167, 69, 0.08); border: 1px solid rgba(40, 167, 69, 0.3); padding: 14px; border-radius: 12px; margin-top: 12px; text-align: center; }
-    .quiz-option { width: 100%; text-align: left; padding: 10px 12px; margin-top: 6px; border-radius: 8px; border: 1px solid #333; background: #16161c; color: #fff; font-size: 0.8rem; cursor: pointer; }
-    .quiz-option.correct { background: rgba(40, 167, 69, 0.3); border-color: #28a745; }
-    .quiz-option.wrong { background: rgba(220, 53, 69, 0.3); border-color: #dc3545; }
 
-    .main-footer { text-align: center; font-size: 0.7rem; color: rgba(255, 255, 255, 0.65); z-index: 10; padding-bottom: 4px; }
-    .main-footer a { color: rgba(255, 255, 255, 0.9); text-decoration: underline; cursor: pointer; margin: 0 4px; }
-    .impressum-content { font-size: 0.78rem; color: #ccc; line-height: 1.5; text-align: left; }
+    .contact-box {
+      background: rgba(77, 171, 247, 0.08); border: 1px solid rgba(77, 171, 247, 0.3);
+      padding: 14px; border-radius: 12px; margin-top: 14px; text-align: center;
+    }
+    .contact-title { font-size: 0.9rem; font-weight: bold; color: #fff; margin-bottom: 6px; }
+    .contact-desc { font-size: 0.78rem; color: #aaa; margin-bottom: 10px; line-height: 1.4; }
+
+    .member-box {
+      background: rgba(40, 167, 69, 0.08); border: 1px solid rgba(40, 167, 69, 0.3);
+      padding: 14px; border-radius: 12px; margin-top: 14px; text-align: center;
+    }
+    .member-title { font-size: 0.9rem; font-weight: bold; color: #28a745; margin-bottom: 6px; }
+    .member-desc { font-size: 0.78rem; color: #ccc; margin-bottom: 10px; line-height: 1.4; }
+
+    .app-footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #2a2a32; text-align: center; font-size: 0.7rem; color: #666; }
+    .app-footer a { color: #888; text-decoration: underline; cursor: pointer; margin: 0 5px; }
+
+    .impressum-content { font-size: 0.8rem; color: #ccc; line-height: 1.5; text-align: left; }
     .impressum-content b { color: #fff; }
+
+    .main-footer { text-align: center; font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); z-index: 10; padding-bottom: 8px; }
+    .main-footer a { color: rgba(255, 255, 255, 0.85); text-decoration: underline; cursor: pointer; margin: 0 4px; }
   </style>
 </head>
 <body>
 
   <div class="hero-container">
-    <!-- TOP NAVIGATION -->
-    <div class="top-header">
+    <div class="top-bar">
       <div class="brand-row">
-        <div class="brand-logo">🎭 KULTURVEREIN</div>
+        <div class="brand-logo">KULTURVEREIN</div>
         <div class="lang-switch">
-          <div class="lang-btn active" id="lang-de" onclick="setLanguage('de')">🇩🇪 DE</div>
-          <div class="lang-btn" id="lang-ua" onclick="setLanguage('ua')">🇺🇦 UA</div>
+          <div class="lang-btn active" id="lang-de" onclick="setLanguage('de')">DE</div>
+          <div class="lang-btn" id="lang-ua" onclick="setLanguage('ua')">UA</div>
         </div>
       </div>
       <div class="nav-links">
         <span class="nav-item" id="nav-events" onclick="openModal('events')">Events</span>
         <span class="nav-item" id="nav-galerie" onclick="openModal('galerie')">Galerie</span>
         <span class="nav-item" id="nav-team" onclick="openModal('team')">Team</span>
-        <span class="nav-item" id="nav-quiz" onclick="openModal('quiz')">🏆 Quiz</span>
         <span class="nav-item" id="nav-info" onclick="openModal('info')">Info</span>
       </div>
     </div>
 
-    <!-- CENTER ENGAGEMENT DASHBOARD -->
-    <div class="hero-center">
-      <div class="hero-badge" id="hero-badge">✨ Nächstes Highlight</div>
-      <h1 class="hero-title" id="hero-title">Kulturabend 2026</h1>
-      <p class="hero-sub" id="hero-sub">Musik, Austausch & Gemeinschaft. Sichere dir jetzt kostenlos deine Sitzplätze oder mach mit beim Community-Treff!</p>
-      
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-val" id="free-seats-counter">80</div>
-          <div class="stat-lbl" id="lbl-free-seats">Freie Plätze</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val" id="user-points-counter">0 ⭐</div>
-          <div class="stat-lbl" id="lbl-points">Vereins-Punkte</div>
-        </div>
-      </div>
-
-      <div class="hero-cta-row">
-        <button class="hero-btn-primary" id="cta-book" onclick="openModal('events'); openSeatingPlan('Kulturabend 2026');">🪑 Platz buchen</button>
-        <button class="hero-btn-secondary" id="cta-meetup" onclick="openModal('events')">🔥 Treffen</button>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
+    <!-- FOOTER AM STARTBILDSCHIRM -->
     <div class="main-footer">
       <p>© 2026 Ukrainisch-Deutscher Kulturverein e.V.</p>
       <p style="margin-top: 4px;">
-        <a onclick="openImpressum()" id="link-impressum">Impressum</a> • <a onclick="openDatenschutz()" id="link-datenschutz">Datenschutz</a>
+        <a onclick="openImpressum()" id="footer-imp">Impressum</a> • <a onclick="openDatenschutz()" id="footer-dat">Datenschutz</a>
       </p>
     </div>
   </div>
 
-  <!-- DAS HAUPT-MODAL (WAR VORHER GELÖSCHT!) -->
+  <!-- HAUPT-POPUP FÜR EVENTS, GALERIE, TEAM, INFO, SAALPLAN -->
   <div class="overlay" id="popup">
-    <div class="modal-card">
+    <div class="modal-card" id="main-modal-card">
+      <div id="modal-back-holder"></div>
       <span class="close-btn" onclick="closeModal()">×</span>
       <div id="modal-content"></div>
     </div>
   </div>
 
-  <!-- IMPRESSUM MODAL -->
+  <!-- IMPRESSUM -->
   <div class="overlay" id="impressum-popup">
     <div class="modal-card">
       <span class="close-btn" onclick="closeImpressum()">×</span>
-      <h2 id="imp-title">Impressum</h2>
+      <h2>Impressum</h2>
       <div class="impressum-content">
         <p><b>Angaben gemäß § 5 DDG:</b></p>
-        <p>Ukrainisch-Deutscher Kulturverein e.V.<br>
-        <!-- WICHTIG: HIER VOR DEM START DIE ECHTE ADRESSE EINTRAGEN! -->
-        [Straße und Hausnummer eintragen]<br>
-        [PLZ und Ort eintragen]</p>
+        <p><b>Ukrainisch-Deutscher Kulturverein e.V.</b></p>
+        <p>Musterstraße 123<br>12345 Musterstadt</p>
         <br>
-        <p><b>Vertreten durch den Vorstand (§ 26 BGB):</b><br>
-        1. Vorsitzende(r): [Vorname Nachname eintragen]</p>
+        <p><b>Vertreten durch den Vorstand (§ 26 BGB):</b><br>1. Vorsitzende(r): Vorname Nachname</p>
         <br>
-        <p><b>Kontakt:</b><br>
-        E-Mail: info@kulturverein.de<br>
-        Telegram-Support: Direkt über diesen Bot-Chat</p>
+        <p><b>Kontakt:</b><br>E-Mail: info@kulturverein.de</p>
         <br>
-        <p><b>Registereintrag:</b><br>
-        Eintragung im Vereinsregister.<br>
-        Registergericht: Amtsgericht [Stadt eintragen]<br>
-        Registernummer: VR [Nummer eintragen]</p>
+        <p><b>Registereintrag:</b><br>Eintragung im Vereinsregister.<br>Registergericht: Amtsgericht Musterstadt<br>Registernummer: VR 12345</p>
       </div>
     </div>
   </div>
 
-  <!-- DATENSCHUTZ MODAL -->
+  <!-- DATENSCHUTZ -->
   <div class="overlay" id="datenschutz-popup">
     <div class="modal-card">
       <span class="close-btn" onclick="closeDatenschutz()">×</span>
-      <h2 id="privacy-title">Datenschutzerklärung</h2>
-      <div class="impressum-content" style="max-height: 72vh; overflow-y: auto; padding-right: 5px;">
-        <p><b>1. Verantwortlicher (Art. 4 Nr. 7 DSGVO)</b></p>
-        <p>Verantwortlich für die Datenverarbeitung innerhalb dieses Telegram-Bots und der WebApp ist der im Impressum genannte Verein (Ukrainisch-Deutscher Kulturverein e.V., E-Mail: info@kulturverein.de).</p>
+      <h2>Datenschutzerklärung</h2>
+      <div class="impressum-content" style="max-height: 75vh; overflow-y: auto; padding-right: 5px;">
+        <p><b>1. Verantwortlicher</b></p>
+        <p>Verantwortlich für die Datenverarbeitung innerhalb dieses Telegram-Bots und der WebApp ist der im Impressum genannte Ukrainisch-Deutscher Kulturverein e.V.</p>
         <br>
         <p><b>2. Welche Daten werden verarbeitet?</b></p>
-        <p>• <b>Beim Öffnen der WebApp (Hosting via GitHub Pages):</b> Die WebApp wird über GitHub Pages (GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA) bereitgestellt. Beim Aufruf werden technisch notwendige Verbindungsdaten (z. B. IP-Adresse, Zeitpunkt, Browser-Informationen) verarbeitet (Art. 6 Abs. 1 lit. f DSGVO).<br>
-        • <b>Bei einer Sitzplatzreservierung oder Kontaktaufnahme:</b> Ihre Telegram-ID, Ihr angezeigter Name, Ihr @Benutzername, die gewählten Sitzplätze sowie Ihre Nachrichten an die Administration (Art. 6 Abs. 1 lit. b DSGVO zur Durchführung der Reservierung).</p>
+        <p>Beim Öffnen der WebApp (gehostet über GitHub Pages) werden technisch notwendige Verbindungsdaten verarbeitet. Wenn Sie eine Reservierung vornehmen oder uns kontaktieren, verarbeiten wir:</p>
+        <ul>
+          <li>• <b>Telegram-Daten:</b> Ihre Telegram-ID, Ihren Profilnamen und Ihren @Benutzernamen.</li>
+          <li>• <b>Buchungsdaten:</b> Den angegebenen Namen und die ausgewählten Sitzplätze.</li>
+          <li>• <b>Kommunikation:</b> Nachrichten, die Sie über den Bot an die Administration senden.</li>
+        </ul>
         <br>
-        <p><b>3. Speicherung & Löschung</b></p>
-        <p>Ihre Buchungsdaten werden in einer geschützten Datenbank des Vereins gespeichert. Sobald Sie Ihre Reservierung über den Button „Reservierung stornieren“ löschen oder die Veranstaltung abgeschlossen ist, werden die Reservierungsdaten gelöscht.</p>
+        <p><b>3. Zweck und Rechtsgrundlage</b></p>
+        <p>Die Verarbeitung erfolgt zur Durchführung der Ticketreservierung, Einlasskontrolle und Beantwortung von Anfragen (Art. 6 Abs. 1 lit. b DSGVO).</p>
         <br>
-        <p><b>4. Ticket-Erstellung (QR-Code)</b></p>
-        <p>Zur Generierung des Einlass-QR-Codes wird lediglich eine Ticket-Kennung (ohne Ihren Klarnamen) genutzt. Für die Nutzung von Telegram selbst gelten die Datenschutzbestimmungen von Telegram.</p>
+        <p><b>4. Speicherung & Löschung</b></p>
+        <p>Ihre Daten werden in einer geschützten Datenbank beim Betreiber gespeichert. Bei einer Stornierung werden die Plätze freigegeben und Ihre Reservierung gelöscht.</p>
         <br>
-        <p><b>5. Ihre Rechte & Beschwerderecht</b></p>
-        <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft, Berichtigung, Löschung oder Einschränkung der Verarbeitung Ihrer gespeicherten Daten (Art. 15–18 DSGVO) – schreiben Sie uns dazu einfach im Bot-Chat. Zudem besteht ein Beschwerderecht bei einer zuständigen Datenschutz-Aufsichtsbehörde (Art. 77 DSGVO).</p>
+        <p><b>5. QR-Code Generierung</b></p>
+        <p>Zur Erstellung des Einlass-Tickets (QR-Code) wird lediglich eine anonymisierte Ticket-Kennung an den Dienst <i>api.qrserver.com</i> übermittelt (ohne Ihren Namen).</p>
+        <br>
+        <p><b>6. Ihre Rechte</b></p>
+        <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten (Art. 15–18 DSGVO) sowie ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde (Art. 77 DSGVO).</p>
       </div>
     </div>
   </div>
@@ -337,11 +328,11 @@
     function haptic(type = 'light') {
       if (tg && tg.HapticFeedback) {
         if (type === 'selection') tg.HapticFeedback.selectionChanged();
+        else if (['success', 'warning', 'error'].includes(type)) tg.HapticFeedback.notificationOccurred(type);
         else tg.HapticFeedback.impactOccurred(type);
       }
     }
 
-    // URL Parameter aus bot.py lesen
     const urlParams = new URLSearchParams(window.location.search);
     const occupiedSeatsParam = urlParams.get('occupied') || '';
     const mySeatsParam = urlParams.get('my_seats') || '';
@@ -353,133 +344,72 @@
 
     let selectedSeats = [];
     let currentLang = localStorage.getItem('kv_lang') || 'de';
-    let userPoints = parseInt(localStorage.getItem('kv_points') || '10', 10);
-    let joinedMeetups = JSON.parse(localStorage.getItem('kv_meetups') || '[]');
 
-    // ÜBERSETZUNGEN (DEUTSCH & UKRAINISCH)
     const i18n = {
       de: {
-        navEvents: "Events", navGalerie: "Galerie", navTeam: "Team", navQuiz: "🏆 Quiz", navInfo: "Info",
-        heroBadge: "✨ Nächstes Highlight",
-        heroTitle: "Kulturabend 2026",
-        heroSub: "Musik, Austausch & Gemeinschaft. Sichere dir jetzt deine Sitzplätze oder komm zu unseren Wochentreffen!",
-        lblFreeSeats: "Freie Plätze", lblPoints: "Vereins-Punkte",
-        ctaBook: "🪑 Platz buchen", ctaMeetup: "🔥 Treffen",
-        eventsHeader: "Events & Treffen",
-        mainEventBadge: "🎭 Hauptveranstaltung (Mit Saalplan)",
-        selectSeatsBtn: "Sitzplätze auswählen",
-        communityHeader: "🤝 Spontane Wochentreffen (Ohne Ticket)",
-        joinBtn: "Ich bin dabei!", joinedBtn: "✅ Du bist dabei!",
-        suggestIdeaTitle: "💡 Eigene Event-Idee vorschlagen?",
-        suggestIdeaSub: "Du möchtest ein Turnier, einen Filmabend oder Workshop organisieren? Schreib uns!",
-        suggestIdeaBtn: "Idee an Vorstand senden",
-        galerieHeader: "Galerie", galerieSub: "Eindrücke unserer vergangenen Vereinsabende.",
-        teamHeader: "Unser Team", backBtn: "⬅ Zurück",
+        navEvents: "Events", navGalerie: "Galerie", navTeam: "Team", navInfo: "Info",
+        eventsHeader: "Anstehende Events",
+        selectSeatsBtn: "Sitzplätze Auswählen",
+        galerieHeader: "Galerie",
+        galerieSub: "Eindrücke unserer Events.",
+        teamHeader: "Unser Team",
+        backBtn: "⬅ Zurück",
         infoHeader: "Info & FAQ",
-        memberTitle: "🤝 Mitglied im Verein werden",
-        memberDesc: "Unterstütze den Ukrainisch-Deutschen Kulturverein e.V. und gestalte unsere Events aktiv mit!",
+        memberTitle: "🤝 Wie kann ich Mitglied werden?",
+        memberDesc: "Möchtest du unseren Verein unterstützen und aktiv mitgestalten? Wir freuen uns über jedes neue Mitglied!",
         memberBtn: "Mitgliedschaft anfragen",
-        contactTitle: "💬 Direktkontakt zum Team",
-        contactDesc: "Schreibe uns einfach direkt im Telegram-Chat deine Frage – wir antworten schnellstmöglich!",
-        contactBtn: "Nachricht im Chat schreiben",
-        seatTitle: "Platzwahl", stage: "LEINWAND / BÜHNE",
+        contactTitle: "💬 Fragen oder Hilfe nötig?",
+        contactDesc: "Klicke unten, um uns direkt eine Nachricht im Telegram-Chat zu schreiben. Wir antworten dir so schnell wie möglich!",
+        contactBtn: "Frage an Admin senden",
+        seatTitle: "Platzwahl",
+        stage: "LEINWAND / BÜHNE",
         legFree: "Frei", legSel: "Gewählt", legMine: "Deine", legOcc: "Besetzt",
-        alreadyBooked: "Bereits von dir reserviert",
-        namePlaceholder: "Dein vollständiger Name",
-        maxReached: "Maximum (4 Plätze) erreicht",
-        selectPrompt: "Stühle gewählt – Jetzt reservieren",
-        quizHeader: "🏆 Kultur-Quiz & Bonus",
-        quizSub: "Sammle Punkte für unser nächstes Vereins-Event! Ab 50 Punkten gibt es ein Freigetränk am Einlass.",
-        quizDone: "✅ Du hast diese Frage bereits gelöst! (+20 ⭐)"
+        alreadyBooked: "Bereits von dir gebucht",
+        namePlaceholder: "Vollständiger Name",
+        maxReached: "Maximum (4) erreicht",
+        selectPrompt: "Stuhl/Stühle ausgewählt – Reservieren",
+        zeroPrompt: "0 Stühle ausgewählt – Reservieren",
+        alertMax4: "Du hast bereits das Maximum von 4 Plätzen gebucht!",
+        alertMaxRemain: (n) => `Du kannst maximal noch ${n} weiteren/weitere Platz/Plätze auswählen!`,
+        alertEnterName: "Bitte gib deinen Namen ein!",
+        alertSelectSeat: "Bitte wähle mindestens 1 Stuhl aus!"
       },
       ua: {
-        navEvents: "Події", navGalerie: "Галерея", navTeam: "Команда", navQuiz: "🏆 Квіз", navInfo: "Інфо",
-        heroBadge: "✨ Головна подія",
-        heroTitle: "Вечір Культури 2026",
-        heroSub: "Музика, спілкування та атмосфера. Бронюй місця в залі або приєднуйся до наших щотижневих зустрічей!",
-        lblFreeSeats: "Вільних місць", lblPoints: "Бонусні бали",
-        ctaBook: "🪑 Обрати місце", ctaMeetup: "🔥 Зустрічі",
-        eventsHeader: "Події та Зустрічі",
-        mainEventBadge: "🎭 Головна подія (З вибором місць)",
-        selectSeatsBtn: "Обрати місця в залі",
-        communityHeader: "🤝 Щотижневі зустрічі (Вхід вільний)",
-        joinBtn: "Я прийду!", joinedBtn: "✅ Ти в списку!",
-        suggestIdeaTitle: "💡 Маєш ідею для нової події?",
-        suggestIdeaSub: "Хочеш провести настільні ігри, кіновечір чи майстер-клас? Напиши нам!",
-        suggestIdeaBtn: "Запропонувати ідею",
-        galerieHeader: "Галерея", galerieSub: "Яскраві моменти наших минулих зустрічей.",
-        teamHeader: "Наша Команда", backBtn: "⬅ Назад",
-        infoHeader: "Інформація та FAQ",
-        memberTitle: "🤝 Стати учасником спілки",
-        memberDesc: "Підтримай Українсько-Німецьку культурну спілку та створюй круті події разом із нами!",
-        memberBtn: "Подати заявку в чаті",
-        contactTitle: "💬 Питання чи допомога?",
-        contactDesc: "Напиши своє питання просто в чат Telegram-бота — ми відповімо якнайшвидше!",
-        contactBtn: "Написати адміністрації",
-        seatTitle: "Вибір місць", stage: "СЦЕНА / ЕКРАН",
+        navEvents: "Події", navGalerie: "Галерея", navTeam: "Команда", navInfo: "Інфо",
+        eventsHeader: "Найближчі події",
+        selectSeatsBtn: "Обрати місця",
+        galerieHeader: "Галерея",
+        galerieSub: "Яскраві моменти наших подій.",
+        teamHeader: "Наша Команда",
+        backBtn: "⬅ Назад",
+        infoHeader: "Інфо та FAQ",
+        memberTitle: "🤝 Як стати учасником спілки?",
+        memberDesc: "Хочеш підтримати нашу спілку та долучитися до організації подій? Ми раді кожному новому учаснику!",
+        memberBtn: "Подати заявку",
+        contactTitle: "💬 Маєш питання чи потрібна допомога?",
+        contactDesc: "Натисни нижче, щоб написати нам повідомлення просто в чаті Telegram. Ми відповімо якнайшвидше!",
+        contactBtn: "Написати адміністратору",
+        seatTitle: "Вибір місць",
+        stage: "СЦЕНА / ЕКРАН",
         legFree: "Вільно", legSel: "Обрано", legMine: "Твої", legOcc: "Зайнято",
         alreadyBooked: "Вже заброньовано тобою",
-        namePlaceholder: "Твоє ім'я та прізвище",
-        maxReached: "Досягнуто ліміт (4 місця)",
+        namePlaceholder: "Повне ім'я та прізвище",
+        maxReached: "Досягнуто ліміт (4)",
         selectPrompt: "місць обрано – Забронювати",
-        quizHeader: "🏆 Культурний Квіз & Бонуси",
-        quizSub: "Збирай бали! За 50 балів ти отримаєш безкоштовний напій або смаколик на наступному вечорі.",
-        quizDone: "✅ Ти вже відповів правильно! (+20 ⭐)"
+        zeroPrompt: "0 місць обрано – Забронювати",
+        alertMax4: "Ти вже забронював максимум (4 місця)!",
+        alertMaxRemain: (n) => `Ти можеш обрати ще максимум ${n} місць!`,
+        alertEnterName: "Будь ласка, введи своє ім'я!",
+        alertSelectSeat: "Будь ласка, обери хоча б 1 місце!"
       }
     };
 
-    const communityMeetups = [
+    const eventsList = [
       {
-        id: "sprachklub",
-        badge: "🗣️ DE / UA",
-        title: { de: "Deutsch-Ukrainischer Sprachklub", ua: "Німецько-Український розмовний клуб" },
-        date: { de: "Jeden Samstag, 15:00 Uhr | Vereinsheim", ua: "Щосуботи, 15:00 | Будинок спілки" },
-        desc: { de: "Entspannt Deutsch & Ukrainisch üben bei Kaffee und Tee (Niveau A2–C1).", ua: "Практика німецької та української мов за чашкою кави чи чаю." },
-        baseCount: 14
-      },
-      {
-        id: "brettspiele",
-        badge: "🎲 Games",
-        title: { de: "Catan, Mafia & Brettspiel-Abend", ua: "Вечір настільних ігор та Мафії" },
-        date: { de: "Freitag, 18:30 Uhr | Jugendraum", ua: "П'ятниця, 18:30 | Молодіжний простір" },
-        desc: { de: "Bring gute Laune mit – Spiele und Snacks sind vorhanden!", ua: "Бери гарний настрій — ігри, чай та печиво вже чекають!" },
-        baseCount: 9
-      }
-    ];
-
-    const teamMembers = [
-      { id: 1, name: "Natali", role: { de: "Vorstand & Orga", ua: "Голова та Організація" }, imgs: ["https://i.pravatar.cc/300?img=47", "https://i.pravatar.cc/300?img=48"], bio: { de: "Natali ist das Herz des Kulturvereins. Sie plant die Events, koordiniert das Team und sorgt dafür, dass jeder Abend unvergesslich wird.", ua: "Наталі — серце нашої спілки. Вона планує події, координує команду та дбає про незабутню атмосферу." } },
-      { id: 2, name: "Volodymyr", role: { de: "Künstlerische Leitung", ua: "Художній керівник" }, imgs: ["https://i.pravatar.cc/300?img=11", "https://i.pravatar.cc/300?img=12"], bio: { de: "Volodymyr ist für das kreative Programm verantwortlich. Von der Musikauswahl bis zur Bühnengestaltung bringt er Kunst zum Leben.", ua: "Володимир відповідає за творчу програму: від музики до оформлення сцени." } },
-      { id: 3, name: "Anna", role: { de: "Event Management", ua: "Івент-менеджер" }, imgs: ["https://i.pravatar.cc/300?img=41"], bio: { de: "Anna sorgt für einen reibungslosen Ablauf vor Ort. Sie empfängt die Gäste und koordiniert den Einlass.", ua: "Анна дбає про ідеальну організацію на місці, зустрічає гостей та координує вхід." } },
-      { id: 4, name: "Max", role: { de: "Technik & IT", ua: "Техніка та IT" }, imgs: ["https://i.pravatar.cc/300?img=53"], bio: { de: "Ohne Max läuft nichts: Licht, Ton und dieser Telegram-Bot liegen in seinen Händen.", ua: "Без Макса нічого не працює: світло, звук та цей Telegram-бот — у його надійних руках." } },
-      { id: 5, name: "Julia", role: { de: "Social Media", ua: "Соціальні мережі" }, imgs: ["https://i.pravatar.cc/300?img=32"], bio: { de: "Julia hält unsere Community auf dem Laufenden und fängt die besten Momente fotografisch ein.", ua: "Юлія веде наші соцмережі та ловить найкращі моменти в об'єктив камери." } }
-    ];
-
-    const faqList = {
-      de: [
-        { q: "Wie viele Plätze kann ich reservieren?", a: "Jeder Nutzer kann bis zu 4 Sitzplätze für die Hauptveranstaltung reservieren." },
-        { q: "Wie erhalte ich mein Ticket?", a: "Sobald deine Buchung vom Admin bestätigt wird, schickt dir der Bot automatisch dein QR-Code-Ticket in den Chat." },
-        { q: "Kann ich kostenlos stornieren?", a: "Ja, klicke einfach unten im Telegram-Chat auf '❌ Reservierung stornieren', damit deine Plätze für andere frei werden." }
-      ],
-      ua: [
-        { q: "Скільки місць я можу забронювати?", a: "Кожен користувач може безкоштовно забронювати до 4 місць у залі." },
-        { q: "Як я отримаю свій квиток?", a: "Щойно адміністратор підтвердить бронювання, бот автоматично надішле QR-код квитка просто в цей чат." },
-        { q: "Чи можна скасувати бронювання?", a: "Так, просто натисни кнопку '❌ Reservierung stornieren' внизу чату, щоб звільнити місця для інших." }
-      ]
-    };
-
-    const quizQuestions = [
-      {
-        id: "q1",
-        q: { de: "Welches UNESCO-Kulturerbe stammt aus der Ukraine?", ua: "Яка традиційна страва України входить до спадщини ЮНЕСКО?" },
-        options: { de: ["Borschtsch-Kochkultur", "Currywurst", "Fondue"], ua: ["Культура приготування борщу", "Вареники з вишнею", "Сирники"] },
-        correct: 0
-      },
-      {
-        id: "q2",
-        q: { de: "Wie viele Sitzplätze hat unser Vereinssaal insgesamt?", ua: "Скільки всього місць у нашому залі для подій?" },
-        options: { de: ["50 Plätze", "80 Plätze (8 Reihen à 10)", "120 Plätze"], ua: ["50 місць", "80 місць (8 рядів по 10)", "120 місць"] },
-        correct: 1
+        id: "kulturabend_2026",
+        title: { de: "Kulturabend 2026", ua: "Вечір Культури 2026" },
+        date: { de: "Samstag, 19:00 Uhr", ua: "Субота, 19:00" },
+        location: { de: "Hauptaula im Vereinsheim", ua: "Головна зала спілки" }
       }
     ];
 
@@ -492,88 +422,130 @@
       "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800"
     ];
 
-    let currentSlideIndex = 0;
-    let autoSlideInterval;
+    const teamMembers = [
+      {
+        id: 1, name: "Natali",
+        role: { de: "Vorstand & Orga", ua: "Голова та Організація" },
+        imgs: ["https://i.pravatar.cc/300?img=47", "https://i.pravatar.cc/300?img=48"],
+        bio: {
+          de: "Natali ist das Herz des Kulturvereins. Sie plant die Events, koordiniert das Team und sorgt dafür, dass jeder Abend unvergesslich wird.",
+          ua: "Наталі — серце нашої спілки. Вона планує події, координує команду та дбає про те, щоб кожен вечір був незабутнім."
+        }
+      },
+      {
+        id: 2, name: "Volodymyr",
+        role: { de: "Künstlerische Leitung", ua: "Художній керівник" },
+        imgs: ["https://i.pravatar.cc/300?img=11", "https://i.pravatar.cc/300?img=12", "https://i.pravatar.cc/300?img=13"],
+        bio: {
+          de: "Volodymyr ist für das kreative Programm verantwortlich. Von der Musikauswahl bis zur Bühnengestaltung bringt er Kunst zum Leben.",
+          ua: "Володимир відповідає за творчу програму. Від вибору музики до оформлення сцени — він оживляє мистецтво."
+        }
+      },
+      {
+        id: 3, name: "Anna",
+        role: { de: "Event Management", ua: "Івент-менеджмент" },
+        imgs: ["https://i.pravatar.cc/300?img=41", "https://i.pravatar.cc/300?img=42"],
+        bio: {
+          de: "Anna sorgt für einen reibungslosen Ablauf vor Ort. Sie empfängt die Gäste und koordiniert den Einlass.",
+          ua: "Анна дбає про ідеальний порядок на місці. Вона зустрічає гостей та координує вхід до зали."
+        }
+      },
+      {
+        id: 4, name: "Max",
+        role: { de: "Technik & IT", ua: "Техніка та IT" },
+        imgs: ["https://i.pravatar.cc/300?img=53"],
+        bio: {
+          de: "Ohne Max läuft nichts: Licht, Ton und das Buchungssystem liegen in seinen Händen. Er löst jedes technische Problem.",
+          ua: "Без Макса нічого не працює: світло, звук та система бронювання в його руках. Він вирішує будь-яку технічну проблему."
+        }
+      },
+      {
+        id: 5, name: "Julia",
+        role: { de: "Social Media", ua: "Соціальні мережі" },
+        imgs: ["https://i.pravatar.cc/300?img=32", "https://i.pravatar.cc/300?img=33"],
+        bio: {
+          de: "Julia hält unsere Community auf Instagram und Facebook auf dem Laufenden und fängt die besten Momente fotografisch ein.",
+          ua: "Юлія веде наші сторінки в Instagram та Facebook і ловить найкращі моменти подій на камеру."
+        }
+      }
+    ];
 
-    function updateMainUI() {
+    const faqList = {
+      de: [
+        { q: "Wie viele Plätze kann ich reservieren?", a: "Jeder Benutzer kann insgesamt bis zu 4 Plätze für die Veranstaltung reservieren." },
+        { q: "Wie erhalte ich mein Ticket?", a: "Sobald deine Reservierung vom Administrator bestätigt wird, erhältst du dein QR-Code-Ticket direkt hier im Telegram-Chat." },
+        { q: "Kann ich meine Reservierung stornieren?", a: "Ja, klicke dazu einfach im Telegram-Chat unten auf den Button '❌ Reservierung stornieren'." },
+        { q: "Wo findet das Event statt?", a: "Alle Details zum Ort und Datum der Veranstaltung findest du unter der Rubrik 'Events'." }
+      ],
+      ua: [
+        { q: "Скільки місць я можу забронювати?", a: "Кожен користувач може забронювати до 4 місць на подію." },
+        { q: "Як я отримаю свій квиток?", a: "Щойно адміністратор підтвердить бронювання, ти отримаєш QR-код квитка просто в цей Telegram-чат." },
+        { q: "Чи можу я скасувати бронювання?", a: "Так, для цього просто натисни внизу в чаті Telegram кнопку '❌ Reservierung stornieren'." },
+        { q: "Де відбувається подія?", a: "Усі деталі щодо місця та часу проведення ти знайдеш у розділі 'Події'." }
+      ]
+    };
+
+    let currentSlideIndex = 0;
+    let autoSlideInterval = null;
+    let pointerStartX = 0;
+    let pointerEndX = 0;
+    let isDragging = false;
+
+    function updateNavLabels() {
       const t = i18n[currentLang];
       document.getElementById('lang-de').classList.toggle('active', currentLang === 'de');
       document.getElementById('lang-ua').classList.toggle('active', currentLang === 'ua');
-
       document.getElementById('nav-events').innerText = t.navEvents;
       document.getElementById('nav-galerie').innerText = t.navGalerie;
       document.getElementById('nav-team').innerText = t.navTeam;
-      document.getElementById('nav-quiz').innerText = t.navQuiz;
       document.getElementById('nav-info').innerText = t.navInfo;
-
-      document.getElementById('hero-badge').innerText = t.heroBadge;
-      document.getElementById('hero-title').innerText = t.heroTitle;
-      document.getElementById('hero-sub').innerText = t.heroSub;
-      document.getElementById('lbl-free-seats').innerText = t.lblFreeSeats;
-      document.getElementById('lbl-points').innerText = t.lblPoints;
-      document.getElementById('cta-book').innerText = t.ctaBook;
-      document.getElementById('cta-meetup').innerText = t.ctaMeetup;
-
-      const freeCount = Math.max(0, 80 - occupiedSeats.length);
-      document.getElementById('free-seats-counter').innerText = `${freeCount} / 80`;
-      document.getElementById('user-points-counter').innerText = `${userPoints} ⭐`;
     }
 
     function setLanguage(lang) {
       haptic('selection');
       currentLang = lang;
       localStorage.setItem('kv_lang', lang);
-      updateMainUI();
-      // Falls gerade ein Modal offen ist, Inhalt neu rendern
+      updateNavLabels();
       const popup = document.getElementById('popup');
-      if (popup.classList.contains('active') && popup.dataset.currentTab) {
-        openModal(popup.dataset.currentTab);
+      if (popup.classList.contains('active') && popup.dataset.view) {
+        const view = popup.dataset.view;
+        if (view.startsWith('team_')) {
+          showTeamMember(parseInt(view.split('_')[1], 10));
+        } else if (view.startsWith('seat_')) {
+          openSeatingPlan(view.replace('seat_', ''));
+        } else {
+          openModal(view);
+        }
       }
+    }
+
+    function setBackButton(htmlStr) {
+      document.getElementById('modal-back-holder').innerHTML = htmlStr;
     }
 
     function openModal(type) {
       haptic('medium');
       const popup = document.getElementById('popup');
       const content = document.getElementById('modal-content');
-      popup.dataset.currentTab = type;
+      const modalCard = document.getElementById('main-modal-card');
       const t = i18n[currentLang];
 
+      popup.dataset.view = type;
+      setBackButton('');
       clearInterval(autoSlideInterval);
 
       if (type === 'events') {
         let html = `<h2>${t.eventsHeader}</h2>`;
-        html += `
-          <div class="event-card" style="border-color:#4dabf7;">
-            <span class="event-badge">${t.mainEventBadge}</span>
-            <div class="event-title">${t.heroTitle}</div>
-            <div class="event-info">📅 Samstag, 19:00 Uhr | 📍 Hauptaula im Vereinsheim</div>
-            <button class="btn-action" style="background:#4dabf7; color:#000;" onclick="openSeatingPlan('Kulturabend 2026')">🪑 ${t.selectSeatsBtn}</button>
-          </div>
-          <h2 style="margin-top:14px; font-size:0.9rem; color:#aaa;">${t.communityHeader}</h2>
-        `;
-
-        communityMeetups.forEach(m => {
-          const isJoined = joinedMeetups.includes(m.id);
-          const count = m.baseCount + (isJoined ? 1 : 0);
+        eventsList.forEach(event => {
+          const title = event.title[currentLang];
           html += `
             <div class="event-card">
-              <span class="event-badge">${m.badge} • 👥 ${count}</span>
-              <div class="event-title">${m.title[currentLang]}</div>
-              <div class="event-info">📅 ${m.date[currentLang]}<br>${m.desc[currentLang]}</div>
-              <button class="btn-action ${isJoined ? 'joined' : ''}" onclick="toggleMeetup('${m.id}')">
-                ${isJoined ? t.joinedBtn : t.joinBtn}
-              </button>
+              <div class="event-title">${title}</div>
+              <div class="event-info">📅 ${event.date[currentLang]} | 📍 ${event.location[currentLang]}</div>
+              <button class="btn-action" onclick="openSeatingPlan('${title}')">${t.selectSeatsBtn}</button>
             </div>
           `;
         });
-
-        html += `
-          <div class="contact-box">
-            <div style="font-weight:bold; font-size:0.85rem; margin-bottom:4px;">${t.suggestIdeaTitle}</div>
-            <div style="font-size:0.75rem; color:#aaa; margin-bottom:8px;">${t.suggestIdeaSub}</div>
-            <button class="btn-action" onclick="contactAdmin()">${t.suggestIdeaBtn}</button>
-          </div>
-        `;
         content.innerHTML = html;
 
       } else if (type === 'galerie') {
@@ -584,7 +556,7 @@
         gridHtml += '</div>';
         content.innerHTML = `
           <h2>${t.galerieHeader}</h2>
-          <p style="color:#aaa; font-size:0.82rem;">${t.galerieSub}</p>
+          <p style="color:#aaa; font-size:0.85rem;">${t.galerieSub}</p>
           ${gridHtml}
         `;
 
@@ -601,27 +573,6 @@
         gridHtml += '</div>';
         content.innerHTML = `<h2>${t.teamHeader}</h2>${gridHtml}`;
 
-      } else if (type === 'quiz') {
-        const solved = JSON.parse(localStorage.getItem('kv_quiz_solved') || '[]');
-        let quizHtml = `
-          <h2>${t.quizHeader}</h2>
-          <p style="color:#aaa; font-size:0.8rem; margin-bottom:12px;">${t.quizSub}</p>
-          <div class="info-banner" style="text-align:center; font-weight:bold;">⭐ ${t.lblPoints}: ${userPoints} / 50</div>
-        `;
-        quizQuestions.forEach(q => {
-          const isSolved = solved.includes(q.id);
-          quizHtml += `<div class="event-card"><div class="event-title" style="font-size:0.88rem;">❓ ${q.q[currentLang]}</div>`;
-          if (isSolved) {
-            quizHtml += `<div style="color:#28a745; font-size:0.8rem; font-weight:bold; margin-top:6px;">${t.quizDone}</div>`;
-          } else {
-            q.options[currentLang].forEach((opt, idx) => {
-              quizHtml += `<button class="quiz-option" onclick="answerQuiz('${q.id}', ${idx}, ${q.correct}, this)">${opt}</button>`;
-            });
-          }
-          quizHtml += `</div>`;
-        });
-        content.innerHTML = quizHtml;
-
       } else if (type === 'info') {
         let faqHtml = '';
         faqList[currentLang].forEach(item => {
@@ -635,92 +586,170 @@
 
         content.innerHTML = `
           <h2>${t.infoHeader}</h2>
-          <div style="margin-top:8px;">${faqHtml}</div>
+          <div style="margin-top:10px;">${faqHtml}</div>
 
           <div class="member-box">
-            <div style="font-weight:bold; color:#28a745; font-size:0.9rem; margin-bottom:4px;">${t.memberTitle}</div>
-            <div style="font-size:0.78rem; color:#ccc; margin-bottom:8px;">${t.memberDesc}</div>
+            <div class="member-title">${t.memberTitle}</div>
+            <div class="member-desc">${t.memberDesc}</div>
             <button class="btn-action" style="background:#28a745; color:#fff;" onclick="contactAdmin()">${t.memberBtn}</button>
           </div>
 
           <div class="contact-box">
-            <div style="font-weight:bold; color:#fff; font-size:0.9rem; margin-bottom:4px;">${t.contactTitle}</div>
-            <div style="font-size:0.78rem; color:#aaa; margin-bottom:8px;">${t.contactDesc}</div>
-            <button class="btn-action" style="background:#4dabf7; color:#000;" onclick="contactAdmin()">${t.contactBtn}</button>
+            <div class="contact-title">${t.contactTitle}</div>
+            <div class="contact-desc">${t.contactDesc}</div>
+            <button class="btn-action" style="background:#4dabf7; color:#fff;" onclick="contactAdmin()">${t.contactBtn}</button>
+          </div>
+
+          <div class="app-footer">
+            <p>© 2026 Ukrainisch-Deutscher Kulturverein e.V.</p>
+            <p style="margin-top:6px;">
+              <a onclick="openImpressum()">Impressum</a> • <a onclick="openDatenschutz()">Datenschutz</a>
+            </p>
           </div>
         `;
       }
 
       popup.classList.add('active');
-    }
-
-    function toggleMeetup(id) {
-      haptic('medium');
-      if (joinedMeetups.includes(id)) {
-        joinedMeetups = joinedMeetups.filter(m => m !== id);
-      } else {
-        joinedMeetups.push(id);
-        userPoints += 5;
-        localStorage.setItem('kv_points', userPoints);
-      }
-      localStorage.setItem('kv_meetups', JSON.stringify(joinedMeetups));
-      updateMainUI();
-      openModal('events');
-    }
-
-    function answerQuiz(qId, selectedIdx, correctIdx, btnEl) {
-      const solved = JSON.parse(localStorage.getItem('kv_quiz_solved') || '[]');
-      if (selectedIdx === correctIdx) {
-        haptic('medium');
-        btnEl.classList.add('correct');
-        if (!solved.includes(qId)) {
-          solved.push(qId);
-          localStorage.setItem('kv_quiz_solved', JSON.stringify(solved));
-          userPoints += 20;
-          localStorage.setItem('kv_points', userPoints);
-          updateMainUI();
-        }
-        setTimeout(() => openModal('quiz'), 600);
-      } else {
-        haptic('light');
-        btnEl.classList.add('wrong');
-      }
+      if (modalCard) modalCard.scrollTop = 0;
     }
 
     function showTeamMember(id) {
       haptic('selection');
       clearInterval(autoSlideInterval);
       currentSlideIndex = 0;
+
+      const popup = document.getElementById('popup');
+      popup.dataset.view = `team_${id}`;
+
       const member = teamMembers.find(m => m.id === id);
       const content = document.getElementById('modal-content');
       const t = i18n[currentLang];
+      const total = member.imgs.length;
+
+      setBackButton(`<div class="back-btn" onclick="openModal('team')">${t.backBtn}</div>`);
 
       let slidesHtml = '';
       let dotsHtml = '';
+
       member.imgs.forEach((imgUrl, index) => {
         slidesHtml += `<img src="${imgUrl}" class="carousel-slide">`;
-        dotsHtml += `<div class="dot ${index === 0 ? 'active' : ''}"></div>`;
+        dotsHtml += `<div class="dot ${index === 0 ? 'active' : ''}" onclick="setSlide(${index}, ${total})"></div>`;
       });
 
+      const arrowsHtml = total > 1 ? `
+        <div class="carousel-arrow left" onclick="manualStep(-1, ${total})">‹</div>
+        <div class="carousel-arrow right" onclick="manualStep(1, ${total})">›</div>
+      ` : '';
+
       content.innerHTML = `
-        <div class="back-btn" onclick="openModal('team')">${t.backBtn}</div>
         <div class="team-detail">
           <h2>${member.name}</h2>
           <div style="color:#4dabf7; font-size:0.85rem; margin-bottom:12px;">${member.role[currentLang]}</div>
-          <div class="carousel-container">
-            <div class="carousel-track" id="carousel-track">${slidesHtml}</div>
+
+          <div class="carousel-container"
+               ontouchstart="handleTouchStart(event)"
+               ontouchend="handleTouchEnd(event, ${total})"
+               onmousedown="handleMouseDown(event)"
+               onmouseup="handleMouseUp(event, ${total})">
+            ${arrowsHtml}
+            <div class="carousel-track" id="carousel-track">
+              ${slidesHtml}
+            </div>
           </div>
-          <div class="carousel-dots" id="carousel-dots">${member.imgs.length > 1 ? dotsHtml : ''}</div>
+
+          <div class="carousel-dots" id="carousel-dots">
+            ${total > 1 ? dotsHtml : ''}
+          </div>
+
           <div class="team-detail-bio">${member.bio[currentLang]}</div>
         </div>
       `;
+
+      startAutoSlide(total);
+    }
+
+    function startAutoSlide(totalSlides) {
+      clearInterval(autoSlideInterval);
+      if (totalSlides > 1) {
+        autoSlideInterval = setInterval(() => {
+          moveSlide(1, totalSlides);
+        }, 3000);
+      }
+    }
+
+    function moveSlide(direction, totalSlides) {
+      if (totalSlides <= 1) return;
+      currentSlideIndex = (currentSlideIndex + direction + totalSlides) % totalSlides;
+      updateCarousel();
+    }
+
+    function manualStep(direction, totalSlides) {
+      haptic('selection');
+      moveSlide(direction, totalSlides);
+      startAutoSlide(totalSlides);
+    }
+
+    function setSlide(index, totalSlides) {
+      haptic('selection');
+      currentSlideIndex = index;
+      updateCarousel();
+      startAutoSlide(totalSlides);
+    }
+
+    function updateCarousel() {
+      const track = document.getElementById('carousel-track');
+      const dotsContainer = document.getElementById('carousel-dots');
+      if (track) track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+      if (dotsContainer) {
+        const dots = dotsContainer.children;
+        for (let i = 0; i < dots.length; i++) {
+          dots[i].classList.toggle('active', i === currentSlideIndex);
+        }
+      }
+    }
+
+    function handleTouchStart(e) {
+      pointerStartX = e.changedTouches[0].screenX;
+    }
+
+    function handleTouchEnd(e, totalSlides) {
+      pointerEndX = e.changedTouches[0].screenX;
+      handleSwipeGesture(totalSlides);
+    }
+
+    function handleMouseDown(e) {
+      isDragging = true;
+      pointerStartX = e.clientX;
+    }
+
+    function handleMouseUp(e, totalSlides) {
+      if (!isDragging) return;
+      isDragging = false;
+      pointerEndX = e.clientX;
+      handleSwipeGesture(totalSlides);
+    }
+
+    function handleSwipeGesture(totalSlides) {
+      if (totalSlides <= 1) return;
+      const diff = pointerStartX - pointerEndX;
+      if (Math.abs(diff) > 35) {
+        haptic('selection');
+        if (diff > 0) moveSlide(1, totalSlides);
+        else moveSlide(-1, totalSlides);
+        startAutoSlide(totalSlides);
+      }
     }
 
     function openSeatingPlan(eventTitle) {
       haptic('light');
       selectedSeats = [];
+      const popup = document.getElementById('popup');
       const content = document.getElementById('modal-content');
+      const modalCard = document.getElementById('main-modal-card');
       const t = i18n[currentLang];
+
+      popup.dataset.view = `seat_${eventTitle}`;
+      setBackButton(`<div class="back-btn" onclick="openModal('events')">${t.backBtn}</div>`);
 
       const telegramUserName = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user)
         ? `${tg.initDataUnsafe.user.first_name || ''} ${tg.initDataUnsafe.user.last_name || ''}`.trim()
@@ -763,30 +792,46 @@
         ? `<div class="info-banner">🔹 ${t.alreadyBooked}: <b>${mySeats.join(', ')}</b> (${mySeats.length}/4)</div>`
         : '';
 
-      let nameFieldHtml = isReturningUser
-        ? `<div class="locked-name-badge"><span>👤</span><div class="locked-name-value">${displayName || "Gast"}</div></div>
-           <input type="hidden" id="fullname" value="${displayName || "Gast"}">`
-        : `<input type="text" id="fullname" placeholder="${t.namePlaceholder}" value="${displayName}">`;
+      let nameFieldHtml = '';
+      if (isReturningUser) {
+        const savedName = displayName || "Bereits registriert";
+        nameFieldHtml = `
+          <div class="locked-name-badge">
+            <div class="locked-name-icon">👤</div>
+            <div class="locked-name-value">${savedName}</div>
+          </div>
+          <input type="hidden" id="fullname" value="${savedName}">
+        `;
+      } else {
+        nameFieldHtml = `<input type="text" id="fullname" placeholder="${t.namePlaceholder}" value="${displayName}">`;
+      }
 
       let btnDisabledAttr = maxAllowedSeats <= 0 ? 'disabled' : '';
-      let btnText = maxAllowedSeats <= 0 ? t.maxReached : `0 ${t.selectPrompt}`;
+      let btnText = maxAllowedSeats <= 0 ? t.maxReached : t.zeroPrompt;
 
       content.innerHTML = `
-        <div class="back-btn" onclick="openModal('events')">${t.backBtn}</div>
         <h2>${t.seatTitle}</h2>
+        <p style="color:#888; font-size:0.75rem; margin-bottom:8px;">Event: <b>${eventTitle}</b></p>
         ${bannerHtml}
         ${gridHtml}
         <input type="hidden" id="event_name" value="${eventTitle}">
         ${nameFieldHtml}
-        <button class="btn-action" style="background:#28a745; color:#fff;" id="submit-booking-btn" ${btnDisabledAttr} onclick="sendBooking()">
+        <button class="btn-action" id="submit-booking-btn" ${btnDisabledAttr} onclick="sendBooking()">
           <span id="seat-count-text">${btnText}</span>
         </button>
       `;
+
+      if (modalCard) modalCard.scrollTop = 0;
     }
 
     function toggleSeat(seatId) {
       const t = i18n[currentLang];
-      if (maxAllowedSeats <= 0) return;
+      if (maxAllowedSeats <= 0) {
+        haptic('warning');
+        if (tg && tg.showAlert) tg.showAlert(t.alertMax4);
+        else alert(t.alertMax4);
+        return;
+      }
 
       haptic('selection');
       const seatEl = document.getElementById(`seat-${seatId}`);
@@ -796,9 +841,8 @@
         seatEl.classList.remove('selected');
       } else {
         if (selectedSeats.length >= maxAllowedSeats) {
-          const msg = currentLang === 'de'
-            ? `Du kannst maximal ${maxAllowedSeats} Plätze auswählen!`
-            : `Ти можеш обрати максимум ${maxAllowedSeats} місць!`;
+          haptic('warning');
+          const msg = t.alertMaxRemain(maxAllowedSeats);
           if (tg && tg.showAlert) tg.showAlert(msg);
           else alert(msg);
           return;
@@ -806,31 +850,46 @@
         selectedSeats.push(seatId);
         seatEl.classList.add('selected');
       }
+
       document.getElementById('seat-count-text').innerText = `${selectedSeats.length} ${t.selectPrompt}`;
     }
 
     function sendBooking() {
-      const nameInput = document.getElementById('fullname');
-      const name = nameInput ? nameInput.value.trim() : "";
-      const eventName = document.getElementById('event_name') ? document.getElementById('event_name').value : "Event";
+      const t = i18n[currentLang];
+      try {
+        const nameInput = document.getElementById('fullname');
+        const name = nameInput ? nameInput.value.trim() : "";
+        const eventName = document.getElementById('event_name') ? document.getElementById('event_name').value : "Event";
 
-      if (!name && mySeats.length === 0) {
-        const msg = currentLang === 'de' ? 'Bitte gib deinen Namen ein!' : 'Будь ласка, введи своє ім\'я!';
-        if (tg && tg.showAlert) tg.showAlert(msg); else alert(msg);
-        return;
-      }
-      if (selectedSeats.length === 0) {
-        const msg = currentLang === 'de' ? 'Bitte wähle mindestens 1 Platz!' : 'Обери хоча б 1 місце!';
-        if (tg && tg.showAlert) tg.showAlert(msg); else alert(msg);
-        return;
-      }
+        const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
+        const userId = user ? user.id : "Unbekannt";
 
-      if (tg) {
-        tg.sendData(JSON.stringify({
-          event: eventName,
-          name: name,
-          seats: selectedSeats
-        }));
+        if (!name && mySeats.length === 0) {
+          haptic('error');
+          if (tg && tg.showAlert) tg.showAlert(t.alertEnterName);
+          else alert(t.alertEnterName);
+          return;
+        }
+
+        if (selectedSeats.length === 0) {
+          haptic('error');
+          if (tg && tg.showAlert) tg.showAlert(t.alertSelectSeat);
+          else alert(t.alertSelectSeat);
+          return;
+        }
+
+        haptic('success');
+
+        if (tg) {
+          tg.sendData(JSON.stringify({
+            telegram_id: userId,
+            event: eventName,
+            name: name,
+            seats: selectedSeats
+          }));
+        }
+      } catch (err) {
+        alert("Fehler beim Senden: " + err.message);
       }
     }
 
@@ -844,25 +903,35 @@
       clearInterval(autoSlideInterval);
     }
 
-    function openImpressum() { document.getElementById('impressum-popup').classList.add('active'); }
-    function closeImpressum() { document.getElementById('impressum-popup').classList.remove('active'); }
-    function openDatenschutz() { document.getElementById('datenschutz-popup').classList.add('active'); }
-    function closeDatenschutz() { document.getElementById('datenschutz-popup').classList.remove('active'); }
+    function openImpressum() {
+      haptic('light');
+      document.getElementById('impressum-popup').classList.add('active');
+    }
+    function closeImpressum() {
+      document.getElementById('impressum-popup').classList.remove('active');
+    }
+    function openDatenschutz() {
+      haptic('light');
+      document.getElementById('datenschutz-popup').classList.add('active');
+    }
+    function closeDatenschutz() {
+      document.getElementById('datenschutz-popup').classList.remove('active');
+    }
 
     function openLightbox(imgSrc) {
-      const lb = document.getElementById('lightbox');
+      haptic('light');
+      const lightbox = document.getElementById('lightbox');
       document.getElementById('lightbox-img').src = imgSrc;
-      lb.style.display = 'flex';
-      setTimeout(() => lb.classList.add('active'), 10);
+      lightbox.style.display = 'flex';
+      setTimeout(() => lightbox.classList.add('active'), 10);
     }
     function closeLightbox() {
-      const lb = document.getElementById('lightbox');
-      lb.classList.remove('active');
-      setTimeout(() => lb.style.display = 'none', 300);
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+      setTimeout(() => lightbox.style.display = 'none', 300);
     }
 
-    // Initialisieren
-    updateMainUI();
+    updateNavLabels();
   </script>
 </body>
 </html>
