@@ -1,22 +1,6 @@
 {
   "gallery": [],
-  "team": [
-    {
-      "id": 6,
-      "name": "Test MD",
-      "role": {
-        "de": "Management",
-        "ua": "Менеджмент"
-      },
-      "imgs": [
-        "img/team_c2c77b1191.jpg"
-      ],
-      "bio": {
-        "de": "test bio",
-        "ua": "тест біо"
-      }
-    }
-  ],
+  "team": [],
   "faqs": {
     "de": [
       {
