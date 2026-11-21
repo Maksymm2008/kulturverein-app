@@ -2,22 +2,6 @@
   "gallery": [],
   "team": [
     {
-      "id": 5,
-      "name": "Julia",
-      "role": {
-        "de": "Social Media",
-        "ua": "Соціальні мережі"
-      },
-      "imgs": [
-        "https://i.pravatar.cc/300?img=32",
-        "https://i.pravatar.cc/300?img=33"
-      ],
-      "bio": {
-        "de": "Julia hält unsere Community auf Instagram und Facebook auf dem Laufenden und fängt die besten Momente fotografisch ein.",
-        "ua": "Юлія веде наші сторінки в Instagram та Facebook і ловить найкращі моменти подій на камеру."
-      }
-    },
-    {
       "id": 6,
       "name": "Test MD",
       "role": {
