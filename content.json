@@ -57,21 +57,6 @@
       }
     },
     {
-      "id": 4,
-      "name": "Max",
-      "role": {
-        "de": "Technik & IT",
-        "ua": "Техніка та IT"
-      },
-      "imgs": [
-        "https://i.pravatar.cc/300?img=53"
-      ],
-      "bio": {
-        "de": "Ohne Max läuft nichts: Licht, Ton und das Buchungssystem liegen in seinen Händen. Er löst jedes technische Problem.",
-        "ua": "Без Макса нічого не працює: світло, звук та система бронювання в його руках. Він вирішує будь-яку технічну проблему."
-      }
-    },
-    {
       "id": 5,
       "name": "Julia",
       "role": {
