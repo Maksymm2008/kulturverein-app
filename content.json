@@ -2,22 +2,6 @@
   "gallery": [],
   "team": [
     {
-      "id": 1,
-      "name": "Natali",
-      "role": {
-        "de": "Vorstand & Orga",
-        "ua": "Голова та Організація"
-      },
-      "imgs": [
-        "https://i.pravatar.cc/300?img=47",
-        "https://i.pravatar.cc/300?img=48"
-      ],
-      "bio": {
-        "de": "Natali ist das Herz des Kulturvereins. Sie plant die Events, koordiniert das Team und sorgt dafür, dass jeder Abend unvergesslich wird.",
-        "ua": "Наталі — серце нашої спілки. Вона планує події, координує команду та дбає про те, щоб кожен вечір був незабутнім."
-      }
-    },
-    {
       "id": 2,
       "name": "Volodymyr",
       "role": {
