@@ -2,22 +2,6 @@
   "gallery": [],
   "team": [
     {
-      "id": 3,
-      "name": "Anna",
-      "role": {
-        "de": "Event Management",
-        "ua": "Івент-менеджмент"
-      },
-      "imgs": [
-        "https://i.pravatar.cc/300?img=41",
-        "https://i.pravatar.cc/300?img=42"
-      ],
-      "bio": {
-        "de": "Anna sorgt für einen reibungslosen Ablauf vor Ort. Sie empfängt die Gäste und koordiniert den Einlass.",
-        "ua": "Анна дбає про ідеальний порядок на місці. Вона зустрічає гостей та координує вхід до зали."
-      }
-    },
-    {
       "id": 5,
       "name": "Julia",
       "role": {
