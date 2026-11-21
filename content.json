@@ -1,0 +1,145 @@
+{
+  "gallery": [
+    "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800",
+    "https://images.unsplash.com/photo-1493225457124-a1a2a4af4048?w=800",
+    "https://images.unsplash.com/photo-1540039155733-d76e614860c6?w=800",
+    "https://images.unsplash.com/photo-1470229722913-7c090be5bc12?w=800",
+    "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800"
+  ],
+  "team": [
+    {
+      "id": 1,
+      "name": "Natali",
+      "role": {
+        "de": "Vorstand & Orga",
+        "ua": "Голова та Організація"
+      },
+      "imgs": [
+        "https://i.pravatar.cc/300?img=47",
+        "https://i.pravatar.cc/300?img=48"
+      ],
+      "bio": {
+        "de": "Natali ist das Herz des Kulturvereins. Sie plant die Events, koordiniert das Team und sorgt dafür, dass jeder Abend unvergesslich wird.",
+        "ua": "Наталі — серце нашої спілки. Вона планує події, координує команду та дбає про те, щоб кожен вечір був незабутнім."
+      }
+    },
+    {
+      "id": 2,
+      "name": "Volodymyr",
+      "role": {
+        "de": "Künstlerische Leitung",
+        "ua": "Художній керівник"
+      },
+      "imgs": [
+        "https://i.pravatar.cc/300?img=11",
+        "https://i.pravatar.cc/300?img=12",
+        "https://i.pravatar.cc/300?img=13"
+      ],
+      "bio": {
+        "de": "Volodymyr ist für das kreative Programm verantwortlich. Von der Musikauswahl bis zur Bühnengestaltung bringt er Kunst zum Leben.",
+        "ua": "Володимир відповідає за творчу програму. Від вибору музики до оформлення сцени — він оживляє мистецтво."
+      }
+    },
+    {
+      "id": 3,
+      "name": "Anna",
+      "role": {
+        "de": "Event Management",
+        "ua": "Івент-менеджмент"
+      },
+      "imgs": [
+        "https://i.pravatar.cc/300?img=41",
+        "https://i.pravatar.cc/300?img=42"
+      ],
+      "bio": {
+        "de": "Anna sorgt für einen reibungslosen Ablauf vor Ort. Sie empfängt die Gäste und koordiniert den Einlass.",
+        "ua": "Анна дбає про ідеальний порядок на місці. Вона зустрічає гостей та координує вхід до зали."
+      }
+    },
+    {
+      "id": 4,
+      "name": "Max",
+      "role": {
+        "de": "Technik & IT",
+        "ua": "Техніка та IT"
+      },
+      "imgs": [
+        "https://i.pravatar.cc/300?img=53"
+      ],
+      "bio": {
+        "de": "Ohne Max läuft nichts: Licht, Ton und das Buchungssystem liegen in seinen Händen. Er löst jedes technische Problem.",
+        "ua": "Без Макса нічого не працює: світло, звук та система бронювання в його руках. Він вирішує будь-яку технічну проблему."
+      }
+    },
+    {
+      "id": 5,
+      "name": "Julia",
+      "role": {
+        "de": "Social Media",
+        "ua": "Соціальні мережі"
+      },
+      "imgs": [
+        "https://i.pravatar.cc/300?img=32",
+        "https://i.pravatar.cc/300?img=33"
+      ],
+      "bio": {
+        "de": "Julia hält unsere Community auf Instagram und Facebook auf dem Laufenden und fängt die besten Momente fotografisch ein.",
+        "ua": "Юлія веде наші сторінки в Instagram та Facebook і ловить найкращі моменти подій на камеру."
+      }
+    }
+  ],
+  "faqs": {
+    "de": [
+      {
+        "q": "Kann ich auch ohne Reservierung kommen?",
+        "a": "Ja, selbstverständlich! Gäste ohne Reservierung können sich im Saal frei auf jeden Stuhl setzen, der nicht als reserviert markiert ist."
+      },
+      {
+        "q": "Warum sollte ich vorher reservieren?",
+        "a": "Die Reservierung ist zu 100 % kostenlos. Sie garantiert, dass Familien oder Freunde sicher nebeneinander sitzen können, oder sichert dir deinen persönlichen Lieblingsplatz im Saal. Bring einfach dein Smartphone mit dem QR-Code aus dem Bot mit – unser Team scannt ihn am Einlass und zeigt euch eure Plätze."
+      },
+      {
+        "q": "Wie viele Plätze kann ich reservieren?",
+        "a": "Jeder Benutzer kann pro Veranstaltung bis zu 4 Plätze kostenlos reservieren."
+      },
+      {
+        "q": "Wie erhalte ich mein QR-Code-Ticket?",
+        "a": "Sobald deine Reservierung vom Administrator bestätigt wird, erhältst du dein persönliches QR-Code-Ticket mit allen Details direkt hier im Telegram-Chat."
+      },
+      {
+        "q": "Kann ich meine Reservierung stornieren?",
+        "a": "Ja, jederzeit! Klicke dazu einfach im Telegram-Chat unten auf den Button '❌ Reservierung stornieren' und wähle das gewünschte Event aus."
+      },
+      {
+        "q": "Wo und wann findet das Event statt?",
+        "a": "Alle aktuellen Veranstaltungen inklusive Datum, Uhrzeit und Ort findest du jederzeit unter der Rubrik 'Events'."
+      }
+    ],
+    "ua": [
+      {
+        "q": "Чи можу я прийти без попереднього бронювання?",
+        "a": "Так, звісно! Гості без бронювання можуть вільно сісти на будь-який стілець у залі, який не позначений як зарезервований."
+      },
+      {
+        "q": "Чому варто забронювати місця заздалегідь?",
+        "a": "Бронювання на 100 % безкоштовне. Воно гарантує, що сім'я або друзі сидітимуть поруч, або дозволяє закріпити за собою улюблене місце в залі. Просто візьми свій телефон із QR-кодом із бота — наша команда просканує його на вході та покаже ваші місця."
+      },
+      {
+        "q": "Скільки місць я можу забронювати?",
+        "a": "Кожен користувач може безкоштовно забронювати до 4 місць на кожну подію."
+      },
+      {
+        "q": "Як я отримаю свій квиток із QR-кодом?",
+        "a": "Щойно адміністратор підтвердить бронювання, ти отримаєш персональний QR-код квитка з усіма деталями просто в цей Telegram-чат."
+      },
+      {
+        "q": "Чи можу я скасувати бронювання?",
+        "a": "Так, у будь-який момент! Просто натисни внизу в чаті Telegram кнопку '❌ Reservierung stornieren' та обери потрібну подію."
+      },
+      {
+        "q": "Де і коли відбувається подія?",
+        "a": "Усі актуальні події з датою, часом та місцем проведення ти завжди знайдеш у розділі 'Події'."
+      }
+    ]
+  }
+}
