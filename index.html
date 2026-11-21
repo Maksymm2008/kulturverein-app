@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Kulturverein Experience</title>
+  <title>Ukrainisch-Deutscher-Kulturverein Neumünster e.V.</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body, html {
-      width: 100vw; height: 100vh;
+    html, body {
+      width: 100%; height: 100%;
       background-color: #050507; color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       overflow: hidden;
     }
 
     .hero-container {
-      position: relative; width: 100vw; height: 100vh;
+      position: relative; width: 100%; height: 100%;
       background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(5,5,7,0.95) 100%),
                   url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200') center/cover no-repeat;
       display: flex; flex-direction: column; justify-content: space-between;
@@ -25,12 +25,13 @@
 
     /* NAVIGATION */
     .top-bar { display: flex; flex-direction: column; gap: 10px; z-index: 10; width: 100%; }
-    .brand-row { display: flex; justify-content: space-between; align-items: center; }
+    .brand-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .brand-logo { font-size: clamp(0.8rem, 3vw, 1rem); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
 
     .lang-switch {
       display: flex; background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 20px; overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      flex-shrink: 0;
     }
     .lang-btn {
       padding: 4px 10px; font-size: 0.68rem; font-weight: 700; color: #aaa;
@@ -47,21 +48,26 @@
     }
     .nav-item:active { background: #fff; color: #000; }
 
-    /* OVERLAY MODAL */
+    /* OVERLAY MODAL (narrow-window & desktop safe) */
     .overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      position: fixed; inset: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
       z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center;
-      padding: 12px; animation: fadeIn 0.2s ease;
+      padding: 12px; overflow: hidden; animation: fadeIn 0.2s ease;
     }
     .overlay.active { display: flex; }
 
     .modal-card {
       background: #121216; border: 1px solid #2a2a32; border-radius: 20px;
-      padding: 44px 16px 16px 16px; position: relative; width: 100%; max-width: 420px;
-      max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column;
+      padding: 44px 16px 18px 16px; position: relative;
+      width: 100%; max-width: 420px; min-width: 0;
+      max-height: calc(100% - 8px);
+      overflow-y: auto; overflow-x: hidden;
+      display: flex; flex-direction: column;
       box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      word-wrap: break-word; overflow-wrap: break-word;
     }
+    #modal-content { width: 100%; min-width: 0; }
 
     .close-btn {
       position: absolute; top: 10px; right: 16px; font-size: 1.6rem; line-height: 1;
@@ -77,7 +83,16 @@
     /* EVENT CARD */
     .event-card { background: #1a1a20; border: 1px solid #2a2a35; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
     .event-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 6px; color: #fff; }
-    .event-info { font-size: 0.8rem; color: #aaa; margin-bottom: 10px; line-height: 1.4; }
+    .event-info { font-size: 0.8rem; color: #aaa; margin-bottom: 8px; line-height: 1.45; }
+    .event-meta-pill {
+      display: inline-block; font-size: 0.7rem; color: #64b5f6;
+      background: rgba(0, 123, 255, 0.14); border: 1px solid rgba(0, 123, 255, 0.35);
+      padding: 3px 8px; border-radius: 8px; margin-bottom: 10px;
+    }
+    .empty-state {
+      background: #1a1a20; border: 1px solid #2a2a32; border-radius: 12px;
+      padding: 18px 14px; text-align: center; color: #aaa; font-size: 0.85rem; line-height: 1.5;
+    }
 
     /* BÜHNE & SAALPLAN */
     .stage {
@@ -94,18 +109,25 @@
       padding: 8px 4px; background: #181820; border-radius: 8px; font-size: 0.65rem; color: #ccc; text-align: center;
     }
     .legend-item { display: flex; align-items: center; justify-content: center; gap: 4px; }
-    .legend-box { width: 12px; height: 12px; border-radius: 3px; }
+    .legend-box { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
     .legend-free { background: #222; border: 1px solid #444; }
     .legend-selected { background: #28a745; border: 1px solid #28a745; }
     .legend-mine { background: #007bff; border: 1px solid #007bff; }
     .legend-occupied { background: #dc3545; border: 1px solid #dc3545; }
 
     .seating-grid {
-      display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px;
-      padding: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      width: 100%; margin-bottom: 14px; padding: 4px 2px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
     }
-    .seat-row { display: flex; align-items: center; justify-content: center; gap: 4px; }
-    .row-label { font-size: 0.65rem; color: #666; width: 18px; text-align: right; margin-right: 2px; font-weight: bold; }
+    .seating-grid-inner {
+      display: flex; flex-direction: column; gap: 5px;
+      width: max-content; margin: 0 auto; padding: 0 2px;
+    }
+    .seat-row { display: flex; align-items: center; gap: 4px; }
+    .row-label {
+      font-size: 0.65rem; color: #666; width: 24px; text-align: right;
+      margin-right: 2px; font-weight: bold; flex-shrink: 0;
+    }
 
     .seat {
       width: 22px; height: 22px; border-radius: 5px; background: #222; border: 1px solid #444;
@@ -119,6 +141,7 @@
     .info-banner {
       background: rgba(0, 123, 255, 0.15); border: 1px solid rgba(0, 123, 255, 0.4);
       color: #64b5f6; font-size: 0.75rem; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px;
+      line-height: 1.4;
     }
 
     .locked-name-badge {
@@ -186,7 +209,7 @@
     .gallery-img:active { transform: scale(0.95); }
 
     .lightbox {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      position: fixed; inset: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.95); z-index: 200;
       display: none; justify-content: center; align-items: center;
       opacity: 0; transition: opacity 0.3s ease;
@@ -200,32 +223,41 @@
     }
 
     /* FAQ, CONTACT & FOOTER */
-    .faq-item { margin-bottom: 10px; background: #1a1a20; padding: 12px; border-radius: 10px; border: 1px solid #2a2a32; }
-    .faq-q { font-weight: bold; font-size: 0.85rem; color: #4dabf7; margin-bottom: 4px; }
-    .faq-a { font-size: 0.8rem; color: #ccc; line-height: 1.4; }
+    .member-box {
+      background: rgba(40, 167, 69, 0.08); border: 1px solid rgba(40, 167, 69, 0.3);
+      padding: 14px; border-radius: 12px; margin-top: 6px; margin-bottom: 12px; text-align: center;
+    }
+    .member-title { font-size: 0.9rem; font-weight: bold; color: #28a745; margin-bottom: 6px; }
+    .member-desc { font-size: 0.78rem; color: #ccc; margin-bottom: 10px; line-height: 1.45; }
 
     .contact-box {
       background: rgba(77, 171, 247, 0.08); border: 1px solid rgba(77, 171, 247, 0.3);
-      padding: 14px; border-radius: 12px; margin-top: 14px; text-align: center;
+      padding: 14px; border-radius: 12px; margin-bottom: 16px; text-align: center;
     }
     .contact-title { font-size: 0.9rem; font-weight: bold; color: #fff; margin-bottom: 6px; }
-    .contact-desc { font-size: 0.78rem; color: #aaa; margin-bottom: 10px; line-height: 1.4; }
+    .contact-desc { font-size: 0.78rem; color: #aaa; margin-bottom: 10px; line-height: 1.45; }
 
-    .member-box {
-      background: rgba(40, 167, 69, 0.08); border: 1px solid rgba(40, 167, 69, 0.3);
-      padding: 14px; border-radius: 12px; margin-top: 14px; text-align: center;
+    .faq-section-title {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #888; margin-bottom: 10px; padding-left: 2px;
     }
-    .member-title { font-size: 0.9rem; font-weight: bold; color: #28a745; margin-bottom: 6px; }
-    .member-desc { font-size: 0.78rem; color: #ccc; margin-bottom: 10px; line-height: 1.4; }
+    .faq-item {
+      margin-bottom: 10px; background: #1a1a20; padding: 12px;
+      border-radius: 10px; border: 1px solid #2a2a32; text-align: left;
+    }
+    .faq-q { font-weight: bold; font-size: 0.85rem; color: #4dabf7; margin-bottom: 5px; line-height: 1.35; }
+    .faq-a { font-size: 0.8rem; color: #ccc; line-height: 1.45; }
 
-    .app-footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #2a2a32; text-align: center; font-size: 0.7rem; color: #666; }
+    .app-footer { margin-top: 18px; padding-top: 14px; border-top: 1px solid #2a2a32; text-align: center; font-size: 0.7rem; color: #666; }
     .app-footer a { color: #888; text-decoration: underline; cursor: pointer; margin: 0 5px; }
 
     .impressum-content { font-size: 0.8rem; color: #ccc; line-height: 1.5; text-align: left; }
     .impressum-content b { color: #fff; }
+    .impressum-content ul { list-style: none; padding-left: 2px; margin-top: 4px; }
+    .impressum-content li { margin-bottom: 4px; }
 
-    .main-footer { text-align: center; font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); z-index: 10; padding-bottom: 8px; }
-    .main-footer a { color: rgba(255, 255, 255, 0.85); text-decoration: underline; cursor: pointer; margin: 0 4px; }
+    .main-footer { text-align: center; font-size: 0.7rem; color: rgba(255, 255, 255, 0.65); z-index: 10; padding-bottom: 8px; }
+    .main-footer a { color: rgba(255, 255, 255, 0.88); text-decoration: underline; cursor: pointer; margin: 0 4px; }
   </style>
 </head>
 <body>
@@ -248,7 +280,7 @@
     </div>
 
     <div class="main-footer">
-      <p>© 2026 Ukrainisch-Deutscher Kulturverein e.V.</p>
+      <p>© 2026 Ukrainisch-Deutscher-Kulturverein Neumünster e.V.</p>
       <p style="margin-top: 4px;">
         <a onclick="openImpressum()">Impressum</a> • <a onclick="openDatenschutz()">Datenschutz</a>
       </p>
@@ -270,28 +302,28 @@
       <span class="close-btn" onclick="closeImpressum()">×</span>
       <h2>Impressum</h2>
       <div class="impressum-content">
-  <p><b>Angaben gemäß § 5 DDG:</b></p>
-  <p><b>[Exakter Name des Vereins e.V.]</b><br>
-  [Straße + Hausnummer des Vereinssitzes]<br>
-  24534 Neumünster</p>
-  <br>
-  <p><b>Kontakt:</b><br>
-  Telefon: [Telefonnummer der Vorsitzenden / des Vereins]<br>
-  E-Mail: [Vereins-E-Mail-Adresse]</p>
-  <br>
-  <p><b>Vertretungsberechtigter Vorstand (§ 26 BGB):</b><br>
-  1. Vorsitzende(r): [Vorname Nachname der Bekannten]<br>
-  2. Vorsitzende(r): [Vorname Nachname, falls vorhanden]</p>
-  <br>
-  <p><b>Registereintrag:</b><br>
-  Registergericht: Amtsgericht Kiel<br>
-  Registernummer: VR [Echte Nummer eintragen]</p>
-  <br>
-  <p><b>Verantwortlich i.S.d. § 18 Abs. 2 MStV:</b><br>
-  [Vorname Nachname der 1. Vorsitzenden]<br>
-  [Straße + Hausnummer]<br>
-  24534 Neumünster</p>
-</div>
+        <p><b>Angaben gemäß § 5 DDG:</b></p>
+        <p><b>Ukrainisch-Deutscher-Kulturverein Neumünster e.V.</b><br>
+        [Straße + Hausnummer des Vereinssitzes]<br>
+        24534 Neumünster</p>
+        <br>
+        <p><b>Kontakt:</b><br>
+        Telefon: [Telefonnummer der Vorsitzenden / des Vereins]<br>
+        E-Mail: [Vereins-E-Mail-Adresse]</p>
+        <br>
+        <p><b>Vertretungsberechtigter Vorstand (§ 26 BGB):</b><br>
+        1. Vorsitzende(r): [Vorname Nachname der Bekannten]<br>
+        2. Vorsitzende(r): [Vorname Nachname, falls vorhanden]</p>
+        <br>
+        <p><b>Registereintrag:</b><br>
+        Registergericht: Amtsgericht Kiel<br>
+        Registernummer: VR [Echte Nummer eintragen]</p>
+        <br>
+        <p><b>Verantwortlich i.S.d. § 18 Abs. 2 MStV:</b><br>
+        [Vorname Nachname der 1. Vorsitzenden]<br>
+        [Straße + Hausnummer]<br>
+        24534 Neumünster</p>
+      </div>
     </div>
   </div>
 
@@ -300,22 +332,22 @@
     <div class="modal-card">
       <span class="close-btn" onclick="closeDatenschutz()">×</span>
       <h2>Datenschutzerklärung</h2>
-      <div class="impressum-content" style="max-height: 75vh; overflow-y: auto; padding-right: 5px;">
+      <div class="impressum-content" style="max-height: 75vh; overflow-y: auto; padding-right: 4px;">
         <p><b>1. Verantwortlicher</b></p>
-        <p>Verantwortlich für die Datenverarbeitung innerhalb dieses Telegram-Bots und der WebApp ist der im Impressum genannte Ukrainisch-Deutscher Kulturverein e.V. in Neumünster.</p>
+        <p>Verantwortlich für die Datenverarbeitung innerhalb dieses Telegram-Bots und der MiniApp ist der im Impressum genannte Ukrainisch-Deutscher-Kulturverein Neumünster e.V.</p>
         <br>
         <p><b>2. Welche Daten werden verarbeitet?</b></p>
-        <p>Beim Öffnen der WebApp (gehostet über GitHub Pages) werden technisch notwendige Verbindungsdaten verarbeitet. Wenn Sie eine Reservierung vornehmen, eine Mitgliedschaft anfragen oder den Vereins-Chat nutzen, verarbeiten wir:</p>
+        <p>Beim Öffnen der MiniApp (gehostet über GitHub Pages) werden technisch notwendige Verbindungsdaten verarbeitet. Wenn Sie eine Reservierung vornehmen, eine Mitgliedschaft anfragen oder den Vereins-Chat nutzen, verarbeiten wir:</p>
         <ul>
           <li>• <b>Telegram-Daten:</b> Ihre Telegram-ID, Ihren Profilnamen und Ihren @Benutzernamen.</li>
-          <li>• <b>Buchungs- & Formulardaten:</b> Den angegebenen Namen, Kontaktdaten, ausgewählte Sitzplätze sowie Ihre Nachrichten.</li>
+          <li>• <b>Buchungs- &amp; Formulardaten:</b> Den angegebenen Namen, Kontaktdaten, ausgewählte Sitzplätze, Feedbacks sowie Ihre Nachrichten.</li>
         </ul>
         <br>
         <p><b>3. Zweck und Rechtsgrundlage</b></p>
         <p>Die Verarbeitung erfolgt zur Durchführung der Ticketreservierung, der Bearbeitung von Mitgliedschafts-/Supportanfragen sowie der Moderation des Vereins-Chats (Art. 6 Abs. 1 lit. b und f DSGVO).</p>
         <br>
-        <p><b>4. Speicherung & Löschung</b></p>
-        <p>Ihre Daten werden in einer geschützten Datenbank beim Betreiber gespeichert. Bei einer Stornierung oder auf Wunsch per Nachricht im Bot werden Ihre Daten gelöscht.</p>
+        <p><b>4. Speicherung &amp; Löschung (Art. 17 DSGVO)</b></p>
+        <p>Ihre Daten werden in einer geschützten Datenbank beim Betreiber gespeichert. Sie können jederzeit eine Reservierung stornieren oder über den Button „🗑️ Meine Daten löschen“ (bzw. /delete_me) im Bot alle gespeicherten Daten sofort und vollständig löschen.</p>
         <br>
         <p><b>5. Ihre Rechte</b></p>
         <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten (Art. 15–18 DSGVO) sowie ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde (ULD Schleswig-Holstein, Kiel).</p>
@@ -326,7 +358,7 @@
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <span class="lightbox-close">×</span>
-    <img id="lightbox-img" src="">
+    <img id="lightbox-img" src="" alt="">
   </div>
 
   <script>
@@ -341,15 +373,79 @@
       }
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const occupiedSeatsParam = urlParams.get('occupied') || '';
-    const mySeatsParam = urlParams.get('my_seats') || '';
-    const maxAllowedSeats = parseInt(urlParams.get('max_seats') || '4', 10);
-    const bookedNameParam = urlParams.get('name') || '';
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
 
-    const occupiedSeats = occupiedSeatsParam ? occupiedSeatsParam.split(',').filter(Boolean) : [];
-    const mySeats = mySeatsParam ? mySeatsParam.split(',').filter(Boolean) : [];
+    function decodeBase64UrlJson(b64url) {
+      let b64 = b64url.replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4 !== 0) b64 += '=';
+      const binStr = atob(b64);
+      const bytes = new Uint8Array(binStr.length);
+      for (let i = 0; i < binStr.length; i++) {
+        bytes[i] = binStr.charCodeAt(i);
+      }
+      const jsonStr = new TextDecoder('utf-8').decode(bytes);
+      return JSON.parse(jsonStr);
+    }
 
+    const FALLBACK_EVENTS = [
+      {
+        id: 1,
+        de: "Kulturabend 2026",
+        ua: "Вечір Культури 2026",
+        dt: "2026-12-12 19:00",
+        loc: "Hauptaula im Vereinsheim",
+        r: 8,
+        s: 10,
+        occ: [],
+        my: []
+      }
+    ];
+
+    function parseAppPayload() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const payloadParam = urlParams.get('payload');
+      if (payloadParam) {
+        try {
+          const decoded = decodeBase64UrlJson(payloadParam);
+          if (decoded && Array.isArray(decoded.e)) {
+            const normalizedEvents = decoded.e.map(ev => ({
+              id: Number(ev.id),
+              de: String(ev.de || 'Event'),
+              ua: String(ev.ua || ev.de || 'Подія'),
+              dt: String(ev.dt || ''),
+              loc: String(ev.loc || ''),
+              r: Math.max(1, Math.min(20, parseInt(ev.r, 10) || 8)),
+              s: Math.max(1, Math.min(15, parseInt(ev.s, 10) || 10)),
+              occ: Array.isArray(ev.occ) ? ev.occ : [],
+              my: Array.isArray(ev.my) ? ev.my : []
+            }));
+            return {
+              savedName: String(decoded.u || ''),
+              events: normalizedEvents
+            };
+          }
+        } catch (err) {
+          console.warn('Konnte payload-Parameter nicht dekodieren, nutze Fallback:', err);
+        }
+      }
+      return {
+        savedName: urlParams.get('name') || '',
+        events: FALLBACK_EVENTS
+      };
+    }
+
+    const appState = parseAppPayload();
+    const bookedNameParam = appState.savedName;
+    const eventsList = appState.events;
+
+    let activeEvent = null;
     let selectedSeats = [];
     let currentLang = localStorage.getItem('kv_lang') || 'de';
 
@@ -357,12 +453,15 @@
       de: {
         navEvents: "Events", navGalerie: "Galerie", navTeam: "Team", navInfo: "Info",
         eventsHeader: "Anstehende Events",
+        noEventsText: "Aktuell sind keine Veranstaltungen geplant. Schau bald wieder vorbei!",
         selectSeatsBtn: "Sitzplätze Auswählen",
+        mySeatsBadge: (n) => `🔹 ${n}/4 Plätze von dir reserviert`,
         galerieHeader: "Galerie",
         galerieSub: "Eindrücke unserer Events.",
         teamHeader: "Unser Team",
         backBtn: "⬅ Zurück",
         infoHeader: "Info & FAQ",
+        faqSectionTitle: "Häufige Fragen (FAQ)",
         memberTitle: "🤝 Wie kann ich Mitglied werden?",
         memberDesc: "Möchtest du unseren Verein unterstützen und aktiv mitgestalten? Wir freuen uns über jedes neue Mitglied!",
         memberBtn: "Mitgliedschaft anfragen",
@@ -386,21 +485,25 @@
         maxReached: "Maximum (4) erreicht",
         selectPrompt: "Stuhl/Stühle ausgewählt – Reservieren",
         zeroPrompt: "0 Stühle ausgewählt – Reservieren",
-        alertMax4: "Du hast bereits das Maximum von 4 Plätzen gebucht!",
-        alertMaxRemain: (n) => `Du kannst maximal noch ${n} weiteren/weitere Platz/Plätze auswählen!`,
+        alertMax4: "Du hast für dieses Event bereits das Maximum von 4 Plätzen gebucht!",
+        alertMaxRemain: (n) => `Du kannst für dieses Event maximal noch ${n} weiteren/weitere Platz/Plätze auswählen!`,
         alertEnterName: "Bitte gib deinen Namen ein!",
         alertEnterText: "Bitte gib eine Nachricht ein!",
-        alertSelectSeat: "Bitte wähle mindestens 1 Stuhl aus!"
+        alertSelectSeat: "Bitte wähle mindestens 1 Stuhl aus!",
+        timeSuffix: " Uhr"
       },
       ua: {
         navEvents: "Події", navGalerie: "Галерея", navTeam: "Команда", navInfo: "Інфо",
         eventsHeader: "Найближчі події",
+        noEventsText: "Наразі подій не заплановано. Завітай до нас трохи згодом!",
         selectSeatsBtn: "Обрати місця",
+        mySeatsBadge: (n) => `🔹 Ти вже забронював ${n}/4 місць`,
         galerieHeader: "Галерея",
         galerieSub: "Яскраві моменти наших подій.",
         teamHeader: "Наша Команда",
         backBtn: "⬅ Назад",
         infoHeader: "Інфо та FAQ",
+        faqSectionTitle: "Часті запитання (FAQ)",
         memberTitle: "🤝 Як стати учасником спілки?",
         memberDesc: "Хочеш підтримати нашу спілку та долучитися до організації подій? Ми раді кожному новому учаснику!",
         memberBtn: "Подати заявку",
@@ -424,22 +527,14 @@
         maxReached: "Досягнуто ліміт (4)",
         selectPrompt: "місць обрано – Забронювати",
         zeroPrompt: "0 місць обрано – Забронювати",
-        alertMax4: "Ти вже забронював максимум (4 місця)!",
-        alertMaxRemain: (n) => `Ти можеш обрати ще максимум ${n} місць!`,
+        alertMax4: "Ти вже забронював максимум (4 місця) на цю подію!",
+        alertMaxRemain: (n) => `На цю подію ти можеш обрати ще максимум ${n} місць!`,
         alertEnterName: "Будь ласка, введи своє ім'я!",
         alertEnterText: "Будь ласка, введи текст повідомлення!",
-        alertSelectSeat: "Будь ласка, обери хоча б 1 місце!"
+        alertSelectSeat: "Будь ласка, обери хоча б 1 місце!",
+        timeSuffix: ""
       }
     };
-
-    const eventsList = [
-      {
-        id: "kulturabend_2026",
-        title: { de: "Kulturabend 2026", ua: "Вечір Культури 2026" },
-        date: { de: "Samstag, 19:00 Uhr", ua: "Субота, 19:00" },
-        location: { de: "Hauptaula im Vereinsheim", ua: "Головна зала спілки" }
-      }
-    ];
 
     const galleryImages = [
       "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800",
@@ -500,16 +595,56 @@
 
     const faqList = {
       de: [
-        { q: "Wie viele Plätze kann ich reservieren?", a: "Jeder Benutzer kann insgesamt bis zu 4 Plätze für die Veranstaltung reservieren." },
-        { q: "Wie erhalte ich mein Ticket?", a: "Sobald deine Reservierung vom Administrator bestätigt wird, erhältst du dein QR-Code-Ticket direkt hier im Telegram-Chat." },
-        { q: "Kann ich meine Reservierung stornieren?", a: "Ja, klicke dazu einfach im Telegram-Chat unten auf den Button '❌ Reservierung stornieren'." },
-        { q: "Wo findet das Event statt?", a: "Alle Details zum Ort und Datum der Veranstaltung findest du unter der Rubrik 'Events'." }
+        {
+          q: "Kann ich auch ohne Reservierung kommen?",
+          a: "Ja, selbstverständlich! Gäste ohne Reservierung können sich im Saal frei auf jeden Stuhl setzen, der nicht als reserviert markiert ist."
+        },
+        {
+          q: "Warum sollte ich vorher reservieren?",
+          a: "Die Reservierung ist zu 100 % kostenlos. Sie garantiert, dass Familien oder Freunde sicher nebeneinander sitzen können, oder sichert dir deinen persönlichen Lieblingsplatz im Saal. Bring einfach dein Smartphone mit dem QR-Code aus dem Bot mit – unser Team scannt ihn am Einlass und zeigt euch eure Plätze."
+        },
+        {
+          q: "Wie viele Plätze kann ich reservieren?",
+          a: "Jeder Benutzer kann pro Veranstaltung bis zu 4 Plätze kostenlos reservieren."
+        },
+        {
+          q: "Wie erhalte ich mein QR-Code-Ticket?",
+          a: "Sobald deine Reservierung vom Administrator bestätigt wird, erhältst du dein persönliches QR-Code-Ticket mit allen Details direkt hier im Telegram-Chat."
+        },
+        {
+          q: "Kann ich meine Reservierung stornieren?",
+          a: "Ja, jederzeit! Klicke dazu einfach im Telegram-Chat unten auf den Button '❌ Reservierung stornieren' und wähle das gewünschte Event aus."
+        },
+        {
+          q: "Wo und wann findet das Event statt?",
+          a: "Alle aktuellen Veranstaltungen inklusive Datum, Uhrzeit und Ort findest du jederzeit unter der Rubrik 'Events'."
+        }
       ],
       ua: [
-        { q: "Скільки місць я можу забронювати?", a: "Кожен користувач може забронювати до 4 місць на подію." },
-        { q: "Як я отримаю свій квиток?", a: "Щойно адміністратор підтвердить бронювання, ти отримаєш QR-код квитка просто в цей Telegram-чат." },
-        { q: "Чи можу я скасувати бронювання?", a: "Так, для цього просто натисни внизу в чаті Telegram кнопку '❌ Reservierung stornieren'." },
-        { q: "Де відбувається подія?", a: "Усі деталі щодо місця та часу проведення ти знайдеш у розділі 'Події'." }
+        {
+          q: "Чи можу я прийти без попереднього бронювання?",
+          a: "Так, звісно! Гості без бронювання можуть вільно сісти на будь-який стілець у залі, який не позначений як зарезервований."
+        },
+        {
+          q: "Чому варто забронювати місця заздалегідь?",
+          a: "Бронювання на 100 % безкоштовне. Воно гарантує, що сім'я або друзі сидітимуть поруч, або дозволяє закріпити за собою улюблене місце в залі. Просто візьми свій телефон із QR-кодом із бота — наша команда просканує його на вході та покаже ваші місця."
+        },
+        {
+          q: "Скільки місць я можу забронювати?",
+          a: "Кожен користувач може безкоштовно забронювати до 4 місць на кожну подію."
+        },
+        {
+          q: "Як я отримаю свій квиток із QR-кодом?",
+          a: "Щойно адміністратор підтвердить бронювання, ти отримаєш персональний QR-код квитка з усіма деталями просто в цей Telegram-чат."
+        },
+        {
+          q: "Чи можу я скасувати бронювання?",
+          a: "Так, у будь-який момент! Просто натисни внизу в чаті Telegram кнопку '❌ Reservierung stornieren' та обери потрібну подію."
+        },
+        {
+          q: "Де і коли відбувається подія?",
+          a: "Усі актуальні події з датою, часом та місцем проведення ти завжди знайдеш у розділі 'Події'."
+        }
       ]
     };
 
@@ -518,6 +653,13 @@
     let pointerStartX = 0;
     let pointerEndX = 0;
     let isDragging = false;
+
+    function formatEventDate(isoStr, lang) {
+      const match = /^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}:\d{2})$/.exec((isoStr || '').trim());
+      if (!match) return isoStr || '';
+      const [, y, m, d, hm] = match;
+      return `${d}.${m}.${y}, ${hm}${i18n[lang].timeSuffix}`;
+    }
 
     function getDefaultUserName() {
       const tgName = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user)
@@ -545,7 +687,7 @@
       if (popup.classList.contains('active') && popup.dataset.view) {
         const view = popup.dataset.view;
         if (view.startsWith('team_')) showTeamMember(parseInt(view.split('_')[1], 10));
-        else if (view.startsWith('seat_')) openSeatingPlan(view.replace('seat_', ''));
+        else if (view.startsWith('seat_')) openSeatingPlan(parseInt(view.replace('seat_', ''), 10));
         else if (view === 'form_member') openMembershipForm();
         else if (view === 'form_question') openQuestionForm();
         else openModal(view);
@@ -569,22 +711,32 @@
 
       if (type === 'events') {
         let html = `<h2>${t.eventsHeader}</h2>`;
-        eventsList.forEach(event => {
-          const title = event.title[currentLang];
-          html += `
-            <div class="event-card">
-              <div class="event-title">${title}</div>
-              <div class="event-info">📅 ${event.date[currentLang]} | 📍 ${event.location[currentLang]}</div>
-              <button class="btn-action" onclick="openSeatingPlan('${title}')">${t.selectSeatsBtn}</button>
-            </div>
-          `;
-        });
+        if (!eventsList.length) {
+          html += `<div class="empty-state">${t.noEventsText}</div>`;
+        } else {
+          eventsList.forEach(ev => {
+            const title = currentLang === 'ua' ? (ev.ua || ev.de) : ev.de;
+            const dateStr = formatEventDate(ev.dt, currentLang);
+            const myCount = ev.my.length;
+            const myBadge = myCount > 0
+              ? `<div class="event-meta-pill">${t.mySeatsBadge(myCount)}</div>`
+              : '';
+            html += `
+              <div class="event-card">
+                <div class="event-title">${escapeHtml(title)}</div>
+                <div class="event-info">📅 ${escapeHtml(dateStr)}<br>📍 ${escapeHtml(ev.loc)}</div>
+                ${myBadge}
+                <button class="btn-action" onclick="openSeatingPlan(${ev.id})">${t.selectSeatsBtn}</button>
+              </div>
+            `;
+          });
+        }
         content.innerHTML = html;
 
       } else if (type === 'galerie') {
         let gridHtml = '<div class="gallery-grid">';
         galleryImages.forEach(img => {
-          gridHtml += `<img src="${img}" class="gallery-img" onclick="openLightbox('${img}')">`;
+          gridHtml += `<img src="${img}" class="gallery-img" alt="Event" onclick="openLightbox('${img}')">`;
         });
         gridHtml += '</div>';
         content.innerHTML = `
@@ -598,9 +750,9 @@
         teamMembers.forEach(m => {
           gridHtml += `
             <div class="team-card" onclick="showTeamMember(${m.id})">
-              <img src="${m.imgs[0]}" class="team-img-small">
-              <div class="team-name">${m.name}</div>
-              <div class="team-role">${m.role[currentLang]}</div>
+              <img src="${m.imgs[0]}" class="team-img-small" alt="${escapeHtml(m.name)}">
+              <div class="team-name">${escapeHtml(m.name)}</div>
+              <div class="team-role">${escapeHtml(m.role[currentLang])}</div>
             </div>`;
         });
         gridHtml += '</div>';
@@ -611,15 +763,14 @@
         faqList[currentLang].forEach(item => {
           faqHtml += `
             <div class="faq-item">
-              <div class="faq-q">❓ ${item.q}</div>
-              <div class="faq-a">${item.a}</div>
+              <div class="faq-q">❓ ${escapeHtml(item.q)}</div>
+              <div class="faq-a">${escapeHtml(item.a)}</div>
             </div>
           `;
         });
 
         content.innerHTML = `
           <h2>${t.infoHeader}</h2>
-          <div style="margin-top:10px;">${faqHtml}</div>
 
           <div class="member-box">
             <div class="member-title">${t.memberTitle}</div>
@@ -633,8 +784,11 @@
             <button class="btn-action" style="background:#4dabf7; color:#fff;" onclick="openQuestionForm()">${t.contactBtn}</button>
           </div>
 
+          <div class="faq-section-title">${t.faqSectionTitle}</div>
+          <div>${faqHtml}</div>
+
           <div class="app-footer">
-            <p>© 2026 Ukrainisch-Deutscher Kulturverein e.V.</p>
+            <p>© 2026 Ukrainisch-Deutscher-Kulturverein Neumünster e.V.</p>
             <p style="margin-top:6px;">
               <a onclick="openImpressum()">Impressum</a> • <a onclick="openDatenschutz()">Datenschutz</a>
             </p>
@@ -657,7 +811,7 @@
       popup.dataset.view = 'form_member';
       setBackButton(`<div class="back-btn" onclick="openModal('info')">${t.backBtn}</div>`);
 
-      const defaultName = getDefaultUserName();
+      const defaultName = escapeHtml(getDefaultUserName());
 
       content.innerHTML = `
         <h2>${t.memberFormHeader}</h2>
@@ -707,7 +861,7 @@
       popup.dataset.view = 'form_question';
       setBackButton(`<div class="back-btn" onclick="openModal('info')">${t.backBtn}</div>`);
 
-      const defaultName = getDefaultUserName();
+      const defaultName = escapeHtml(getDefaultUserName());
 
       content.innerHTML = `
         <h2>${t.questionFormHeader}</h2>
@@ -752,6 +906,7 @@
       popup.dataset.view = `team_${id}`;
 
       const member = teamMembers.find(m => m.id === id);
+      if (!member) return;
       const content = document.getElementById('modal-content');
       const t = i18n[currentLang];
       const total = member.imgs.length;
@@ -762,7 +917,7 @@
       let dotsHtml = '';
 
       member.imgs.forEach((imgUrl, index) => {
-        slidesHtml += `<img src="${imgUrl}" class="carousel-slide">`;
+        slidesHtml += `<img src="${imgUrl}" class="carousel-slide" alt="${escapeHtml(member.name)}">`;
         dotsHtml += `<div class="dot ${index === 0 ? 'active' : ''}" onclick="setSlide(${index}, ${total})"></div>`;
       });
 
@@ -773,8 +928,8 @@
 
       content.innerHTML = `
         <div class="team-detail">
-          <h2>${member.name}</h2>
-          <div style="color:#4dabf7; font-size:0.85rem; margin-bottom:12px;">${member.role[currentLang]}</div>
+          <h2>${escapeHtml(member.name)}</h2>
+          <div style="color:#4dabf7; font-size:0.85rem; margin-bottom:12px;">${escapeHtml(member.role[currentLang])}</div>
 
           <div class="carousel-container"
                ontouchstart="handleTouchStart(event)"
@@ -791,7 +946,7 @@
             ${total > 1 ? dotsHtml : ''}
           </div>
 
-          <div class="team-detail-bio">${member.bio[currentLang]}</div>
+          <div class="team-detail-bio">${escapeHtml(member.bio[currentLang])}</div>
         </div>
       `;
 
@@ -854,21 +1009,35 @@
       }
     }
 
-    function openSeatingPlan(eventTitle) {
+    /* --- DYNAMISCHER SAALPLAN PRO EVENT --- */
+    function openSeatingPlan(eventId) {
+      const ev = eventsList.find(e => e.id === Number(eventId));
+      if (!ev) {
+        openModal('events');
+        return;
+      }
+
       haptic('light');
+      activeEvent = ev;
       selectedSeats = [];
+
       const popup = document.getElementById('popup');
       const content = document.getElementById('modal-content');
       const modalCard = document.getElementById('main-modal-card');
       const t = i18n[currentLang];
 
-      popup.dataset.view = `seat_${eventTitle}`;
+      popup.dataset.view = `seat_${ev.id}`;
       setBackButton(`<div class="back-btn" onclick="openModal('events')">${t.backBtn}</div>`);
 
+      const eventTitle = currentLang === 'ua' ? (ev.ua || ev.de) : ev.de;
+      const dateStr = formatEventDate(ev.dt, currentLang);
       const displayName = getDefaultUserName();
+      const mySeats = ev.my || [];
+      const occupiedSeats = ev.occ || [];
+      const maxAllowedForEvent = Math.max(0, 4 - mySeats.length);
       const isReturningUser = mySeats.length > 0;
 
-      let legendHtml = `
+      const legendHtml = `
         <div class="legend">
           <div class="legend-item"><div class="legend-box legend-free"></div> ${t.legFree}</div>
           <div class="legend-item"><div class="legend-box legend-selected"></div> ${t.legSel}</div>
@@ -877,14 +1046,14 @@
         </div>
       `;
 
-      let gridHtml = `<div class="stage">${t.stage}</div>${legendHtml}<div class="seating-grid">`;
+      let gridHtml = `<div class="stage">${t.stage}</div>${legendHtml}<div class="seating-grid"><div class="seating-grid-inner">`;
 
-      for (let r = 1; r <= 8; r++) {
+      for (let r = 1; r <= ev.r; r++) {
         gridHtml += `<div class="seat-row"><span class="row-label">R${r}</span>`;
-        for (let s = 1; s <= 10; s++) {
+        for (let s = 1; s <= ev.s; s++) {
           const seatId = `R${r}-S${s}`;
           const isMine = mySeats.includes(seatId);
-          const isOccupied = occupiedSeats.includes(seatId);
+          const isOccupied = !isMine && occupiedSeats.includes(seatId);
 
           if (isMine) {
             gridHtml += `<div class="seat my-seat" id="seat-${seatId}">✓</div>`;
@@ -896,10 +1065,10 @@
         }
         gridHtml += `</div>`;
       }
-      gridHtml += `</div>`;
+      gridHtml += `</div></div>`;
 
-      let bannerHtml = isReturningUser
-        ? `<div class="info-banner">🔹 ${t.alreadyBooked}: <b>${mySeats.join(', ')}</b> (${mySeats.length}/4)</div>`
+      const bannerHtml = isReturningUser
+        ? `<div class="info-banner">🔹 ${t.alreadyBooked}: <b>${escapeHtml(mySeats.join(', '))}</b> (${mySeats.length}/4)</div>`
         : '';
 
       let nameFieldHtml = '';
@@ -908,23 +1077,25 @@
         nameFieldHtml = `
           <div class="locked-name-badge">
             <div class="locked-name-icon">👤</div>
-            <div class="locked-name-value">${savedName}</div>
+            <div class="locked-name-value">${escapeHtml(savedName)}</div>
           </div>
-          <input type="hidden" id="fullname" value="${savedName}">
+          <input type="hidden" id="fullname" value="${escapeHtml(savedName)}">
         `;
       } else {
-        nameFieldHtml = `<input type="text" id="fullname" placeholder="${t.namePlaceholder}" value="${displayName}">`;
+        nameFieldHtml = `<input type="text" id="fullname" placeholder="${t.namePlaceholder}" value="${escapeHtml(displayName)}">`;
       }
 
-      let btnDisabledAttr = maxAllowedSeats <= 0 ? 'disabled' : '';
-      let btnText = maxAllowedSeats <= 0 ? t.maxReached : t.zeroPrompt;
+      const btnDisabledAttr = maxAllowedForEvent <= 0 ? 'disabled' : '';
+      const btnText = maxAllowedForEvent <= 0 ? t.maxReached : t.zeroPrompt;
 
       content.innerHTML = `
         <h2>${t.seatTitle}</h2>
-        <p style="color:#888; font-size:0.75rem; margin-bottom:8px;">Event: <b>${eventTitle}</b></p>
+        <p style="color:#aaa; font-size:0.78rem; margin-bottom:10px; line-height:1.4;">
+          <b>${escapeHtml(eventTitle)}</b><br>
+          📅 ${escapeHtml(dateStr)} · 📍 ${escapeHtml(ev.loc)}
+        </p>
         ${bannerHtml}
         ${gridHtml}
-        <input type="hidden" id="event_name" value="${eventTitle}">
         ${nameFieldHtml}
         <button class="btn-action" id="submit-booking-btn" ${btnDisabledAttr} onclick="sendBooking()">
           <span id="seat-count-text">${btnText}</span>
@@ -935,8 +1106,11 @@
     }
 
     function toggleSeat(seatId) {
+      if (!activeEvent) return;
       const t = i18n[currentLang];
-      if (maxAllowedSeats <= 0) {
+      const maxAllowedForEvent = Math.max(0, 4 - (activeEvent.my ? activeEvent.my.length : 0));
+
+      if (maxAllowedForEvent <= 0) {
         haptic('warning');
         if (tg && tg.showAlert) tg.showAlert(t.alertMax4);
         else alert(t.alertMax4);
@@ -945,14 +1119,15 @@
 
       haptic('selection');
       const seatEl = document.getElementById(`seat-${seatId}`);
+      if (!seatEl) return;
 
       if (selectedSeats.includes(seatId)) {
         selectedSeats = selectedSeats.filter(id => id !== seatId);
         seatEl.classList.remove('selected');
       } else {
-        if (selectedSeats.length >= maxAllowedSeats) {
+        if (selectedSeats.length >= maxAllowedForEvent) {
           haptic('warning');
-          const msg = t.alertMaxRemain(maxAllowedSeats);
+          const msg = t.alertMaxRemain(maxAllowedForEvent);
           if (tg && tg.showAlert) tg.showAlert(msg);
           else alert(msg);
           return;
@@ -965,11 +1140,12 @@
     }
 
     function sendBooking() {
+      if (!activeEvent) return;
       const t = i18n[currentLang];
       try {
         const nameInput = document.getElementById('fullname');
         const name = nameInput ? nameInput.value.trim() : "";
-        const eventName = document.getElementById('event_name') ? document.getElementById('event_name').value : "Event";
+        const mySeats = activeEvent.my || [];
 
         const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
         const userId = user ? user.id : "Unbekannt";
@@ -994,7 +1170,8 @@
           tg.sendData(JSON.stringify({
             action: "booking",
             telegram_id: userId,
-            event: eventName,
+            event_id: activeEvent.id,
+            event: activeEvent.de,
             name: name,
             seats: selectedSeats
           }));
