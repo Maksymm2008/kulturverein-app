@@ -113,6 +113,10 @@
       {
         "q": "Wo und wann findet das Event statt?",
         "a": "Alle aktuellen Veranstaltungen inklusive Datum, Uhrzeit und Ort findest du jederzeit unter der Rubrik 'Events'."
+      },
+      {
+        "q": "еуіе",
+        "a": "еуіе"
       }
     ],
     "ua": [
@@ -139,6 +143,10 @@
       {
         "q": "Де і коли відбувається подія?",
         "a": "Усі актуальні події з датою, часом та місцем проведення ти завжди знайдеш у розділі 'Події'."
+      },
+      {
+        "q": "еуіе",
+        "a": "еуіе"
       }
     ]
   }
