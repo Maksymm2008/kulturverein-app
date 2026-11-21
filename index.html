@@ -174,6 +174,11 @@
     .team-card { background: #1a1a20; border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; border: 1px solid #2a2a32; transition: transform 0.2s; }
     .team-card:active { transform: scale(0.95); }
     .team-img-small { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 2px solid #4dabf7; }
+    .team-img-fallback {
+      width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 8px auto;
+      border: 2px solid #4dabf7; background: #22222c; color: #4dabf7;
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800;
+    }
     .team-name { font-size: 0.85rem; font-weight: bold; }
     .team-role { font-size: 0.7rem; color: #888; }
 
@@ -470,7 +475,6 @@
         contactBtn: "Frage an Admin senden",
         memberFormHeader: "🤝 Mitgliedschaft anfragen",
         memberFormSub: "Fülle kurz die Felder aus – der Vorstand meldet sich direkt bei dir im Chat.",
-        contactInputPlaceholder: "Telefonnummer oder E-Mail",
         memberNotePlaceholder: "Optional: Wie möchtest du dich einbringen?",
         sendRequestBtn: "Anfrage jetzt absenden",
         questionFormHeader: "💬 Frage an Admin senden",
@@ -512,7 +516,6 @@
         contactBtn: "Написати адміністратору",
         memberFormHeader: "🤝 Заявка на членство",
         memberFormSub: "Заповни коротку форму — ми зв'яжемося з тобою просто в чаті Telegram.",
-        contactInputPlaceholder: "Номер телефону або E-Mail",
         memberNotePlaceholder: "Необов'язково: де ти хочеш допомагати?",
         sendRequestBtn: "Надіслати заявку",
         questionFormHeader: "💬 Питання адміністратору",
@@ -536,7 +539,7 @@
       }
     };
 
-    const galleryImages = [
+    let galleryImages = [
       "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800",
       "https://images.unsplash.com/photo-1493225457124-a1a2a4af4048?w=800",
       "https://images.unsplash.com/photo-1540039155733-d76e614860c6?w=800",
@@ -545,7 +548,7 @@
       "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800"
     ];
 
-    const teamMembers = [
+    let teamMembers = [
       {
         id: 1, name: "Natali",
         role: { de: "Vorstand & Orga", ua: "Голова та Організація" },
@@ -593,7 +596,7 @@
       }
     ];
 
-    const faqList = {
+    let faqList = {
       de: [
         {
           q: "Kann ich auch ohne Reservierung kommen?",
@@ -734,11 +737,16 @@
         content.innerHTML = html;
 
       } else if (type === 'galerie') {
-        let gridHtml = '<div class="gallery-grid">';
-        galleryImages.forEach(img => {
-          gridHtml += `<img src="${img}" class="gallery-img" alt="Event" onclick="openLightbox('${img}')">`;
-        });
-        gridHtml += '</div>';
+        let gridHtml = '';
+        if (!galleryImages.length) {
+          gridHtml = `<div class="empty-state" style="margin-top:12px;">${t.galerieSub}</div>`;
+        } else {
+          gridHtml = '<div class="gallery-grid">';
+          galleryImages.forEach((img, idx) => {
+            gridHtml += `<img src="${escapeHtml(img)}" class="gallery-img" alt="Event" onclick="openLightboxByIndex(${idx})">`;
+          });
+          gridHtml += '</div>';
+        }
         content.innerHTML = `
           <h2>${t.galerieHeader}</h2>
           <p style="color:#aaa; font-size:0.85rem;">${t.galerieSub}</p>
@@ -748,11 +756,16 @@
       } else if (type === 'team') {
         let gridHtml = '<div class="team-grid">';
         teamMembers.forEach(m => {
+          const imgs = Array.isArray(m.imgs) ? m.imgs : [];
+          const avatarHtml = imgs.length > 0
+            ? `<img src="${escapeHtml(imgs[0])}" class="team-img-small" alt="${escapeHtml(m.name)}">`
+            : `<div class="team-img-fallback">${escapeHtml((m.name || '?')[0].toUpperCase())}</div>`;
+          const roleText = m.role && (m.role[currentLang] || m.role.de) ? (m.role[currentLang] || m.role.de) : '';
           gridHtml += `
-            <div class="team-card" onclick="showTeamMember(${m.id})">
-              <img src="${m.imgs[0]}" class="team-img-small" alt="${escapeHtml(m.name)}">
+            <div class="team-card" onclick="showTeamMember(${Number(m.id)})">
+              ${avatarHtml}
               <div class="team-name">${escapeHtml(m.name)}</div>
-              <div class="team-role">${escapeHtml(m.role[currentLang])}</div>
+              <div class="team-role">${escapeHtml(roleText)}</div>
             </div>`;
         });
         gridHtml += '</div>';
@@ -817,7 +830,6 @@
         <h2>${t.memberFormHeader}</h2>
         <p style="color:#aaa; font-size:0.8rem; margin-bottom:14px; line-height:1.4;">${t.memberFormSub}</p>
         <input type="text" id="member_name" placeholder="${t.namePlaceholder}" value="${defaultName}">
-        <input type="text" id="member_contact" placeholder="${t.contactInputPlaceholder}">
         <textarea id="member_note" placeholder="${t.memberNotePlaceholder}"></textarea>
         <button class="btn-action" style="background:#28a745; color:#fff;" onclick="submitMembershipForm()">
           ${t.sendRequestBtn}
@@ -829,7 +841,6 @@
     function submitMembershipForm() {
       const t = i18n[currentLang];
       const name = (document.getElementById('member_name').value || '').trim();
-      const contact = (document.getElementById('member_contact').value || '').trim();
       const note = (document.getElementById('member_note').value || '').trim();
 
       if (!name) {
@@ -844,7 +855,6 @@
         tg.sendData(JSON.stringify({
           action: "membership",
           name: name,
-          contact: contact,
           message: note
         }));
       }
@@ -905,19 +915,20 @@
       const popup = document.getElementById('popup');
       popup.dataset.view = `team_${id}`;
 
-      const member = teamMembers.find(m => m.id === id);
+      const member = teamMembers.find(m => Number(m.id) === Number(id));
       if (!member) return;
       const content = document.getElementById('modal-content');
       const t = i18n[currentLang];
-      const total = member.imgs.length;
+      const imgs = Array.isArray(member.imgs) ? member.imgs : [];
+      const total = imgs.length;
 
       setBackButton(`<div class="back-btn" onclick="openModal('team')">${t.backBtn}</div>`);
 
       let slidesHtml = '';
       let dotsHtml = '';
 
-      member.imgs.forEach((imgUrl, index) => {
-        slidesHtml += `<img src="${imgUrl}" class="carousel-slide" alt="${escapeHtml(member.name)}">`;
+      imgs.forEach((imgUrl, index) => {
+        slidesHtml += `<img src="${escapeHtml(imgUrl)}" class="carousel-slide" alt="${escapeHtml(member.name)}">`;
         dotsHtml += `<div class="dot ${index === 0 ? 'active' : ''}" onclick="setSlide(${index}, ${total})"></div>`;
       });
 
@@ -926,11 +937,7 @@
         <div class="carousel-arrow right" onclick="manualStep(1, ${total})">›</div>
       ` : '';
 
-      content.innerHTML = `
-        <div class="team-detail">
-          <h2>${escapeHtml(member.name)}</h2>
-          <div style="color:#4dabf7; font-size:0.85rem; margin-bottom:12px;">${escapeHtml(member.role[currentLang])}</div>
-
+      const carouselHtml = total > 0 ? `
           <div class="carousel-container"
                ontouchstart="handleTouchStart(event)"
                ontouchend="handleTouchEnd(event, ${total})"
@@ -945,8 +952,17 @@
           <div class="carousel-dots" id="carousel-dots">
             ${total > 1 ? dotsHtml : ''}
           </div>
+      ` : '';
 
-          <div class="team-detail-bio">${escapeHtml(member.bio[currentLang])}</div>
+      const roleText = member.role && (member.role[currentLang] || member.role.de) ? (member.role[currentLang] || member.role.de) : '';
+      const bioText = member.bio && (member.bio[currentLang] || member.bio.de) ? (member.bio[currentLang] || member.bio.de) : '';
+
+      content.innerHTML = `
+        <div class="team-detail">
+          <h2>${escapeHtml(member.name)}</h2>
+          <div style="color:#4dabf7; font-size:0.85rem; margin-bottom:12px;">${escapeHtml(roleText)}</div>
+          ${carouselHtml}
+          <div class="team-detail-bio">${escapeHtml(bioText)}</div>
         </div>
       `;
 
@@ -1201,6 +1217,11 @@
       document.getElementById('datenschutz-popup').classList.remove('active');
     }
 
+    function openLightboxByIndex(idx) {
+      if (idx >= 0 && idx < galleryImages.length) {
+        openLightbox(galleryImages[idx]);
+      }
+    }
     function openLightbox(imgSrc) {
       haptic('light');
       const lightbox = document.getElementById('lightbox');
@@ -1214,7 +1235,36 @@
       setTimeout(() => lightbox.style.display = 'none', 300);
     }
 
+    async function loadDynamicContent() {
+      try {
+        const resp = await fetch(`content.json?v=${Date.now()}`, { cache: 'no-store' });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (data && Array.isArray(data.gallery)) {
+          galleryImages = data.gallery;
+        }
+        if (data && Array.isArray(data.team)) {
+          teamMembers = data.team;
+        }
+        if (data && data.faqs && Array.isArray(data.faqs.de) && Array.isArray(data.faqs.ua)) {
+          faqList = data.faqs;
+        }
+        const popup = document.getElementById('popup');
+        if (popup && popup.classList.contains('active') && popup.dataset.view) {
+          const view = popup.dataset.view;
+          if (view === 'galerie' || view === 'team' || view === 'info') {
+            openModal(view);
+          } else if (view.startsWith('team_')) {
+            showTeamMember(parseInt(view.split('_')[1], 10));
+          }
+        }
+      } catch (err) {
+        console.info('content.json nicht verfügbar, nutze Standard-Inhalte:', err);
+      }
+    }
+
     updateNavLabels();
+    loadDynamicContent();
   </script>
 </body>
 </html>
