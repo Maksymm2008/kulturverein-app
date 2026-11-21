@@ -86,6 +86,21 @@
         "de": "Julia hält unsere Community auf Instagram und Facebook auf dem Laufenden und fängt die besten Momente fotografisch ein.",
         "ua": "Юлія веде наші сторінки в Instagram та Facebook і ловить найкращі моменти подій на камеру."
       }
+    },
+    {
+      "id": 6,
+      "name": "Test MD",
+      "role": {
+        "de": "Management",
+        "ua": "Менеджмент"
+      },
+      "imgs": [
+        "img/team_c2c77b1191.jpg"
+      ],
+      "bio": {
+        "de": "test bio",
+        "ua": "тест біо"
+      }
     }
   ],
   "faqs": {
